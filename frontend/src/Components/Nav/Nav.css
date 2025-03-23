@@ -1,0 +1,139 @@
+/* Navbar Styling */
+.navbar {
+    width: 100vw; /* Full width of screen */
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #492e05; /* Dark background */
+    padding: 10px 20px; /* Reduced padding for smaller screens */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  /* Logo Section */
+  .logo img {
+    margin-left: 10px; /* Reduced margin */
+    width: 50px; /* Smaller logo for better fit */
+    height: auto;
+  }
+  
+  /* Navbar Links */
+  .nav-links {
+    display: flex;
+    flex-grow: 1; /* Allows items to expand */
+    justify-content: center; /* Center links horizontally */
+    gap: 10px; /* Reduced gap for smaller screens */
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px; /* Slightly smaller font */
+    padding: 8px 10px; /* Reduced padding */
+  }
+  
+  .nav-links a:hover {
+    background-color: #c08607;
+    border-radius: 5px;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    flex-grow: 0.5; /* Takes some space */
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .search-bar input {
+    padding: 6px; /* Reduced padding */
+    font-size: 12px; /* Smaller font */
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    width: 150px; /* Reduced width */
+  }
+  
+  .search-bar input:focus {
+    border: 2px solid #c08607;
+  }
+  
+  /* Dropdown Menu for Auction */
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-btn {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 14px; /* Match nav-links */
+    cursor: pointer;
+    padding: 8px 10px; /* Match nav-links */
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    background-color: #492e05;
+    min-width: 140px; /* Slightly smaller */
+    z-index: 1;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    top: 100%;
+    left: 0;
+  }
+  
+  .dropdown-content a {
+    color: white;
+    padding: 10px 12px; /* Reduced padding */
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #c08607;
+    color: black;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 10px 15px; /* Adjusted padding */
+      height: auto; /* Allow height to adjust */
+      flex-wrap: wrap; /* Allow wrapping if needed */
+    }
+  
+    .logo img {
+      width: 40px; /* Even smaller logo */
+    }
+  
+    .nav-links {
+      gap: 8px; /* Further reduced gap */
+    }
+  
+    .nav-links a,
+    .dropdown-btn {
+      font-size: 12px; /* Smaller font for mobile */
+      padding: 6px 8px; /* Reduced padding */
+    }
+  
+    .search-bar input {
+      width: 120px; /* Smaller search bar */
+      font-size: 10px; /* Smaller font */
+      padding: 5px;
+    }
+  
+    .dropdown-content {
+      min-width: 120px; /* Smaller dropdown */
+    }
+  
+    .dropdown-content a {
+      padding: 8px 10px; /* Reduced padding */
+      font-size: 12px; /* Match nav-links */
+    }
+  }
