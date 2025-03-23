@@ -1,0 +1,109 @@
+/* ContactUs.css */
+.contact-us {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header Styling */
+  .contact-us h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .contact-us p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Form Styling */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .form-group input {
+    height: 40px;
+  }
+  
+  .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  /* Button Styling */
+  button[type="submit"] {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+    width: 200px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Success Message Styling */
+  .success-message {
+    color: #28a745; /* Green for success */
+    text-align: center;
+    margin-top: 15px;
+    font-size: 1.1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-us {
+      padding: 20px 15px;
+    }
+  
+    .contact-us h1 {
+      font-size: 2rem;
+    }
+  
+    .contact-us p {
+      font-size: 1rem;
+    }
+  
+    button[type="submit"] {
+      width: 100%;
+    }
+  }
