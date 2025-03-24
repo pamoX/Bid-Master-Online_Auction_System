@@ -27,21 +27,23 @@ function Register() {
       alert("Passwords do not match!");
       return;
     }
-
-    // Send registration request
+  
     try {
       const res = await axios.post("http://localhost:5000/users", formData);
-
-      // If registration is successful, navigate to login
+  
+      // Check if registration was successful
       if (res.data.success) {
         alert("Registration successful! Please log in.");
         navigate("/login"); // Redirect to login page
-      } 
+      } else {
+        alert(res.data.message || "Registration failed.");
+      }
     } catch (err) {
       console.error("Error during registration:", err);
       alert("An error occurred. Please try again.");
     }
   };
+  
 
   return (
     <div>

@@ -7,8 +7,6 @@ import "./App.css";
 import Nav from "./Components/Nav/Nav";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
-
-
 import Dashboard from "./Components/Dashboard/Dashboard";
 
 function App() {

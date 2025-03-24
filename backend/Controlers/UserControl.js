@@ -29,29 +29,32 @@ const getAllUsers = async(req,res,next) =>{
 
 
 //data insert
-const addUsers = async(req,res,next) =>{
 
-    const{name,username,email,phone,password,confirmPassword} = req.body;
-
-    let users;
-
-    try{
-        users = new User({name,username,email,phone,password,confirmPassword});
-        await users.save();
-    }catch(err){
-        console.log(err);
+const addUsers = async(req, res, next) => {
+    const { name, username, email, phone, password, confirmPassword } = req.body;
+  
+    let user;
+  
+    try {
+      // Check if the username already exists
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({ message: "Username already exists!" });
+      }
+  
+      // Create new user object
+      user = new User({ name, username, email, phone, password, confirmPassword });
+  
+      // Save user to database
+      await user.save();
+  
+      return res.status(201).json({ success: true, message: "Registration successful!", user });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ success: false, message: "An error occurred while registering." });
     }
-
-    //not insert users
-    if(!users){
-        return res.status(404).json({message:"unable to add users"});
-
-    }
-
-    return res.status(200).json({users});
-
-};
-
+  };
+  
 //get by id
 const getById = async (req,res,next) =>{
     const id = req.params.id;

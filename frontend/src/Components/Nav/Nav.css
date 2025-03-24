@@ -19,6 +19,10 @@
     width: 70px; /* Smaller logo for better fit */
     height: auto;
   }
+
+
+
+ 
   
   /* Navbar Links */
   .nav-links {
@@ -77,6 +81,25 @@
   }
   
   .search-btn:hover {
+   
+    background: #c08607;
+  }
+
+
+
+  .sidebar-toggle {
+    width: 60px;
+    height: 40px;
+    background: #5a3f04;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-left: 10px;
+  }
+
+  .sidebar-toggle:hover {
    
     background: #c08607;
   }
