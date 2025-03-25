@@ -5,11 +5,11 @@ import './SellerProfile.css';
 const SellerProfile = () => {
   // Sample initial seller data (corrected address syntax)
   const [sellerData, setSellerData] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '123-456-7890',
-    address: '123 Auction Lane, Bid City, BC 45678', // Fixed typo
-    paymentMethod: 'PayPal: john.doe@paypal.com',
+    name: 'Lakshi Sewwandi',
+    email: 'lakshi@gmail.com',
+    phone: '0769325412',
+    address: '65/4, Maharagama , Lane Street', // Fixed typo
+    paymentMethod: 'PayPal: lakshi@gmail.com',
   });
 
   const [isEditing, setIsEditing] = useState(false);
