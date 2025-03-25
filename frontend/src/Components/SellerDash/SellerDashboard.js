@@ -56,7 +56,7 @@ const SellerDashboard = () => {
 
   return (
     <div className="seller-dashboard-page">
-      <Nav />
+      <Nav /><br/><br/>
       <div className="seller-dashboard-container">
         <h2>Seller Dashboard</h2>
 

@@ -170,8 +170,8 @@
 
   .nav-links a,
   .dropdown-btn {
-    font-size: 12px; /* Smaller font for mobile */
-    padding: 6px 8px; /* Reduced padding */
+    font-size: 56px; /* Smaller font for mobile */
+    padding: 8px 10px; /* Reduced padding */
   }
 
   .search-bar input {

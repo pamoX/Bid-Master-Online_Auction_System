@@ -36,13 +36,13 @@ const SellerRegistration = () => {
 
   return (
     <div className="registration-page">
-      <Nav /> {/* Navigation bar at the top */}
+      <Nav /> <br/><br/><br/><br/>
       <div className="registration-container">
         <div className="registration-card">
           <h2 className="registration-title">Seller Registration</h2>
           <form onSubmit={handleSubmit} className="registration-form">
             <div className="form-group">
-              <label htmlFor="name">Full Name</label>
+              <label>Full Name</label>
               <input
                 type="text"
                 id="name"
@@ -68,7 +68,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone">Phone Number</label>
+              <label>Phone Number</label>
               <input
                 type="tel"
                 id="phone"
@@ -81,7 +81,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="companyName">Company Name (Optional)</label>
+              <label>Company Name (Optional)</label>
               <input
                 type="text"
                 id="companyName"
@@ -93,7 +93,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="address">Address</label>
+              <label>Address</label>
               <textarea
                 id="address"
                 name="address"
@@ -105,7 +105,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label>Password</label>
               <input
                 type="password"
                 id="password"

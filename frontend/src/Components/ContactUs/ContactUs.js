@@ -22,7 +22,7 @@ function ContactUs() {
 
   return (
     <div className="contact-us-page">
-      <Nav />
+      <Nav /><br/><br/>
       <div className="contact-us-container">
         <h1>Contact Us</h1>
         <p>Questions about bidding, selling, or shipping? <br/>Contact us below to join the auction!</p>

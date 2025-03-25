@@ -59,7 +59,7 @@ const SellerProfile = () => {
 
   return (
     <div className="seller-profile-page">
-        <Nav/>
+        <Nav/><br/><br/>
       <h1>Seller Profile</h1>
       <p>View and update your seller information below.</p>
 

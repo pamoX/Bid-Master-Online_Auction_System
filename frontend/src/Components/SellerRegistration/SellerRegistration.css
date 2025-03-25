@@ -1,152 +1,146 @@
 .registration-page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* Original gradient */
-  }
-  
-  .registration-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-  }
-  
-  .registration-card {
-    background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  .registration-title {
-    color: #8b4513; /* Saddle Brown for title */
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .registration-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .form-group label {
-    color: #a0522d; /* Sienna for labels */
-    font-weight: 500;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    padding: 0.8rem;
-    border: 2px solid #d2b48c; /* Tan for borders */
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .form-group input:focus,
-  .form-group textarea:focus {
-    border-color: #cd853f; /* Peru for focus */
-    outline: none;
-    box-shadow: 0 0 5px rgba(205, 133, 63, 0.3);
-  }
-  
-  .form-group textarea {
-    min-height: 100px;
-    resize: vertical;
-  }
-  
-  .radio-group {
-    display: flex;
-    gap: 2rem;
-    margin-top: 0.5rem;
-  }
-  
-  .radio-label {
-    display: flex;
-    align-items: center;
-    color: #a0522d; /* Sienna for radio labels */
-    cursor: pointer;
-  }
-  
-  .radio-label input {
-    margin-right: 0.5rem;
-    accent-color: #deb887; /* BurlyWood for radio buttons */
-  }
-  
-  .terms-group {
-    margin-top: 1rem;
-  }
-  
-  .checkbox-label {
-    display: flex;
-    align-items: center;
-    color: #a0522d; /* Sienna for checkbox label */
-    cursor: pointer;
-  }
-  
-  .checkbox-label input {
-    margin-right: 0.5rem;
-    accent-color: #cd853f; /* Peru for checkbox */
-  }
-  
-  .terms-link {
-    color: #deb887; /* BurlyWood for terms link */
-    text-decoration: none;
-  }
-  
-  .terms-link:hover {
-    text-decoration: underline;
-  }
-  
-  .register-btn {
-    background-color: #8b4513; /* Saddle Brown for button */
-    color: white;
-    border: none;
-    padding: 1rem;
-    border-radius: 15px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .register-btn:hover {
-    background-color: #5c4033; /* Darker brown for hover */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(92, 64, 51, 0.3);
-  }
-  
-  .login-link {
-    text-align: center;
-    margin-top: 1.5rem;
-    color: #764ba2; /* Original purple for text */
-  }
-  
-  .login-link a {
-    color: #ff6b6b; /* Original coral for link */
-    text-decoration: none;
-  }
-  
-  .login-link a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Ensure navbar stays at top */
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* Original gradient */
+}
+
+.registration-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.registration-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.registration-title {
+  color: #8b4513; /* Saddle Brown for title */
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #a0522d; /* Sienna for labels */
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.8rem;
+  border: 2px solid #d2b48c; /* Tan for borders */
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #cd853f; /* Peru for focus */
+  outline: none;
+  box-shadow: 0 0 5px rgba(205, 133, 63, 0.3);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.radio-group {
+  display: flex;
+  gap: 2rem;
+  margin-top: 0.5rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  color: #a0522d; /* Sienna for radio labels */
+  cursor: pointer;
+}
+
+.radio-label input {
+  margin-right: 0.5rem;
+  accent-color: #deb887; /* BurlyWood for radio buttons */
+}
+
+.terms-group {
+  margin-top: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  color: #a0522d; /* Sienna for checkbox label */
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  margin-right: 0.5rem;
+  accent-color: #cd853f; /* Peru for checkbox */
+}
+
+.terms-link {
+  color: #deb887; /* BurlyWood for terms link */
+  text-decoration: none;
+}
+
+.terms-link:hover {
+  text-decoration: underline;
+}
+
+.register-btn {
+  background-color: #8b4513; /* Saddle Brown for button */
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #5c4033; /* Darker brown for hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(92, 64, 51, 0.3);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #764ba2; /* Original purple for text */
+}
+
+.login-link a {
+  color: #ff6b6b; /* Original coral for link */
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+

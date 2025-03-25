@@ -54,7 +54,7 @@ const Nav = () => {
 
       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-content">
-          <Link to="/dashboard" onClick={toggleSidebar}>
+          <Link to="/seller-dashboard" onClick={toggleSidebar}>
             <i className="fas fa-tachometer-alt"></i> Dashboard
           </Link>
           <Link to="/register-seller" onClick={toggleSidebar}>
