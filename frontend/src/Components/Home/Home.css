@@ -1,0 +1,83 @@
+/* General Styling */
+.homepage {
+  font-family: 'Arial', sans-serif;
+  background-color: #7c6666;
+  color: #c02424;
+  text-align: center;
+}
+
+/* Header */
+.header {
+  padding: 20px;
+  background-color: #f0e2e2;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 5.5em;
+  color: #865710;
+}
+
+.header p {
+  margin: 5px 0;
+  font-size: 1.2em;
+}
+
+/* Hero Section */
+.hero {
+  padding: 50px 20px;
+  background-color: #f1f0eb;
+}
+
+.hero h2 {
+  font-size: 2em;
+  color: #ff7043;
+}
+
+.hero p {
+  font-size: 1.1em;
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+.cta-button {
+  padding: 10px 20px;
+  font-size: 1.1em;
+  background-color: #b93b2a;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #916a5e;
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background-color: #fff;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid #b0e0e6;
+}
+
+.feature-card h3 {
+  color: #1669ad;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 0.9em;
+}
