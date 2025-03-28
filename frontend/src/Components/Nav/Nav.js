@@ -60,8 +60,8 @@ const Nav = () => {
           <Link to="/register-seller" onClick={toggleSidebar}>
             <i className="fas fa-user-plus"></i> Seller Registration
           </Link>
-          <Link to="/bidding-page" onClick={toggleSidebar}>
-            <i className="fas fa-gavel"></i> Bidding Page
+          <Link to="/seller-listing" onClick={toggleSidebar}>
+            <i className="fas fa-gavel"></i> Item Listing
           </Link>
           <Link to="/seller-profile" onClick={toggleSidebar}>
             <i className="fas fa-plus-circle"></i> Seller Profile

@@ -137,6 +137,7 @@ const SellerDashboard = () => {
                 required
               />
             </div>
+            
             <button type="submit" className="submit-btn">
               {isEditing ? "Update Item" : "Add Item"}
             </button>

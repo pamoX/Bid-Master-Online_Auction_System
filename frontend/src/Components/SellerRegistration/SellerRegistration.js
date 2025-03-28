@@ -1,6 +1,7 @@
+// SellerRegistration.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Nav from '../Nav/Nav'; // Import the Nav component
+import Nav from '../Nav/Nav';
 import "./SellerRegistration.css";
 
 const SellerRegistration = () => {
@@ -30,6 +31,10 @@ const SellerRegistration = () => {
       alert("Please accept the terms and conditions");
       return;
     }
+    if (!formData.name.trim()) {
+      alert("Please enter your full name");
+      return;
+    }
     console.log("Registration data:", formData);
     navigate("/registration-success");
   };
@@ -37,12 +42,12 @@ const SellerRegistration = () => {
   return (
     <div className="registration-page">
       <Nav /> <br/><br/><br/><br/>
-      <div className="registration-container">
+      <section className="seller-registration">
+        <h2 className="registration-title">Seller Registration</h2>
         <div className="registration-card">
-          <h2 className="registration-title">Seller Registration</h2>
           <form onSubmit={handleSubmit} className="registration-form">
             <div className="form-group">
-              <label>Full Name</label>
+              <label htmlFor="name">Full Name</label>
               <input
                 type="text"
                 id="name"
@@ -68,7 +73,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label>Phone Number</label>
+              <label htmlFor="phone">Phone Number</label>
               <input
                 type="tel"
                 id="phone"
@@ -81,7 +86,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label>Company Name (Optional)</label>
+              <label htmlFor="companyName">Company Name (Optional)</label>
               <input
                 type="text"
                 id="companyName"
@@ -93,7 +98,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label>Address</label>
+              <label htmlFor="address">Address</label>
               <textarea
                 id="address"
                 name="address"
@@ -105,7 +110,7 @@ const SellerRegistration = () => {
             </div>
 
             <div className="form-group">
-              <label>Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
@@ -121,6 +126,7 @@ const SellerRegistration = () => {
               <label>Account Type</label>
               <div className="radio-group">
                 <label className="radio-label">
+                  <span className="radio-text">Individual Seller</span>
                   <input
                     type="radio"
                     name="accountType"
@@ -128,9 +134,9 @@ const SellerRegistration = () => {
                     checked={formData.accountType === "individual"}
                     onChange={handleChange}
                   />
-                  Individual Seller
                 </label>
                 <label className="radio-label">
+                  <span className="radio-text">Business</span>
                   <input
                     type="radio"
                     name="accountType"
@@ -138,7 +144,6 @@ const SellerRegistration = () => {
                     checked={formData.accountType === "business"}
                     onChange={handleChange}
                   />
-                  Business
                 </label>
               </div>
             </div>
@@ -158,8 +163,8 @@ const SellerRegistration = () => {
               </label>
             </div>
 
-            <button type="submit" className="register-btn">
-              Register
+            <button type="submit" className="submit-btn">
+              Register as Seller
             </button>
           </form>
 
@@ -167,7 +172,7 @@ const SellerRegistration = () => {
             Already have an account? <Link to="/login">Login here</Link>
           </p>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
