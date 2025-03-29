@@ -1,10 +1,26 @@
-import './App.css';
+import React from "react";
+import { Route , Routes} from "react-router-dom";
+import "./App.css";
 import AboutUs from "./Components/AboutUs/AboutUs";
+import ReportedItems from "./Components/ReportedItems/ReportedItems";
+import InspectionReport from "./Components/InspectionReport/InspectionReport";
+import RejectedItems from "./Components/RejectedItems/RejectedItems";
+import Home from "./Components/Home/Home";
+import AddReport from "./Components/AddReport/AddReport";
 
 function App() {
   return (
     <div>
-      <AboutUs></AboutUs>
+      <React.Fragment>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/about-us" element={<AboutUs/>}/>
+          <Route path="/reject-items" element={<RejectedItems/>}/>
+          <Route path="/flagged-items" element={<ReportedItems/>}/>
+          <Route path="/add-report" element={<AddReport/>}/>
+          <Route path="/inspection-report" element={<InspectionReport/>}/>
+        </Routes>
+      </React.Fragment>
     </div>
   );
 }

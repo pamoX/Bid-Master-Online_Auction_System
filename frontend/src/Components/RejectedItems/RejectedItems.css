@@ -1,0 +1,86 @@
+/* frontend/src/Components/RejectedItems/RejectedItems.css */
+.rejected-items {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  .action-btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .edit-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .edit-form-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 100px;
+  }
+  
+  .submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .cancel-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }

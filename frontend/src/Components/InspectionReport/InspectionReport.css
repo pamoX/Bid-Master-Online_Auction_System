@@ -1,0 +1,42 @@
+/* frontend/src/Components/InspectionReport/InspectionReport.css */
+.inspection-report {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  .generate-btn {
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .generate-btn:hover {
+    background-color: #1976D2;
+  }
