@@ -1,17 +1,17 @@
 /* Full page styling */
 .RI-reported-items-page {
   min-height: 100vh;
-  background: linear-gradient(rgba(99, 40, 40, 0.5), rgba(82, 28, 28, 0.5)),
-              url('https://media.istockphoto.com/id/513607367/photo/durga-idols-in-the-making.jpg?s=612x612&w=0&k=20&c=sE7X9hPJ2yHbU_-TVGZ7RAmFeVWIfpXtdGvwknNgMBA=') no-repeat center center fixed;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+              url('https://media.istockphoto.com/id/157187905/photo/gallery-in-the-accademia-florence-italy.jpg?s=612x612&w=0&k=20&c=CNKOCq7axFBTrDyDhN5_x-pAoVH_cGTajrfbFioomMg=') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Roboto', sans-serif;
-  color: #333;
+  color: #fff; 
 }
 
 /* Header banner with overlay */
 .RI-header-banner {
   position: relative;
-  background: linear-gradient(to bottom, rgba(19, 12, 0, 0.445), rgba(156, 128, 2, 0.493));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
   padding: 20px 0;
   text-align: center;
 }
@@ -26,24 +26,27 @@
   color: #fff;
   margin: 20px 0;
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Stronger shadow for readability */
 }
 
-/* Main content wrapper */
+/* Main content wrapper with frosted glass effect */
 .RI-content-wrapper {
   max-width: 1280px;
   margin: 40px auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.95);
+  /* Semi-transparent background with blur effect */
+  background: rgba(255, 255, 255, 0.1); /* Very light transparency */
+  backdrop-filter: blur(10px); /* Frosted glass effect */
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Slightly darker shadow */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
 }
 
 /* Table styling */
 .RI-reports-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
+  background: rgba(255, 255, 255, 0.2); /* Slightly more opaque for readability */
   border-radius: 8px;
   overflow: hidden;
 }
@@ -52,28 +55,28 @@
 .RI-reports-table td {
   padding: 16px;
   text-align: left;
-  border-bottom: 1px solid #e0e6ed;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
+  color: #fff; /* White text for contrast */
 }
 
 .RI-reports-table th {
-  background-color: #08417eda;
+  background: rgba(32, 91, 153, 0.8); /* Slightly transparent header background */
   color: #fff;
   font-weight: 600;
   text-transform: uppercase;
-
   font-size: 0.95rem;
 }
 
 .RI-reports-table tr:nth-child(even) {
-  background-color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05); /* Very subtle background for even rows */
 }
 
 .RI-reports-table tr:hover {
-  background-color: #eef2f7;
+  background: rgba(255, 255, 255, 0.15); /* Slightly more visible hover effect */
   transition: background-color 0.3s ease;
 }
 
-/* Action buttons (ensure FlaggedItems uses these classes) */
+/* Action buttons */
 .RI-action-btn {
   padding: 8px 16px;
   margin-right: 8px;
@@ -110,12 +113,12 @@
 /* No reports message */
 .RI-no-reports {
   text-align: center;
-  color: #6b7280;
+  color: #fff; /* White text for contrast */
   font-size: 1.4rem;
   margin: 40px 0;
   font-style: italic;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Shadow for readability */
 }
-
 
 /* Responsive design */
 @media (max-width: 1024px) {
