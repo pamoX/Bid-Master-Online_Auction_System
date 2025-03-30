@@ -5,7 +5,6 @@
     text-align: center;
     width: 100%;
    
-  
   }
   
   .footer-container {
@@ -14,8 +13,7 @@
     justify-content: space-around;
     max-width: 1200px; /* Set a fixed width */
     margin: 0 auto; /* Center it properly */
-    padding-left: 300px;
-    padding-right: 300px;
+   
   }
   
   .footer-section {

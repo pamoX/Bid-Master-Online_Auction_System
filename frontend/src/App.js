@@ -3,14 +3,21 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 
 
+
 import "./App.css";
 import Nav from "./Components/Nav/Nav";
+import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import Dashboard from "./Components/Dashboard/Dashboard";
-import Footer from "./Components/Footer/Footer";
 import AddEmployee from "./Components/AsignRoles/AddEmployee";
 import EmployeeDashboard from "./Components/AsignRoles/EmployeeDashboard";
+import AboutUs from "./Components/AboutUs/AboutUs";
+import Footer from "./Components/Footer/Footer";
+import ContactUs from "./Components/ContactUs/ContactUs";
+import UpdateEmployee from "./Components/UpdateEmployee/UpdateEmployee";
+
+
 
 
 function App() {
@@ -26,12 +33,19 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/addEmployee" element={<AddEmployee/>}/>
         <Route path="/employeeDashboard" element={<EmployeeDashboard/>}/>
+        <Route path="/aboutUs" element={<AboutUs/>}/>
+        <Route path="/contactUs" element={<ContactUs/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/employeeDashboard/:id" element={<UpdateEmployee/>}/>
+     
+
+
         
       </Routes>
     </React.Fragment>
 
-  <Footer></Footer>
-   
+
+   <Footer></Footer>
     </div>
   );
 }

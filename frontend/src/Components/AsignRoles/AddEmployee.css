@@ -1,23 +1,13 @@
 /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    background: white;
+
+
+/* Container */
+.addEmp-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 130vh;
-    margin-top: 30px;
-}
-
-/* Container */
-.form-container {
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    margin-top: 30px;
-  
-   
+    height: 110vh;
+    margin: auto;
 }
 
 /* Register Box */
@@ -27,17 +17,19 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
     text-align: left;
-
+    width: 500px;
+   
     
 }
 
 /* Form Elements */
-h2 {
+.addEmp-header {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 
-input {
+.addEmp-input {
     width: 90%;
     padding: 10px;
     margin: 10px ;
@@ -47,7 +39,7 @@ input {
     font-size: 16px;
 }
 
-button {
+.addEmp-button {
     width: 100%;
     background: #382a04;
     color: white;
@@ -57,22 +49,23 @@ button {
     font-size: 18px;
     cursor: pointer;
     transition: 0.3s;
+    margin-top: 10px;
 }
 
-button:hover {
+.addEmp-button :hover {
     background: #c08607;
     
 }
 
 
-label {
+.addEmp-form label {
     font-weight: bold;
     margin: 10px 0 5px;
     align-self: flex-start;
    
     
 }
-
+.addEmp-form
 input,
 textarea,
 select {
@@ -83,24 +76,8 @@ select {
     border-radius: 5px;
     font-size: 16px;
 }
-textarea {
+
+.addEmp-form textarea {
     resize: vertical;
 }
 
-/* Buttons */
-button {
-    width: 100%;
-    background: #382a04;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-top: 15px;
-}
-
-button:hover {
-    background: #c08607;
-}

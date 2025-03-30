@@ -1,77 +1,193 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    background: white;
+/* Login.css */
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+
+    background: url('https://img.freepik.com/free-photo/close-up-law-hammer_23-2151889552.jpg?ga=GA1.1.2098028568.1743051870&semt=ais_hybrid') 
+      center/cover no-repeat;
+    min-height: calc(100vh - 120px); /* Adjust for Nav and Footer height */
+    margin-top: 30px;
+   
+  }
+  
+  .login-box {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    margin: 0;
-}
-
-/* Container */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    margin-left: 600px;
-}
-
-/* Login Box */
-.login-box {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    max-width: 400px;
     text-align: center;
+    margin-top: 100px;
     
-}
-
-/* Form Elements */
-h2 {
+ 
+  }
+  
+  .login-box h2 {
+    font-size: 28px;
+    font-weight: bold;
     margin-bottom: 20px;
-}
-
-input {
+    color: #333;
+  }
+  
+  .error-message {
+    color: #ff0000;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input-group {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #999;
+  }
+  
+  .login-form input {
     width: 90%;
-    padding: 10px;
-    margin: 10px ;
-    margin-right: 10px;
-    border: 1px solid #ccc;
+    padding: 12px 12px 12px 40px; /* Space for the icon */
+    border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
-}
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .login-form input:focus {
+    border-color: #ebf74e;
+  }
+  
+  .login-form input::placeholder {
+    color: #999;
+  }
 
-button {
-    width: 100%;
-    background: #382a04;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #c08607;
-}
-
-/* Register Link */
-p {
-    margin-top: 10px;
+  .remember-me {
+    display: flex;
+    align-items: center; /* Vertically center the checkbox and label */
+    justify-content: flex-start; /* Align to the left */
+    gap: 5px; /* Space between checkbox and label */
     font-size: 14px;
-}
-
-p a {
-    color: #6a11cb;
+    color: #666;
+    margin: 10px 0;
+  }
+  
+  .remember-me input {
+    cursor: pointer;
+    width: 16px; /* Ensure the checkbox is a reasonable size */
+    height: 16px;
+  }
+  
+  .remember-me label {
+    cursor: pointer; /* Make the label clickable */
+  }
+  
+  .forgot-password {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 5px;
+  }
+  
+  .forgot-password a {
+    color: #999;
+    font-size: 14px;
     text-decoration: none;
-    font-weight: bold;
-}
-
-p a:hover {
+  }
+  
+  .forgot-password a:hover {
     text-decoration: underline;
-}
+  }
+  
+  .login-button {
+    background-color: #e08720;
+    border: none;
+    padding: 12px;
+    width: 250px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s;
+    margin-top: 20px;
+  }
+  
+  .login-button:hover {
+    transform: scale(1.02);
+  }
+  
+  .social-login {
+    margin-top: 20px;
+  }
+  
+  .social-login p {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .social-btn.facebook {
+    background-color: #3b5998;
+  }
+  
+  .social-btn.twitter {
+    background-color: #1da1f2;
+  }
+  
+  .social-btn.google {
+    background-color: #db4437;
+  }
+  
+  .signup-link {
+    margin-top: 20px;
+  }
+  
+  .signup-link p {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .signup-link a {
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline;
+  }

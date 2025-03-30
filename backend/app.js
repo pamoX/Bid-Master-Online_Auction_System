@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const userRoutes = require("./Route/UserRoute");
 const loginRoutes = require("./Route/LoginRoute"); // Import login route
-
+const empRoutes = require("./Route/EmpRoute");
 const app = express();
 
 // Middleware to parse JSON
@@ -13,6 +13,8 @@ app.use(cors());
 // Define routes
 app.use("/users", userRoutes); // User registration routes
 app.use("/auth", loginRoutes); // Login route
+app.use("/api/employees", empRoutes);
+
 
 // Connect to MongoDB
 mongoose

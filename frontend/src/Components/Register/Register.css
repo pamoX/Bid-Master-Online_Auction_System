@@ -1,21 +1,15 @@
 /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    background: white;
+
+
+/* Container */
+.register-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 130vh;
-    margin-top: 30px;
-}
-
-/* Container */
-.container {
-   
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    margin-top: 30px;
+    height: 100vh;
+    margin: auto;
+    background: url('https://www.fishergerman.co.uk/images/Auction_gavel_with_laptop_in_background_online_auction_istock_974329568.jpg') 
+      center/cover no-repeat;
 }
 
 /* Register Box */
@@ -25,15 +19,17 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
     text-align: center;
+    width: 500px;
+    margin-top: 50px;
 }
 
 /* Form Elements */
-h2 {
+.register-form h2 {
     margin-bottom: 20px;
 }
 
 
-input {
+.register-form input {
     width: 90%;
     padding: 10px;
     margin: 10px ;
@@ -43,9 +39,9 @@ input {
     font-size: 16px;
 }
 
-button {
+.register-form button {
     width: 100%;
-    background: #382a04;
+    background: #e08720;
     color: white;
     padding: 10px;
     border: none;
@@ -55,23 +51,23 @@ button {
     transition: 0.3s;
 }
 
-button:hover {
+.register-form button:hover {
     background: #c08607;
     
 }
 
 /* Login Link */
-p {
+.register-form p {
     margin-top: 10px;
     font-size: 14px;
 }
 
-p a {
+.register-form p a {
     color: #6a11cb;
     text-decoration: none;
     font-weight: bold;
 }
 
-p a:hover {
+.register-form p a:hover {
     text-decoration: underline;
 }

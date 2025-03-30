@@ -18,7 +18,7 @@ function Nav() {
       <nav className="navbar">
         {/* Logo Section */}
         <div className="logo">
-          <Link to="/">
+          <Link to="/home">
             <img src="/favicon.ico" alt="AuctionApp Logo" className="logo-img" />
           </Link>
         </div>
@@ -36,9 +36,9 @@ function Nav() {
 
         {/* Navigation Links */}
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/about-us">About Us</Link>
-          <Link to="/contact-us">Contact Us</Link>
+          <Link to="/home">Home</Link>
+          <Link to="/aboutUs">About Us</Link>
+          <Link to="/contactUs">Contact Us</Link>
 
           {/* Conditionally Render Login or Profile/Logout */}
           {!user ? (

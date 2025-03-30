@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Nav from "../Nav/Nav";
+
 import "./Login.css";
-
-
 
 
 function Login() {
@@ -33,28 +31,57 @@ function Login() {
   };
 
   return (
-   
     <div>
-       <Nav></Nav>
-      <div className="container">
+     
+      <div className="login-container">
         <div className="login-box">
           <h2>Login</h2>
-          {error && <p>{error}</p>}
-          <form onSubmit={handleSubmit}>
-            <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-            <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-            <button type="submit">Login</button>
+          {error && <p className="error-message">{error}</p>}
+          <div className="login-form">
+            <form onSubmit={handleSubmit}>
+              <div className="input-group">
+                <span className="input-icon">👤</span>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Type your username"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <span className="input-icon">🔒</span>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Type your password"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             
-            <p>Do not have an account? <Link to="/register">Register</Link></p>
-          </form>
+              <button type="submit" className="login-button">
+                LOGIN
+              </button>
+            </form>
+            <div className="social-login">
+              <p>or Sign Up Using</p>
+              <div className="social-buttons">
+                <button className="social-btn facebook">F</button>
+                <button className="social-btn twitter">T</button>
+                <button className="social-btn google">G</button>
+              </div>
+            </div>
+            <div className="signup-link">
+              <p>or</p>
+              <Link to="/register">SIGN UP</Link>
+            </div>
+          </div>
         </div>
-     
       </div>
-     
-    </div>
-   
     
+    </div>
   );
 }
 
-export default Login;
+export default Login; 

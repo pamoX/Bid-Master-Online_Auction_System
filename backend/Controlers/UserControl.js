@@ -96,7 +96,7 @@ const updateUser = async(req,res,next)=>{
         console.log(err);
     }
 
-     //not insert users
+     //not update users
      if(!users){
         return res.status(404).json({message:"unable to update user details"});
 

@@ -1,89 +1,172 @@
-/* Dashboard Container */
-.dashboard-container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: center;
+/* Container for the entire dashboard */
+.empDashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin-top: 100px;
 }
 
-/* Table Styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+/* Header section with title */
+.empDashboard {
+  text-align: center; /* Center the header */
+  margin-bottom: 10px;
 }
 
-th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: center;
+.empDashboard h2 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
 }
 
-th {
-    background-color: #007bff;
-    color: white;
+/* Controls section (search bar and Add button) */
+.empDashboard-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px; /* Space between search bar and Add button */
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-/* Buttons */
-.update-btn, .delete-btn {
-    padding: 8px 12px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.update-btn {
-    background-color: #28a745;
-    color: white;
-}
-
-.update-btn:hover {
-    background-color: #218838;
-}
-
-.delete-btn {
-    background-color: #dc3545;
-    color: white;
-}
-
-.delete-btn:hover {
-    background-color: #c82333;
-}
-
-
-
-
-
-/* Header with Button */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-/* Add Employee Button */
 .add-employee-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 .add-employee-btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
+}
+
+/* Search bar styling */
+.empDashboard-search {
+  flex: 1; /* Allow the search bar to take up remaining space */
+}
+
+.empDashboard-search input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.empDashboard-search input::placeholder {
+  color: #aaa;
+}
+
+/* Table styling */
+.empDashboard-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.empDashboard-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.empDashboard-table th,
+.empDashboard-table td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.empDashboard-table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+}
+
+.empDashboard-table td {
+  border-bottom: 1px solid #eee;
+}
+
+/* Alternating row colors */
+.empDashboard-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.empDashboard-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* No employees message */
+.no-employees {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+/* Action buttons (edit and delete) */
+.empUpdate-btn,
+.empDelete-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: color 0.3s;
+}
+
+.empUpdate-btn {
+  color: #007bff;
+}
+
+.empUpdate-btn:hover {
+  color: #0056b3;
+}
+
+.empDelete-btn {
+  color: #dc3545;
+}
+
+.empDelete-btn:hover {
+  color: #b02a37;
+}
+
+/* Pagination styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  font-size: 14px;
+  color: #333;
 }

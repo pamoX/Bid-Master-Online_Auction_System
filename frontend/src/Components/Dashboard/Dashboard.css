@@ -23,14 +23,14 @@
 /* Style the text inside the box */
 
 
-h1 {
+.dashboard-main-content h1 {
     color: #4CAF50;
     font-size: 2rem;
     margin-bottom: 20px;
 }
 
 /* Style the logout button */
-button {
+.dashboard-main-content button {
     background-color: #382a04;
     color: white;
     border: none;
@@ -40,10 +40,10 @@ button {
     font-size: 1rem;
 }
 
-button:hover {
+.dashboard-main-content button:hover {
     background-color: #c08607;
 }
 
 
-/* Dashboard Layout */
+
 

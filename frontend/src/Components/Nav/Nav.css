@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #724604;
+  background-color: #262630;
   padding: 10px 20px;
   position: fixed;  /* Fixed position */
   top: 0;
@@ -16,7 +16,7 @@
   /* Logo Section */
   .logo img {
     margin-left: 40px; /* Reduced margin */
-    width: 70px; /* Smaller logo for better fit */
+    width: 80px; /* Smaller logo for better fit */
     height: auto;
   }
 
@@ -60,7 +60,7 @@
     border-radius: 5px;
     border: none;
     outline: none;
-    width: 150px; /* Reduced width */
+    width: 250px; /* Reduced width */
   }
   
   .search-bar input:focus {
@@ -71,10 +71,10 @@
   .search-btn {
     width: 80px;
     height: 40px;
-    background: #5a3f04;
+    background: #cac7c1;
     border: none;
     cursor: pointer;
-    color: white;
+    color: rgb(19, 17, 17);
     border-radius: 5px;
     padding: 8px 12px;
     margin-left: 10px;
@@ -90,7 +90,7 @@
   .sidebar-toggle {
     width: 60px;
     height: 40px;
-    background: #5a3f04;
+    background: #262630;
     border: none;
     cursor: pointer;
     color: white;
