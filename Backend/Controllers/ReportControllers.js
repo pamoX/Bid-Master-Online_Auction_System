@@ -79,22 +79,22 @@ const updateReport = async(req,res,next) =>{
     return res.status(200).json({ reports });
 };
 //delete user details
-const deleteReport = async (req,res,next) => {
+const deleteReport = async (req, res, next) => {
     const id = req.params.id;
-
+  
     let report;
-
-    try{
-        report= await Report.findByIdAndDelete(id)
-    }catch(err){
-        console.log(err);
-        return res.status(500).json({ message: "Server error" });
+  
+    try {
+      report = await Report.findByIdAndDelete(id);
+      if (!report) {
+        return res.status(404).json({ message: "Report not found" });
+      }
+      return res.status(200).json({ message: "Report deleted successfully", report });
+    } catch (err) {
+      console.error("Error deleting report:", err);
+      return res.status(500).json({ message: "Server error", error: err.message });
     }
-    if(!report){
-        return res.status(404).json({message:"Unable to Delete Report Details"});
-    }
-    return res.status(200).json({ report });
-};
+  };
 
 
 exports.getAllReports = getAllReports;

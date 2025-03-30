@@ -7,6 +7,7 @@ import InspectionReport from "./Components/InspectionReport/InspectionReport";
 import RejectedItems from "./Components/RejectedItems/RejectedItems";
 import Home from "./Components/Home/Home";
 import AddReport from "./Components/AddReport/AddReport";
+import UpdateReport from "./Components/UpdateReport/UpdateReport";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/about-us" element={<AboutUs/>}/>
           <Route path="/reject-items" element={<RejectedItems/>}/>
           <Route path="/flagged-items" element={<ReportedItems/>}/>
+          <Route path="/flagged-items/:_id" element={<UpdateReport/>}/>
           <Route path="/add-report" element={<AddReport/>}/>
           <Route path="/inspection-report" element={<InspectionReport/>}/>
         </Routes>
