@@ -16,7 +16,7 @@ import AboutUs from "./Components/AboutUs/AboutUs";
 import Footer from "./Components/Footer/Footer";
 import ContactUs from "./Components/ContactUs/ContactUs";
 import UpdateEmployee from "./Components/UpdateEmployee/UpdateEmployee";
-
+import Terms from "./Components/Terms/Terms";
 
 
 
@@ -36,6 +36,7 @@ function App() {
         <Route path="/aboutUs" element={<AboutUs/>}/>
         <Route path="/contactUs" element={<ContactUs/>}/>
         <Route path="/home" element={<Home/>}/>
+        <Route path="/terms" element={<Terms/>}/>
         <Route path="/employeeDashboard/:id" element={<UpdateEmployee/>}/>
      
 

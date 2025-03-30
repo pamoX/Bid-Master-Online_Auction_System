@@ -14,10 +14,15 @@ function Register() {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const [acceptTerms, setAcceptTerms] = useState(false);  // To track checkbox state
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError(""); // Clear error on input change
+  };
+
+  const handleTermsChange = (e) => {
+    setAcceptTerms(e.target.checked);
   };
 
   const handleSubmit = async (e) => {
@@ -49,6 +54,12 @@ function Register() {
       return;
     }
 
+    // Ensure terms are accepted
+    if (!acceptTerms) {
+      setError("You must accept the terms and conditions to register.");
+      return;
+    }
+
     try {
       const res = await axios.post("http://localhost:5000/users", formData);
 
@@ -66,72 +77,122 @@ function Register() {
   };
 
   return (
-    <div>
-    
-      <div className="register-container">
-        <div className="register-box">
-          <h2 className="register-header">Register</h2>
-          {error && <p className="error-message">{error}</p>}
-          <div className="register-form">
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Re-enter Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-              <button type="submit">Register</button>
-              <p>
-                Already have an account? <Link to="/login" className="active login">Login</Link>
-              </p>
-            </form>
+    <section className="register-container">
+      <div className="register-box">
+        <h2 className="register-header">Create an account</h2>
+
+        {error && <p className="error-message">{error}</p>}
+
+        <form className="register-form" onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="name">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
           </div>
-        </div>
+
+          <div className="input-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="name@company.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="phone">Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              placeholder="Phone Number"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="••••••••"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="terms">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={acceptTerms}
+              onChange={handleTermsChange}
+              required
+            />
+            <label htmlFor="terms">
+              I accept the{" "}
+              <Link to="/terms" className="terms-link">
+                Terms and Conditions
+              </Link>
+            </label>
+          </div>
+
+          <button type="submit" className="register-button">
+            Register
+          </button>
+
+          <div className="register-p">
+          <p>
+            Already have an account?{" "}
+            <Link to="/login" className="login-link">
+              Login here
+            </Link>
+          </p>
+          </div>
+        </form>
       </div>
-     
-    </div>
+    </section>
   );
 }
 
