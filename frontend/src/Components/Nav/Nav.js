@@ -66,8 +66,8 @@ const Nav = () => {
           <Link to="/seller-profile" onClick={toggleSidebar}>
             <i className="fas fa-plus-circle"></i> Seller Profile
           </Link>
-          <Link to="/inspection-report" onClick={toggleSidebar}>
-            <i className="fas fa-clipboard-check"></i> Inspection Report
+          <Link to="/add-item" onClick={toggleSidebar}>
+            <i className="fas fa-clipboard-check"></i> Add Item
           </Link>
           <Link to="/logout" onClick={toggleSidebar}>
             <i className="fas fa-sign-out-alt"></i> Logout

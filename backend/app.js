@@ -1,19 +1,26 @@
-//P0ELXe3zDiPFGZsh
-
-const express =require("express");
-const mongoose =require("mongoose");
-const router=require("./Route/UserRoute");
+const express = require("express");
+const mongoose = require("mongoose");
+const UserRoute = require("./Route/UserRoute");
+const SellerRoute = require("./Route/SellerRoute");
+const cors = require("cors");
 
 const app = express();
 
-//middlweare
+// Middleware
 app.use(express.json());
-app.use("/users",router);
+app.use(cors());
 
+// Define routes
+app.use("/users", UserRoute);
+app.use("/items", SellerRoute);
 
-mongoose.connect("mongodb+srv://Seller:P0ELXe3zDiPFGZsh@cluster0.r9x82.mongodb.net/")
-.then(()=>console.log("Connected to MongoDB"))
-.then(()=>{
-    app.listen(5000);
-})
-.catch((err)=>console.log((err)));
+// MongoDB connection
+mongoose
+    .connect("mongodb+srv://Seller:ZFi98iqbEniPHrOp@cluster0.r9x82.mongodb.net/")
+    .then(() => {
+        console.log("Connected to MongoDB");
+        app.listen(5000, () => {
+            console.log("Server running on port 5000");
+        });
+    })
+    .catch((err) => console.log("MongoDB connection error:", err));
