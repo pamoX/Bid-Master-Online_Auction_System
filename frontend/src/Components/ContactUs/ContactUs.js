@@ -4,7 +4,7 @@ import Nav from '../Nav/Nav';
 import emailjs from 'emailjs-com';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import './ContactUs.css';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaTwitter, FaInstagram, Fa500Px, FaAddressBook } from 'react-icons/fa';
 
 const mapContainerStyle = {
   width: '100%',
@@ -49,8 +49,9 @@ function ContactUs() {
           <div className="contact-form-container">
             <h2>Send Us a Message</h2>
             <form ref={form} onSubmit={sendEmail} className="contact-form">
+
+            <label htmlFor="user_name"><FaAddressBook /> Name</label>
               <div className="form-group">
-                <label htmlFor="user_name"><FaEnvelope /> Name</label>
                 <input
                   type="text"
                   id="user_name"
@@ -59,8 +60,9 @@ function ContactUs() {
                   required
                 />
               </div>
+
+              <label htmlFor="user_email"><FaEnvelope /> Email</label>
               <div className="form-group">
-                <label htmlFor="user_email"><FaEnvelope /> Email</label>
                 <input
                   type="email"
                   id="user_email"
@@ -69,18 +71,9 @@ function ContactUs() {
                   required
                 />
               </div>
+
+              <label htmlFor="message"><Fa500Px/>Message</label>
               <div className="form-group">
-                <label htmlFor="subject">Subject</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  placeholder="Subject"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
                 <textarea
                   id="message"
                   name="message"
@@ -93,10 +86,15 @@ function ContactUs() {
           </div>
         </section>
 
-        {/* Contact Info Section */}
+        {/* Contact Info Section with Image */}
         <section className="contact-info-section">
           <h2>Contact Information</h2>
           <div className="contact-details">
+            <img 
+              src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+              alt="Our Team" 
+              className="contact-image"
+            />
             <p><FaPhone /> <strong>Phone:</strong> +94 123 456 789</p>
             <p><FaEnvelope /> <strong>Email:</strong> support@auction.com</p>
             <p><FaMapMarkerAlt /> <strong>Address:</strong> 123 Auction Lane, Kandy, Sri Lanka</p>
@@ -132,7 +130,7 @@ function ContactUs() {
 
       {/* Footer */}
       <footer className="contact-footer">
-        <p>&copy; 2025 Auction Platform. All rights reserved.</p>
+        <p>© 2025 Auction Platform. All rights reserved.</p>
       </footer>
     </div>
   );
