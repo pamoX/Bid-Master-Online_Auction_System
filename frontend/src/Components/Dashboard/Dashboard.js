@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import './Dashboard.css';
@@ -13,9 +13,6 @@ import summaryIcon from '../../assets/summary-icon.png';
 import alertIcon from '../../assets/alert-icon.png';
 
 const Dashboard = () => {
-  const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(3600); // 1 hour countdown for demo
-
   const recentActivity = [
     { id: 123, name: 'Lamp', status: 'Pending', date: '03/29/25', image: 'https://images.unsplash.com/photo-1609223732832-fd47d91a8747?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGxhbXBzaGFkZXxlbnwwfHwwfHx8MA%3D%3D' },
     { id: 124, name: 'Phone', status: 'Live', date: '03/30/25', image: 'https://images.unsplash.com/photo-1551806235-6692cbfc690b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHZpbnRhZ2UlMjBwaG9uZXxlbnwwfHwwfHx8MA%3D%3D' },
@@ -34,64 +31,19 @@ const Dashboard = () => {
     { title: 'Generate Summary', icon: summaryIcon, action: 'Generate Summary', link: '#' },
   ];
 
-  // Carousel auto-slide
-  useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setCurrentItemIndex((prev) => (prev + 1) % recentActivity.length);
-    }, 5000);
-    return () => clearInterval(slideInterval);
-  }, [recentActivity.length]);
-
-  // Countdown timer
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 3600));
-    }, 1000);
-    return () => clearInterval(countdown);
-  }, []);
-
-  const formatTime = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const goToNextItem = () => setCurrentItemIndex((prev) => (prev + 1) % recentActivity.length);
-  const goToPrevItem = () => setCurrentItemIndex((prev) => (prev === 0 ? recentActivity.length - 1 : prev - 1));
-
   const handleTileClick = (section) => console.log(`Navigating to ${section}`);
   const handleActionClick = (action) => console.log(`Action triggered: ${action}`);
 
   return (
     <div className="dashboard-page">
       <Nav />
-
+      
       {/* Hero Section */}
       <section className="dash-hero-section">
-        
       </section>
-      <h1 className="dash-hero-title">Welcome, Pamodini</h1>
-        <p className="dash-hero-subtitle">Your Auction Dashboard</p>
 
-      {/* Carousel Section (Moved here) */}
-      <div className="dash-carousel">
-        <button className="dash-carousel-btn prev" onClick={goToPrevItem}>←</button>
-        <div className="dash-carousel-item-wrapper">
-          <img
-            src={recentActivity[currentItemIndex].image}
-            alt={recentActivity[currentItemIndex].name}
-            className="dash-carousel-image"
-          />
-          <div className="dash-item-info">
-            <h3>{recentActivity[currentItemIndex].name}</h3>
-            <p>Status: <span>{recentActivity[currentItemIndex].status}</span></p>
-            <p>Date: {recentActivity[currentItemIndex].date}</p>
-            <p className="dash-countdown">Time Left: <span>{formatTime(timeLeft)}</span></p>
-          </div>
-        </div>
-        <button className="dash-carousel-btn next" onClick={goToNextItem}>→</button>
-      </div>
+      <h1 className="dash-hero-title">Welcome, Pamodini</h1>
+      <p className="dash-hero-subtitle">Your Auction Dashboard</p>
 
       {/* Metrics Section */}
       <section className="dash-metrics-section">
