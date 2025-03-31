@@ -65,7 +65,7 @@ const Nav = () => {
       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-content">
           <Link to="/dashboard" onClick={toggleSidebar}>
-            dashboard
+            Dashboard
           </Link>
           <Link
             to={{ pathname: "/add-report", state: { showForm: true } }}
