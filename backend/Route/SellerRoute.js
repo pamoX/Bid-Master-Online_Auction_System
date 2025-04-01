@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const SellerControllers = require("../Controlers/SellerControllers");
 
@@ -8,8 +8,8 @@ router.get("/", SellerControllers.getAllItems);
 // Create new item
 router.post("/", SellerControllers.addItem);
 
-// Get by ID (no extra "/items" needed)
-router.get("/:id", SellerControllers.getById); // Changed from "/items/:id"
+// Get by ID
+router.get("/:id", SellerControllers.getById);
 
 // Update item
 router.put("/:id", SellerControllers.updateItem);

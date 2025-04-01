@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Nav from '../Nav/Nav';
 import './SellerProfile.css';
+import axios from 'axios';
 
 const SellerProfile = () => {
-  // Sample initial seller data (corrected address syntax)
   const [sellerData, setSellerData] = useState({
     name: 'Lakshi Sewwandi',
     email: 'lakshi@gmail.com',
     phone: '0769325412',
-    address: '65/4, Maharagama , Lane Street', // Fixed typo
+    address: '65/4, Maharagama, Lane Street',
     paymentMethod: 'PayPal: lakshi@gmail.com',
   });
 
+  const [salesData, setSalesData] = useState({
+    totalSales: 0,
+    successfulAuctions: 0,
+    pendingPayments: 0,
+    earnings: { daily: 0, monthly: 0, yearly: 0 }
+  });
+
+  const [reviews, setReviews] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
+  const [timeFilter, setTimeFilter] = useState('monthly');
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({ ...sellerData });
   const [passwordData, setPasswordData] = useState({
@@ -20,11 +30,52 @@ const SellerProfile = () => {
     confirmPassword: '',
   });
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Simulate fetching data from backend (replace with actual API call)
   useEffect(() => {
-    // Example: fetchSellerProfile().then(data => setSellerData(data));
-  }, []);
+    fetchSellerData();
+    fetchSalesData();
+    fetchReviews();
+  }, [timeFilter]);
+
+  const fetchSellerData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/seller/profile');
+      setSellerData(response.data);
+      setFormData(response.data);
+    } catch (error) {
+      setMessage('Error fetching profile data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSalesData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`/api/seller/sales?filter=${timeFilter}`);
+      setSalesData(response.data);
+    } catch (error) {
+      setMessage('Error fetching sales data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchReviews = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/seller/reviews');
+      setReviews(response.data);
+      const avgRating = response.data.reduce((acc, review) => acc + review.rating, 0) / response.data.length;
+      setAverageRating(avgRating || 0);
+    } catch (error) {
+      setMessage('Error fetching reviews');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,151 +87,172 @@ const SellerProfile = () => {
     setPasswordData({ ...passwordData, [name]: value });
   };
 
-  const handleSaveChanges = (e) => {
+  const handleSaveChanges = async (e) => {
     e.preventDefault();
-    // Simulate API call to update seller profile
-    setSellerData({ ...formData });
-    setIsEditing(false);
-    setMessage('Profile updated successfully!');
-    // In a real app: updateSellerProfile(formData).then(() => setMessage(...));
+    setLoading(true);
+    try {
+      await axios.put('/api/seller/profile', formData);
+      setSellerData({ ...formData });
+      setIsEditing(false);
+      setMessage('Profile updated successfully!');
+    } catch (error) {
+      setMessage('Error updating profile');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handlePasswordSubmit = (e) => {
+  const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setMessage('New password and confirmation do not match.');
+      setMessage('Passwords do not match');
       return;
     }
-    // Simulate API call to change password
-    setMessage('Password changed successfully!');
-    setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
-    // In a real app: changePassword(passwordData).then(() => setMessage(...));
+    setLoading(true);
+    try {
+      await axios.put('/api/seller/password', passwordData);
+      setMessage('Password updated successfully!');
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (error) {
+      setMessage('Error updating password');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="seller-profile-page">
-        <Nav/><br/><br/>
+      <Nav />
+      <br />
       <h1>Seller Profile</h1>
-      <p>View and update your seller information below.</p>
+      {loading && <p className="loading">Loading...</p>}
+      {message && <p className={`message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</p>}
 
-      {/* Profile Information */}
-      <div className="profile-container">
-        <h2>Your Details</h2>
-        {message && <p className="message">{message}</p>}
-        
-        {!isEditing ? (
-          <div className="profile-display">
-            <p><strong>Name:</strong> {sellerData.name}</p>
-            <p><strong>Email:</strong> {sellerData.email}</p>
-            <p><strong>Phone:</strong> {sellerData.phone}</p>
-            <p><strong>Address:</strong> {sellerData.address}</p>
-            <p><strong>Payment Method:</strong> {sellerData.paymentMethod}</p>
-            <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+      <div className="dashboard-grid">
+        {/* Sales Overview */}
+        <div className="sales-container grid-item embossed-card">
+          <h2>Sales Overview</h2>
+          <div className="time-filter">
+            {['daily', 'monthly', 'yearly'].map((filter) => (
+              <button
+                key={filter}
+                className={timeFilter === filter ? 'active' : ''}
+                onClick={() => setTimeFilter(filter)}
+              >
+                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+              </button>
+            ))}
           </div>
-        ) : (
-          <form onSubmit={handleSaveChanges} className="profile-form">
+          <div className="sales-stats">
+            <p><strong>Total Sales:</strong> ${salesData.totalSales.toLocaleString()}</p>
+            <p><strong>Auctions:</strong> {salesData.successfulAuctions.toLocaleString()}</p>
+            <p><strong>Pending:</strong> ${salesData.pendingPayments.toLocaleString()}</p>
+            <p><strong>Earnings:</strong> ${salesData.earnings[timeFilter].toLocaleString()}</p>
+          </div>
+        </div>
+
+        {/* Profile Information */}
+        <div className="profile-container grid-item embossed-card">
+          <h2>Your Details</h2>
+          {!isEditing ? (
+            <div className="profile-display">
+              <p><strong>Name:</strong> {sellerData.name}</p>
+              <p><strong>Email:</strong> {sellerData.email}</p>
+              <p><strong>Phone:</strong> {sellerData.phone}</p>
+              <p><strong>Address:</strong> {sellerData.address}</p>
+              <p><strong>Payment:</strong> {sellerData.paymentMethod}</p>
+              <button onClick={() => setIsEditing(true)} disabled={loading}>
+                Edit Profile
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSaveChanges} className="profile-form">
+              <div className="form-group">
+                <label>Name</label>
+                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
+              </div>
+              <div className="form-group">
+                <label>Phone</label>
+                <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} required />
+              </div>
+              <div className="form-group">
+                <label>Address</label>
+                <textarea name="address" value={formData.address} onChange={handleInputChange} required />
+              </div>
+              <div className="form-group">
+                <label>Payment</label>
+                <input type="text" name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required />
+              </div>
+              <div className="form-buttons">
+                <button type="submit" disabled={loading}>Save</button>
+                <button type="button" onClick={() => setIsEditing(false)} disabled={loading}>Cancel</button>
+              </div>
+            </form>
+          )}
+        </div>
+
+        {/* Ratings and Reviews */}
+        <div className="reviews-container grid-item embossed-card">
+          <h2>Your Reputation</h2>
+          <p className="rating-summary">
+            <strong>Rating:</strong> {averageRating.toFixed(1)} / 5 ({reviews.length})
+          </p>
+          <div className="reviews-list">
+            {reviews.length > 0 ? (
+              reviews.map((review) => (
+                <div key={review._id} className="review-item">
+                  <p><strong>{review.buyerName}</strong> - {review.rating}/5 ★</p>
+                  <p>{review.comment}</p>
+                  <p className="review-date">{new Date(review.date).toLocaleDateString()}</p>
+                </div>
+              ))
+            ) : (
+              <p className="no-reviews">No reviews yet</p>
+            )}
+          </div>
+        </div>
+
+        {/* Password Section */}
+        <div className="password-container grid-item embossed-card">
+          <h2>Change Password</h2>
+          <form onSubmit={handlePasswordSubmit} className="password-form">
             <div className="form-group">
-              <label htmlFor="name">Name</label>
+              <label>Current</label>
               <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
+                type="password"
+                name="currentPassword"
+                value={passwordData.currentPassword}
+                onChange={handlePasswordChange}
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label>New</label>
               <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
+                type="password"
+                name="newPassword"
+                value={passwordData.newPassword}
+                onChange={handlePasswordChange}
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="phone">Phone</label>
+              <label>Confirm</label>
               <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
+                type="password"
+                name="confirmPassword"
+                value={passwordData.confirmPassword}
+                onChange={handlePasswordChange}
                 required
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="address">Address</label>
-              <textarea
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="paymentMethod">Payment Method</label>
-              <input
-                type="text"
-                id="paymentMethod"
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleInputChange}
-                placeholder="e.g., PayPal: email@example.com"
-                required
-              />
-            </div>
-            <div className="form-buttons">
-              <button type="submit">Save Changes</button>
-              <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-            </div>
+            <button type="submit" disabled={loading}>Update</button>
           </form>
-        )}
-      </div>
-
-      {/* Change Password Section */}
-      <div className="password-container">
-        <h2>Change Password</h2>
-        <form onSubmit={handlePasswordSubmit} className="password-form">
-          <div className="form-group">
-            <label htmlFor="currentPassword">Current Password</label>
-            <input
-              type="password"
-              id="currentPassword"
-              name="currentPassword"
-              value={passwordData.currentPassword}
-              onChange={handlePasswordChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="newPassword">New Password</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              value={passwordData.newPassword}
-              onChange={handlePasswordChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm New Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={passwordData.confirmPassword}
-              onChange={handlePasswordChange}
-              required
-            />
-          </div>
-          <button type="submit">Update Password</button>
-        </form>
+        </div>
       </div>
     </div>
   );

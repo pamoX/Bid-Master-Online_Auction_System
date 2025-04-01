@@ -90,7 +90,7 @@ const deleteItem = async (req, res) => {
       });
     }
 
-    const deletedItem = await SellerItem.findOneAndDelete({ _id: itemId });
+    const deletedItem = await SellerItem.findOneAndDelete({ _id:itemId });
     
     if (!deletedItem) {
       return res.status(404).json({ 

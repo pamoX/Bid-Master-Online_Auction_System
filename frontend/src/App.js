@@ -11,6 +11,7 @@ import Terms from './Components/Terms/Terms';
 import SellerListings from './Components/SellerListing/SellerListing';
 import AddItem from './Components/AddItem/AddItem';
 import UpdateItem from './Components/UpdateItem/UpdateItem';
+import ImgUploader from './Components/ImgUploader/ImgUploader';
 
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
          <Route path="/terms" element={<Terms />} />
          <Route path="/seller-listing" element={<SellerListings/>}/>
          <Route path="/add-item" element={<AddItem/>}/>
+
+         <Route path="/upload-img" element={<ImgUploader/>}/>
 
          <Route path="/seller-dashboard" element={<SellerDashboard />} />
          <Route path="/seller-dashboard/:id" element={<UpdateItem />} />

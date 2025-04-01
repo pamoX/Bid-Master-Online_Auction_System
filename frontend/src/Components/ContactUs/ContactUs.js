@@ -5,6 +5,7 @@ import emailjs from 'emailjs-com';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import './ContactUs.css';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaTwitter, FaInstagram, Fa500Px, FaAddressBook } from 'react-icons/fa';
+import Footer from '../Footer/Footer';
 
 const mapContainerStyle = {
   width: '100%',
@@ -100,15 +101,7 @@ function ContactUs() {
             <p><FaMapMarkerAlt /> <strong>Address:</strong> 123 Auction Lane, Kandy, Sri Lanka</p>
           </div>
           
-          {/* Social Media Links */}
-          <div className="social-links">
-            <h3>Follow Us</h3>
-            <div className="social-icons">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-            </div>
-          </div>
+          
         </section>
       </div>
 
@@ -128,10 +121,7 @@ function ContactUs() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="contact-footer">
-        <p>© 2025 Auction Platform. All rights reserved.</p>
-      </footer>
+    <Footer/>
     </div>
   );
 }

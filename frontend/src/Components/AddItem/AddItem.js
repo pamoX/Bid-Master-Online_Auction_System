@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 import { useNavigate } from "react-router";
 import axios from 'axios';
 import './AddItem.css';
@@ -9,6 +10,7 @@ function AddItem() {
     
     const [inputs, setInputs] = useState({
         title: "",
+        image:"",
         description: "",
         startingBid: "",
     });
@@ -35,9 +37,10 @@ function AddItem() {
             }).then(res=>res.data);
             
         }
+
     return (
         <div className="AR-add-item-page">
-            <Nav />
+            <Nav /><br/><br/><br/><br/>
             <div>
                 <div className="AR-header">
                     <h1>Add Item</h1>
@@ -45,7 +48,7 @@ function AddItem() {
             </div>
             
             <form onSubmit={handleSubmit} className="AR-form-container AR-report-form">
-                
+
                 <label >Title:</label>
                 <div className="AR-form-group">
                     <input 
@@ -89,6 +92,8 @@ function AddItem() {
                 <br/>
                 <button type="submit" className="submit-button">Add Item</button>
             </form>
+            <br/><br/>
+           <Footer/>
         </div>
     );
 }

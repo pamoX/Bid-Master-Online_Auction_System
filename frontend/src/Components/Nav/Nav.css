@@ -4,12 +4,12 @@
 }
 
 .navbar {
-  width: 100vw; /* Full width of screen */
+  width: 100%; /* Full width of screen */
   height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #492e05; /* Dark background */
+  background-color: #262630; /* Dark background */
   padding: 10px 20px; /* Reduced padding for smaller screens */
   position: fixed; /* Fixed to stay at the top */
   top: 0;
@@ -19,8 +19,8 @@
 
 /* Logo Section */
 .logo img {
-  margin-left: 10px; /* Reduced margin */
-  width: 50px; /* Smaller logo for better fit */
+  margin-left: 40px; /* Reduced margin */
+  width: 80px; /* Smaller logo for better fit */
   height: auto;
 }
 
@@ -45,7 +45,7 @@
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-size: 14px; /* Slightly smaller font */
+  font-size: 18px; /* Slightly smaller font */
   padding: 8px 10px; /* Reduced padding */
 }
 
@@ -63,11 +63,11 @@
 
 .search-bar input {
   padding: 6px; /* Reduced padding */
-  font-size: 12px; /* Smaller font */
+  font-size: 15px; /* Smaller font */
   border-radius: 5px;
   border: none;
   outline: none;
-  width: 150px; /* Reduced width */
+  width: 250px; /* Reduced width */
 }
 
 .search-bar input:focus {
@@ -197,4 +197,60 @@
     font-size: 14px; /* Smaller font for mobile */
     padding: 8px;
   }
+}
+
+.sidebar {
+  background-color: #2c3e50; /* Dark blue-gray background */
+  color: #ecf0f1; /* Light text color */
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  transition: all 0.3s ease;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-content {
+  padding: 20px;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: #ecf0f1; /* Light text color */
+  text-decoration: none;
+  margin: 10px 0;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.sidebar a:hover {
+  background-color: #34495e; /* Slightly lighter blue-gray on hover */
+  color: #fff; /* White text on hover */
+}
+
+.sidebar a i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Active link styling */
+.sidebar a:active {
+  background-color: #3498db; /* Bright blue for active state */
+}
+
+/* Specific colors for different menu items (optional) */
+.sidebar a[href="/seller-dashboard"] {
+  background-color: rgba(52, 152, 219, 0.1); /* Light blue tint */
+}
+
+.sidebar a[href="/register-seller"] {
+  background-color: rgba(46, 204, 113, 0.1); /* Light green tint */
+}
+
+.sidebar a[href="/seller-listing"] {
+  background-color: rgba(231, 76, 60, 0.1); /* Light red tint */
 }

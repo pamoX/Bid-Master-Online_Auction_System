@@ -76,7 +76,7 @@ function UpdateItem() {
       <Nav />
       <div>
         <div className="AR-header">
-          <h1>Update Item (ID: {id})</h1>
+          <h1>Update Item</h1>
         </div>
       </div>
 
@@ -113,7 +113,7 @@ function UpdateItem() {
             value={inputs.description || ''}
             placeholder="Enter item description"
             required
-            rows="4"
+            rows="5"
           />
         </div>
 

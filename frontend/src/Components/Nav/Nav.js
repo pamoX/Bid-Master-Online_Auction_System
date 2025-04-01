@@ -69,6 +69,9 @@ const Nav = () => {
           <Link to="/add-item" onClick={toggleSidebar}>
             <i className="fas fa-clipboard-check"></i> Add Item
           </Link>
+          <Link to="/upload-img" onClick={toggleSidebar}>
+            <i className="fas fa-clipboard-check"></i> Upload Image
+          </Link>  
           <Link to="/logout" onClick={toggleSidebar}>
             <i className="fas fa-sign-out-alt"></i> Logout
           </Link>
