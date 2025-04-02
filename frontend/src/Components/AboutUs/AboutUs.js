@@ -1,6 +1,7 @@
 import React from 'react';
-import Nav from "../Nav/Nav";
+import Nav from '../Nav/Nav';
 import './AboutUs.css';
+
 
 function AboutUs() {
   const values = [
@@ -24,8 +25,8 @@ function AboutUs() {
 
   return (
     <div className="aboutus-container">
-      <Nav />
       
+      <Nav/>
       {/* Hero Section */}
       <div className="aboutus-hero-section">
         <div className="aboutus-hero-overlay">
@@ -88,7 +89,35 @@ function AboutUs() {
             ))}
           </div>
         </section>
+
+         {/* Team Stats Section */}
+      <section className="aboutus-stats-section">
+        <h2 className="aboutus-stats-title">Our Team</h2>
+        <div className="aboutus-stats-grid">
+          <div className="aboutus-stat-item">
+            <h2>HR Manager</h2>
+            <p>Durangi Abeykoon</p>
+          </div>
+          <div className="aboutus-stat-item">
+            <h2>Inapection Manager</h2>
+            <p>Pamodini Perera</p>
+          </div>
+          <div className="aboutus-stat-item">
+            <h2>Shipping Manager</h2>
+            <p>Lahiruni Ariyawansa</p>
+          </div>
+          <div className="aboutus-stat-item">
+            <h2>Financial Manager</h2>
+            <p>Poornima Liyanage</p>
+          </div>
+          <div className="aboutus-stat-item">
+            <h2>Custom Care</h2>
+            <p>Sewwandi Koodituwakku</p>
+          </div>
+        </div>
+      </section>
       </div>
+    
     </div>
   );
 }

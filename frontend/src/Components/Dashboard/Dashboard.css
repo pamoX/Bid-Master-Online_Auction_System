@@ -133,7 +133,7 @@
   }
   
   .dash-metric-item {
-    background: linear-gradient(135deg, #ff9800, #ff5722); /* Orange gradient */
+    background: linear-gradient(135deg, #110b01, #ff5722); /* Orange gradient */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
@@ -142,9 +142,9 @@
     color: white;
   }
   
-  .dash-metric-item:nth-child(2) { background: linear-gradient(135deg, #28a745, #4caf50); } /* Green gradient */
-  .dash-metric-item:nth-child(3) { background: linear-gradient(135deg, #d32f2f, #f44336); } /* Red gradient */
-  .dash-metric-item:nth-child(4) { background: linear-gradient(135deg, #ab47bc, #e91e63); } /* Purple to pink */
+  .dash-metric-item:nth-child(2) { background: linear-gradient(135deg, #033d11, #4caf50); } /* Green gradient */
+  .dash-metric-item:nth-child(3) { background: linear-gradient(135deg, #410c0c, #f44336); } /* Red gradient */
+  .dash-metric-item:nth-child(4) { background: linear-gradient(135deg, #311436, #e91e63); } /* Purple to pink */
   
   .dash-metric-item:hover {
     transform: translateY(-5px);

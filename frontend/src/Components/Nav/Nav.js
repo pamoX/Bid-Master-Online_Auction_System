@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Nav.css";
 
 const Nav = () => {
-  const [auctionDropdown, setAuctionDropdown] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -39,21 +38,6 @@ const Nav = () => {
         <div className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/about-us">About Us</Link>
-
-          <div
-            className="dropdown"
-            onMouseEnter={() => setAuctionDropdown(true)}
-            onMouseLeave={() => setAuctionDropdown(false)}
-          >
-            <button className="dropdown-btn">Auction</button>
-            {auctionDropdown && (
-              <div className="dropdown-content">
-                <Link to="/selling">Selling</Link>
-                <Link to="/bidding">Bidding</Link>
-                <Link to="/shipping">Shipping</Link>
-              </div>
-            )}
-          </div>
 
           <Link to="/contact-us">Contact Us</Link>
           <Link to="/profile">Profile</Link>
@@ -92,3 +76,4 @@ const Nav = () => {
 };
 
 export default Nav;
+

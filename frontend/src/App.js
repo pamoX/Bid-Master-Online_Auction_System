@@ -9,6 +9,7 @@ import Home from "./Components/Home/Home";
 import AddReport from "./Components/AddReport/AddReport";
 import UpdateReport from "./Components/UpdateReport/UpdateReport";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
           <Route path="/inspection-report" element={<InspectionReport/>}/>
         </Routes>
       </React.Fragment>
+
+      <Footer></Footer>
     </div>
   );
 }
