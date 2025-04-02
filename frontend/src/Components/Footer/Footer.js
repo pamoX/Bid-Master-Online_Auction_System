@@ -29,7 +29,7 @@ function Footer() {
           <h4>Contact Us</h4>
           <p>Email: support@bidmaster.com</p>
           <p>Phone: +94 774 567 890</p>
-          <p>Address: 123 Auction Street, Colombo7, Colombo</p>
+          <p>Address: 123 Auction Street, Kandy</p>
         </div>
 
         {/* Social Media Links */}

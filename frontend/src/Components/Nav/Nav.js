@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom"; // Use NavLink instead of Link
 import "./Nav.css"; // Import CSS file
 import Sidebar from "../Sidebar/Sidebar"; // Import Sidebar
 
@@ -18,14 +18,14 @@ function Nav() {
       <nav className="navbar">
         {/* Logo Section */}
         <div className="logo">
-          <Link to="/home">
+          <NavLink to="/home" activeClassName="active">
             <img src="/favicon.ico" alt="AuctionApp Logo" className="logo-img" />
-          </Link>
+          </NavLink>
         </div>
 
         {/* Sidebar Toggle Button */}
         <button className="sidebar-toggle" onClick={toggleSidebar}>
-          {isSidebarOpen ? "  ☰ " : "  ☰"} {/* Open/Close Sidebar */}
+          {isSidebarOpen ? "☰" : "☰"} {/* Open/Close Sidebar */}
         </button>
 
         {/* Search Bar */}
@@ -36,17 +36,17 @@ function Nav() {
 
         {/* Navigation Links */}
         <div className="nav-links">
-          <Link to="/home">Home</Link>
-          <Link to="/aboutUs">About Us</Link>
-          <Link to="/contactUs">Contact Us</Link>
+          <NavLink to="/home" activeClassName="active">Home</NavLink>
+          <NavLink to="/aboutUs" activeClassName="active">About Us</NavLink>
+          <NavLink to="/contactUs" activeClassName="active">Contact Us</NavLink>
 
           {/* Conditionally Render Login or Profile/Logout */}
           {!user ? (
-            <Link to="/login" className="login-btn">Login</Link>
+            <NavLink to="/login" activeClassName="active" className="login-btn">Login</NavLink>
           ) : (
             <>
-              <Link to="/profile">Profile</Link>
-              <button 
+              <NavLink to="/profile" activeClassName="active">Profile</NavLink>
+              <button
                 className="logout-btn"
                 onClick={() => { 
                   localStorage.removeItem("user"); 

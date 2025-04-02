@@ -18,6 +18,7 @@ import ContactUs from "./Components/ContactUs/ContactUs";
 import UpdateEmployee from "./Components/UpdateEmployee/UpdateEmployee";
 import Terms from "./Components/Terms/Terms";
 import EmployeeDetails from "./Components/EmployeeDetails/EmployeeDetails";
+import Payroll from "./Components/Payroll/Payroll";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/contactUs" element={<ContactUs/>}/>
         <Route path="/home" element={<Home/>}/>
         <Route path="/terms" element={<Terms/>}/>
+        <Route path="/payroll" element={<Payroll/>}/>
         <Route path="/employeeDashboard/:id" element={<UpdateEmployee/>}/>
         <Route path="/employeeDetails/:id" element={<EmployeeDetails />} />
 

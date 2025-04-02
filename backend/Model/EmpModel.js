@@ -2,8 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const addEmpSchema = new Schema({
-   
-    employeeId:{
+   employeeId:{
         type:String,
         required:true  // validate form
     },
@@ -40,7 +39,7 @@ const addEmpSchema = new Schema({
         required:true 
     },
     image: {
-        type: String,  // This will store the image URL or path
+        type: String,  
     }
 });
 

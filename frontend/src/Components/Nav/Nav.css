@@ -35,13 +35,20 @@
   .nav-links a {
     color: white;
     text-decoration: none;
-    font-size: 18px; /* Slightly smaller font */
-    padding: 8px 10px; /* Reduced padding */
+    font-size: 18px;
+    padding: 8px 10px;
   }
   
   .nav-links a:hover {
     background-color: #c08607;
     border-radius: 5px;
+  }
+  
+  .nav-links .active {
+    background-color: #c08607; /* Highlight color for active link */
+    color: white;
+    border-radius: 5px;
+    font-weight: bold; /* Optional: to emphasize the active link */
   }
   
   /* Search Bar */
@@ -137,9 +144,26 @@
       gap: 8px; /* Further reduced gap */
     }
   
+  
+
+
     .nav-links a {
-      font-size: 12px; /* Smaller font for mobile */
-      padding: 6px 8px; /* Reduced padding */
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      padding: 8px 10px;
+    }
+    
+    .nav-links a:hover {
+      background-color: #c08607;
+      border-radius: 5px;
+    }
+    
+    .nav-links .active {
+      background-color: #c08607; /* Highlight color for active link */
+      color: white;
+      border-radius: 5px;
+      font-weight: bold; /* Optional: to emphasize the active link */
     }
   
     .search-bar input {

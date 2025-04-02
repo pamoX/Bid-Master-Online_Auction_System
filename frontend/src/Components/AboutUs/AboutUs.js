@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Nav from '../Nav/Nav';
 import './AboutUs.css';
 
 
@@ -26,17 +26,19 @@ function AboutUs() {
   return (
     <div className="aboutus-container">
       
-      
+      <Nav/>
       {/* Hero Section */}
       <div className="aboutus-hero-section">
-        <div className="aboutus-hero-overlay">
+       
+      </div>
+
+      <div className="aboutus-hero-overlay">
           <h1 className="aboutus-title">About BidMaster</h1>
           <p className="aboutus-tagline">
             Discover a world of opportunities where every bid brings you closer 
             to extraordinary finds and exceptional value.
           </p>
         </div>
-      </div>
 
       {/* Content Sections */}
       <div className="aboutus-content-wrapper">
@@ -89,6 +91,39 @@ function AboutUs() {
             ))}
           </div>
         </section>
+
+         {/* Team Stats Section */}
+      <section className="aboutus-stats-section">
+        <h2 className="aboutus-stats-title">Our Team</h2>
+        <div className="aboutus-stats-grid">
+          <div className="aboutus-stat-item">
+          <img src="/images/durangiProfile.webp" alt="hrProfile" className="aboutus-profile" />
+            <h2>HR Manager</h2>
+            <p>Durangi Abeykoon</p>
+           
+          </div>
+          <div className="aboutus-stat-item">
+          <img src="/images/pamoProfile.jpg" alt="ispectionProfile" className="aboutus-profile" />
+            <h2>Inspection Manager</h2>
+            <p>Pamodini Perera</p>
+          </div>
+          <div className="aboutus-stat-item">
+          <img src="/images/lahi.jpg" alt="shippingProfile" className="aboutus-profile" />
+            <h2>Shipping Manager</h2>
+            <p>Lahiruni Ariyawansa</p>
+          </div>
+          <div className="aboutus-stat-item">
+          <img src="/images/poomaProfile.jpg" alt="FinancialProfile" className="aboutus-profile" />
+            <h2>Financial Manager</h2>
+            <p>Poornima Liyanage</p>
+          </div>
+          <div className="aboutus-stat-item">
+          <img src="/images/sewProfile.jpg" alt="customcareProfile" className="aboutus-profile" />
+            <h2>Custom Care</h2>
+            <p>Sewwandi Koodituwakku</p>
+          </div>
+        </div>
+      </section>
       </div>
     
     </div>

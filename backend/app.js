@@ -4,6 +4,7 @@ const cors = require("cors");
 const userRoutes = require("./Route/UserRoute");
 const loginRoutes = require("./Route/LoginRoute"); // Import login route
 const empRoutes = require("./Route/EmpRoute");
+const payrollRoutes = require("./Route/PayrollRoute");
 const path = require('path');
 
 const app = express();
@@ -18,7 +19,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/users", userRoutes); // User registration routes
 app.use("/auth", loginRoutes); // Login route
 app.use("/api/employees", empRoutes);
-
+app.use("/api/payroll", payrollRoutes);
 
 // Connect to MongoDB
 mongoose

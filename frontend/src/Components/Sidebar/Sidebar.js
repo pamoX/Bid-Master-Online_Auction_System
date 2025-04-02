@@ -36,7 +36,7 @@ function Sidebar({ role, isOpen }) {
         <>
           <Link to="/employeeDashboard">Employee Management</Link>
           <Link to="/employeeReports">Employee Reports</Link>
-          <Link to="/trackAttendance">Track Attendance</Link>
+          <Link to="/trackPerformance">Track Performance</Link>
           <Link to="/payroll">Payroll</Link>
         </>
       )}
