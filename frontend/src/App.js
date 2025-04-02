@@ -20,12 +20,40 @@ import EmployeeDetails from "./Components/EmployeeDetails/EmployeeDetails";
 import Payroll from "./Components/Payroll/Payroll";
 
 //im
-//import ReportedItems from "./Components/ReportedItems/ReportedItems";
-//import InspectionReport from "./Components/InspectionReport/InspectionReport";
-//import RejectedItems from "./Components/RejectedItems/RejectedItems";
+import ReportedItems from "./Components/ReportedItems/ReportedItems";
+
 import AddReport from "./Components/AddReport/AddReport";
 import UpdateReport from "./Components/UpdateReport/UpdateReport";
 import InspectionDashboard from "./Components/InspectionDashboard/InspectionDashboard";
+
+//sl
+import SellerDashboard from './Components/SellerDashboard/SellerDashboard';
+import SellerListings from './Components/SellerListings/SellerListings';
+import AddItem from './Components/AddItem/AddItem';
+import UpdateItem from './Components/UpdateItem/UpdateItem';
+import ImgUploader from './Components/ImgUploader/ImgUploader';
+import SellerProfile from './Components/SellerProfile/SellerProfile';
+
+
+// Bidder profile
+import BidderProfile from './Components/BidderProfile/BidderProfile';
+import EditBidderProfile from './Components/BidderProfile/EditBidderProfile';
+// Bidder ship
+import BidShipProfile from './Components/BidShipUsers/BidShipProfile';
+import BidShipUsersDetails from './Components/BidShipUsers/BidShipUsersDetails';
+import BidShipSuccess from "./Components/BidShipUsers/BidShipSuccess";
+// Bidder feedback
+import BidFeedbackPage from './Components/BidFeedbackUsers/BidFeedbackPage';
+// Bidder pay
+import Checkout from './Components/Payment/Checkout.js';
+import Success from './Components/Payment/Success.js';
+import Cancel from './Components/Payment/Cancel.js';
+// Bidder dashboard
+import BidDashboard from './Components/BidDashboard/BidDashboard';
+// BidNowBidder component
+import BidNowBidder from './Components/BidNowBidder/BidNowBidder';
+  
+const Placeholder = ({ pageName }) => <h2>{pageName} Page (Under Construction)</h2>;
 
 function App() {
   return (
@@ -49,11 +77,50 @@ function App() {
         <Route path="/employeeDetails/:id" element={<EmployeeDetails />} />
 
 
-        //im
-        <Route path="/add-report" element={<AddReport/>}/>
-     
+        <Route path="/addReport" element={<AddReport/>}/>
+        <Route path="/flagged-items" element={<ReportedItems/>}/>
         <Route path="/flagged-items/:_id" element={<UpdateReport/>}/>
         <Route path="/inspectionDashboard" element={<InspectionDashboard/>}/>
+
+        <Route path="/seller-listing" element={<SellerListings/>}/>
+        <Route path="/add-item" element={<AddItem/>}/>
+        <Route path="/upload-img" element={<ImgUploader/>}/>
+         <Route path="/seller-dashboard" element={<SellerDashboard />} />
+         <Route path="/seller-dashboard/:id" element={<UpdateItem />} />
+         <Route path="/seller-profile" element={<SellerProfile />} />
+
+
+
+          {/* Bidder profile */}
+          <Route path="/bidder-profile" element={<BidderProfile />} />
+          <Route path="/edit-bidder-profile" element={<EditBidderProfile />} />
+          <Route path="/BidderProfile" element={<BidderProfile />} />
+
+          {/* Bidder ship details */}
+          <Route path="/BidShipProfile" element={<BidShipProfile />} />
+          <Route path="/bid-ship-users-details" element={<BidShipUsersDetails />} />
+          <Route path="/bid-ship-success" element={<BidShipSuccess />} />
+          <Route path="/shipping" element={<BidShipProfile />} />
+
+          {/* Bid feedback details */}
+          <Route path="/BidFeedbackPage" element={<BidFeedbackPage />} />
+
+          {/* Payment */}
+          <Route path="/payment" element={<Checkout />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
+
+          {/* Bidder dashboard */}
+          <Route path="/BidDashboard" element={<BidDashboard />} />
+
+          {/* BidNowBidder route */}
+          <Route path="/bid-now" element={<BidNowBidder />} />
+
+
+
+
+
+         
 
       </Routes>
     </React.Fragment>

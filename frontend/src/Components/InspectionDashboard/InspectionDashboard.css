@@ -23,13 +23,15 @@
     color: #0a0a0a;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
   }
   
   .dash-hero-subtitle {
     font-size: 18px;
     color: #070707;
     margin-bottom: 20px;
-    margin-left: 550px;
+   
+    text-align: center;
   }
   
   .dash-carousel {

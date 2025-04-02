@@ -9,11 +9,12 @@ function Sidebar({ role, isOpen }) {
       {/* Role-Based Sidebar Navigation */}
       {role === "sl" && (
         <>
-          <Link to="/sellerDashboard">Seller Dashboard</Link>
-          <Link to="/sellerManagement">Seller Management</Link>
-          <Link to="/itemListing">Item Listing</Link>
-          <Link to="/sellerReviews">Reviews and Ratings</Link>
-
+          <Link to="/seller-dashboard">Seller Dashboard</Link>
+          <Link to="/seller-listing">Item Listing</Link>
+          <Link to="/seller-profile">Seller Profile</Link>
+          <Link to="/add-item">Add Item</Link>
+          <Link to="/upload-img">Upload image</Link>
+        
         </>
       )}
       {role === "bid" && (
@@ -43,8 +44,8 @@ function Sidebar({ role, isOpen }) {
       {role === "im" && (
         <>
           <Link to="/inspectionDashboard">Dashboard</Link>
-          <Link to="/rejectItems">Reject Items</Link>
-          <Link to="/biddingPage">Bidding</Link>
+          <Link to="/addReport">Add Report</Link>
+          <Link to="/flagged-items">Report Dashboard</Link>
           <Link to="/inspectionReport">Inspection Report</Link>
         </>
       )}
