@@ -1,0 +1,69 @@
+/* Ensure the container fits the viewport without scrollbars */
+.bid-ship-success-container {
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  margin: 0; /* Remove default margin */
+  padding: 40px; /* Keep padding for content spacing */
+  box-sizing: border-box; /* Include padding in width/height */
+  text-align: center;
+  font-family: Arial, sans-serif;
+  /* Background image settings */
+  background-image: url('C:\Users\Poornima\OneDrive\Documents\GitHub\Online_Auction_system\frontend\public\BidImages\shipgold.jpg'); /* Auction-related background */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent tiling */
+  position: relative; /* For overlay positioning */
+  color: #fff; /* White text for contrast */
+  display: flex; /* Use flexbox to center content */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+/* Semi-transparent overlay for readability */
+.bid-ship-success-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 1; /* Behind the content */
+}
+
+/* Ensure content stays above the overlay */
+.bid-ship-success-container > * {
+  position: relative;
+  z-index: 2; /* Above the overlay */
+}
+
+h1 {
+  color: #2ecc71; /* Green heading */
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 18px;
+  color: #ecf0f1; /* Light gray for contrast */
+  margin-bottom: 30px; /* Space before the button */
+}
+
+/* Button styling */
+.shipping-logistics-btn {
+  background-color: #2ecc71; /* Match the h1 color */
+  color: #fff; /* White text */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the button */
+.shipping-logistics-btn:hover {
+  background-color: #27ae60; /* Darker green on hover */
+}

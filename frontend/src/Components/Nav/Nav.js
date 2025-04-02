@@ -47,18 +47,18 @@ const Nav = () => {
           </div>
 
           <Link to="/contact-us">Contact Us</Link>
-          <Link to="/profile">Profile</Link>
+          {/* Assuming "/coooo" was a typo, removing it; replace if intentional */}
           <Link to="/login">Login</Link>
         </div>
       </nav>
 
       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-content">
-          <Link to="/bidder-dashboard" onClick={toggleSidebar}>
-            <i className="fas fa-tachometer-alt"></i> Dashboard
+          <Link to="/BidDashboard" onClick={toggleSidebar}>
+            <i className="fas fa-tachometer-alt"></i> Bid Dashboard
           </Link>
-          <Link to="/register-bidder" onClick={toggleSidebar}>
-            <i className="fas fa-user-plus"></i> Bidder Registration
+          <Link to="/BidFeedbackPage" onClick={toggleSidebar}>
+            <i className="fas fa-comment"></i> Bid Feedback
           </Link>
           <Link to="/bid-now" onClick={toggleSidebar}>
             <i className="fas fa-gavel"></i> Bid Now
@@ -66,14 +66,14 @@ const Nav = () => {
           <Link to="/inspection-panel" onClick={toggleSidebar}>
             <i className="fas fa-clipboard-check"></i> Inspection Panel
           </Link>
-          <Link to="/shipping-details" onClick={toggleSidebar}>
-            <i className="fas fa-plus-circle"></i> Shipping
+          <Link to="/shipping" onClick={toggleSidebar}>
+            <i className="fas fa-truck"></i> Shipping
           </Link>
           <Link to="/bidder-profile" onClick={toggleSidebar}>
-            <i className="fas fa-plus-circle"></i> Bidder Profile
+            <i className="fas fa-user"></i> Bidder Profile
           </Link>
-          <Link to="/logout" onClick={toggleSidebar}>
-            <i className="fas fa-sign-out-alt"></i> Logout
+          <Link to="/payment" onClick={toggleSidebar}>
+            <i className="fas fa-credit-card"></i> Payment
           </Link>
         </div>
       </div>
