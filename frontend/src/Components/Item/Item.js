@@ -43,7 +43,7 @@ function Item(props) {
       <p className="item-description">Description: {description}</p>
       <p className="item-price">Starting Bid: ${startingBid}</p>
       <div className="item-actions">
-        <Link to={`/seller-dashboard/${_id}`}>Update</Link>
+       <button className="update-btn"><Link to={`/seller-dashboard/${_id}`}>Update</Link></button> 
         {Item &&(
         <button className="delete-btn" onClick={deleteItemHandler}>Delete Item</button>
         )}

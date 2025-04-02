@@ -1,4 +1,5 @@
-const Item = require('../Model/SellerItem');
+const mongoose = require('mongoose'); // Add this line to import mongoose
+const Item = require('../Model/SellerItem'); // Consistent model name
 
 // Get all items for a seller
 const getAllItems = async (req, res, next) => {
@@ -24,7 +25,7 @@ const addItem = async (req, res, next) => {
         await items.save();
     } catch (err) {
         console.log(err);
-        return res.status(404).json({ message: "Server error" });
+        return res.status(500).json({ message: "Server error" }); // Changed 404 to 500 for server error
     }
     if (!items) {
         return res.status(404).json({ message: "Unable to add item" });
@@ -57,7 +58,7 @@ const updateItem = async (req, res, next) => {
         items = await Item.findByIdAndUpdate(
             id,
             { title, description, startingBid },
-            { new: true } // Return the updated document
+            { new: true }
         );
     } catch (err) {
         console.log(err);
@@ -69,49 +70,49 @@ const updateItem = async (req, res, next) => {
     return res.status(200).json({ items });
 };
 
-// In SellerControllers.js
+// Delete item
 const deleteItem = async (req, res) => {
-  try {
-    const itemId = req.params.id;
+    try {
+        const itemId = req.params.id;
 
-    // Validate the ID
-    if (!itemId || itemId === 'undefined') {
-      return res.status(400).json({ 
-        success: false,
-        message: 'Invalid or missing item ID' 
-      });
+        // Validate the ID
+        if (!itemId || itemId === 'undefined') {
+            return res.status(400).json({ 
+                success: false,
+                message: 'Invalid or missing item ID' 
+            });
+        }
+
+        // Check if the ID is a valid MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).json({ 
+                success: false,
+                message: 'Invalid item ID format' 
+            });
+        }
+
+        const deletedItem = await Item.findOneAndDelete({ _id: itemId }); // Use Item instead of SellerItem
+        
+        if (!deletedItem) {
+            return res.status(404).json({ 
+                success: false,
+                message: 'Item not found' 
+            });
+        }
+
+        res.status(200).json({ 
+            success: true,
+            message: 'Item deleted successfully',
+            data: deletedItem 
+        });
+    } catch (error) {
+        console.error('Delete error:', error);
+        res.status(500).json({ 
+            success: false,
+            message: 'Server error while deleting item',
+            error: error.message 
+        });
     }
-
-    // Check if the ID is a valid MongoDB ObjectId
-    if (!mongoose.Types.ObjectId.isValid(itemId)) {
-      return res.status(400).json({ 
-        success: false,
-        message: 'Invalid item ID format' 
-      });
-    }
-
-    const deletedItem = await SellerItem.findOneAndDelete({ _id:itemId });
-    
-    if (!deletedItem) {
-      return res.status(404).json({ 
-        success: false,
-        message: 'Item not found' 
-      });
-    }
-
-    res.status(200).json({ 
-      success: true,
-      message: 'Item deleted successfully',
-      data: deletedItem 
-    });
-  } catch (error) {
-    console.error('Delete error:', error);
-    res.status(500).json({ 
-      success: false,
-      message: 'Server error while deleting item',
-      error: error.message 
-    });
-  }
 };
 
 exports.getAllItems = getAllItems;

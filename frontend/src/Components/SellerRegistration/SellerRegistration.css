@@ -1,62 +1,83 @@
 /* SellerRegistration.css */
-.seller-registration {
-  background: #f8e1e1;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 20px 0;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
 
+/* Background styling for the entire page */
 .registration-page {
   min-height: 100vh;
-  background: #f5f5f5;
-}
-
-.registration-title {
-  color: #5c4033;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.registration-card {
-  background: white;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') 
+    no-repeat center center fixed;
+  background-size: cover;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Main section styling */
+.seller-registration {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Title styling */
+.registration-title {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(199, 13, 13, 0.3);
+}
+
+/* Card container */
+.registration-card {
+  background: rgba(197, 175, 175, 0.2); /* Transparent background */
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(228, 12, 12, 0.1);
+  backdrop-filter: blur(5px); /* Optional blur effect */
+}
+
+/* Form styling */
 .registration-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
+/* Form group styling */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 
 .form-group label {
-  color: #5c4033;
-  font-weight: bold;
+  font-weight: 600;
+  color: #fff; /* White for contrast */
 }
 
+/* Input styling */
 .form-group input,
 .form-group textarea {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.8); /* Slightly opaque inputs */
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
 .form-group textarea {
-  min-height: 80px;
+  min-height: 100px;
   resize: vertical;
 }
 
+/* Radio group styling */
 .radio-group {
   display: flex;
   gap: 20px;
@@ -66,22 +87,24 @@
 .radio-label {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+  cursor: pointer;
 }
 
 .radio-text {
-  color: #5c4033;
+  color: #fff; /* White for contrast */
 }
 
+/* Checkbox terms styling */
 .terms-group {
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 5px;
-  color: #5c4033;
+  gap: 8px;
+  color: #fff; /* White for contrast */
 }
 
 .terms-link {
@@ -93,24 +116,27 @@
   text-decoration: underline;
 }
 
+/* Submit button styling */
 .submit-btn {
-  background: #5c4033;
+  background-color: #007bff;
   color: white;
-  padding: 10px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
+  font-size: 1.1rem;
   cursor: pointer;
-  
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-  background: #4a3228;
+  background-color: #0056b3;
 }
 
+/* Login link styling */
 .login-link {
   text-align: center;
-  margin-top: 15px;
-  color: #5c4033;
+  margin-top: 20px;
+  color: #fff; /* White for contrast */
 }
 
 .login-link a {
@@ -120,4 +146,24 @@
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .seller-registration {
+    padding: 10px;
+  }
+
+  .registration-card {
+    padding: 20px;
+  }
+
+  .registration-title {
+    font-size: 2rem;
+  }
+
+  .radio-group {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

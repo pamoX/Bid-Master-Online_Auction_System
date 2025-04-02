@@ -64,3 +64,25 @@
   .delete-btn:hover {
     background-color: #c0392b; /* Darker red on hover */
   }
+
+  /* Target the link */
+a {
+  text-decoration: none; /* Removes the default underline */
+  color: #007bff; /* A nice blue color */
+  font-weight: 500; /* Slightly bold text */
+  padding: 8px 16px; /* Some padding for a button-like feel */
+  border-radius: 4px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effect */
+a:hover {
+  color: #0056b3; /* Darker blue on hover */
+  background-color: #f0f0f0; /* Light gray background */
+}
+
+/* Optional: Active state */
+a:active {
+  color: #003d82; /* Even darker blue when clicked */
+}
+
