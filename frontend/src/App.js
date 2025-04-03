@@ -53,6 +53,17 @@ import BidDashboard from './Components/BidDashboard/BidDashboard';
 // BidNowBidder component
 import BidNowBidder from './Components/BidNowBidder/BidNowBidder';
   
+
+
+import Shippers from './Components/Shippers/Shippers';
+import Shipments from './Components/Shipments/Shipments';
+import NewShipment from './Components/NewShipment/NewShipment';
+import UpdateShipment from './Components/UpdateShipment/UpdateShipment';
+import NewShipper from './Components/NewShipper/NewShipper';
+import UpdateShipper from './Components/UpdateShipper/UpdateShipper';
+import ShipManageDash from './Components/ShipManageDash/ShipManageDash';
+
+
 const Placeholder = ({ pageName }) => <h2>{pageName} Page (Under Construction)</h2>;
 
 function App() {
@@ -115,6 +126,16 @@ function App() {
 
           {/* BidNowBidder route */}
           <Route path="/bid-now" element={<BidNowBidder />} />
+
+
+          <Route path="/shipmanagedash" element={<ShipManageDash />} />
+          <Route path="/shippers" element={<Shippers />} />
+          <Route path="/shipments" element={<Shipments />} />
+          <Route path="/newshipment" element={<NewShipment />} />
+          <Route path="/shipments/:id" element={<UpdateShipment />} />
+          <Route path="/newshipper" element={<NewShipper />} />
+          <Route path="/shippers/:id" element={<UpdateShipper/>}/>
+
 
 
 

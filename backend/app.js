@@ -8,6 +8,9 @@ const payrollRoutes = require("./Route/PayrollRoute");
 const bidUserRoutes = require("./Route/BidUserRoutes");
 const bidShipRoutes = require("./Route/BidShipRoutes");
 const bidFeedbackUserRoutes = require("./Route/BidFeedbackUserRoutes");
+const shipmentRouter = require("./Route/ShipmentRouter.js");
+const shipperRouter = require("./Route/ShipperRouter.js");
+
 const Stripe = require('stripe');
 require('dotenv').config();
 
@@ -32,6 +35,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/items", SellerRoute);
 app.use("/files", express.static(path.join(__dirname, "../frontend/src/Components/ImgUploader/files")));
+
+app.use("/shipments", shipmentRouter);
+app.use("/shippers", shipperRouter);
 
 
 // Define routes

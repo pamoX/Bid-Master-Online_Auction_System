@@ -19,18 +19,21 @@ function Sidebar({ role, isOpen }) {
       )}
       {role === "bid" && (
         <>
-          <Link to="/bidderDashboard">Bidder Dashboard</Link>
-          <Link to="/bidManagement">Bid Management</Link>
-          <Link to="/shipping">Shipping</Link>
+          <Link to="/BidDashboard">Bidder Dashboard</Link>
+          <Link to="/bid-now">Bid Now</Link>
+          <Link to="/shipping">Shipping Details</Link>
           <Link to="/payment">Payment</Link>
+          <Link to="/bidder-profile">Profile</Link>
+          <Link to="/BidFeedbackPage">Feedback</Link>
+
         </>
       )}
       {role === "ship" && (
         <>
-          <Link to="/shippingDashboard">Shipping Dashboard</Link>
-          <Link to="/manageShipping">Manage Shipping</Link>
-          <Link to="/complaintManagement">Complaint Management</Link>
-          <Link to="/asignShipment">Asign Shipment</Link>
+          <Link to="/shipmanagedash">Shipping Dashboard</Link>
+          <Link to="/shipments">Manage Shipments</Link>
+          <Link to="/shippers">Manage Shipment Service Providers</Link>
+         
         </>
       )}
       {role === "hr" && (
