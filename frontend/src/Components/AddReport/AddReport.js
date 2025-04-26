@@ -47,54 +47,62 @@ function AddReport() {
   return (
     <div className="AR-add-report-page">
       <header className="AR-header-banner">
+      <br/><br/><br/>
         <Nav />
+        
         <div className="AR-header-overlay">
-            <br/>
-            <br/>
-            <br/>
-            <br/>
           <h1 className="AR-page-title">Add New Report</h1>
         </div>
       </header>
-      <main className="AR-form-container">
-        <form onSubmit={handleSubmit} className="AR-report-form">
-          <div className="AR-form-group">
-            <label htmlFor="ReportName">Report Name</label>
-            <input
-              type="text"
-              id="ReportName"
-              name="ReportName"
-              onChange={handleChange}
-              value={inputs.ReportName}
-              required
-              placeholder="Enter report name"
-            />
-          </div>
-          <div className="AR-form-group">
-            <label htmlFor="ReportReason">Report Reason</label>
-            <input
-              type="text"
-              id="ReportReason"
-              name="ReportReason"
-              onChange={handleChange}
-              value={inputs.ReportReason}
-              required
-              placeholder="Enter reason for report"
-            />
-          </div>
-          <div className="AR-form-group">
-            <label htmlFor="Date">Date</label>
-            <input
-              type="date"
-              id="Date"
-              name="Date"
-              onChange={handleChange}
-              value={inputs.Date}
-              required
-            />
-          </div>
-          <button type="submit" className="AR-submit-btn">Submit Report</button>
-        </form>
+      <main className="AR-content-container">
+        <div className="AR-image-container">
+          <img
+            src="https://images.unsplash.com/photo-1707157281599-d155d1da5b4c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHJlcG9ydHxlbnwwfHwwfHx8MA%3D%3D"
+            alt="Cityscape with communication network"
+            className="AR-side-image"
+          />
+        </div>
+        <br/><br/>
+        <div className="AR-form-container">
+          <form onSubmit={handleSubmit} className="AR-report-form">
+            <div className="AR-form-group">
+              <label htmlFor="ReportName">Report Name</label>
+              <input
+                type="text"
+                id="ReportName"
+                name="ReportName"
+                onChange={handleChange}
+                value={inputs.ReportName}
+                required
+                placeholder="Enter report name"
+              />
+            </div>
+            <div className="AR-form-group">
+              <label htmlFor="ReportReason">Report Reason</label>
+              <input
+                type="text"
+                id="ReportReason"
+                name="ReportReason"
+                onChange={handleChange}
+                value={inputs.ReportReason}
+                required
+                placeholder="Enter reason for report"
+              />
+            </div>
+            <div className="AR-form-group">
+              <label htmlFor="Date">Date</label>
+              <input
+                type="date"
+                id="Date"
+                name="Date"
+                onChange={handleChange}
+                value={inputs.Date}
+                required
+              />
+            </div>
+            <button type="submit" className="AR-submit-btn">Submit Report</button>
+          </form>
+        </div>
       </main>
     </div>
   );
