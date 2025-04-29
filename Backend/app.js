@@ -5,6 +5,8 @@ const path = require("path"); // For serving static files (optional)
 const bidUserRoutes = require("./Route/BidUserRoutes");
 const bidShipRoutes = require("./Route/BidShipRoutes");
 const bidFeedbackUserRoutes = require("./Route/BidFeedbackUserRoutes");
+const bidNowRoutes = require("./Route/BidNowRoutes");
+const itemRoutes = require("./Route/ItemRoutes");
 const Stripe = require('stripe');
 require('dotenv').config();
 
@@ -21,6 +23,8 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 app.use("/bid-users", bidUserRoutes);
 app.use("/bid-ship-users", bidShipRoutes);
 app.use("/bid-feedback-users", bidFeedbackUserRoutes);
+app.use("/bids", bidNowRoutes);
+app.use("/items", itemRoutes);
 
 // Payment route with dynamic success_url
 // app.js (partial)

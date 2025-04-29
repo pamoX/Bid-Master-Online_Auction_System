@@ -60,7 +60,7 @@ const Nav = () => {
           <Link to="/BidFeedbackPage" onClick={toggleSidebar}>
             <i className="fas fa-comment"></i> Bid Feedback
           </Link>
-          <Link to="/bid-now" onClick={toggleSidebar}>
+          <Link to="/bid-now/1" onClick={toggleSidebar}>
             <i className="fas fa-gavel"></i> Bid Now
           </Link>
           <Link to="/inspection-panel" onClick={toggleSidebar}>

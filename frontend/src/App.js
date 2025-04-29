@@ -56,7 +56,7 @@ function App() {
           <Route path="/BidDashboard" element={<BidDashboard />} />
 
           {/* BidNowBidder route */}
-          <Route path="/bid-now" element={<BidNowBidder />} />
+          <Route path="/bid-now/:itemId?" element={<BidNowBidder />} />
 
           <Route path="/about-us" element={<Placeholder pageName="About Us" />} />
           <Route path="/selling" element={<Placeholder pageName="Selling" />} />
