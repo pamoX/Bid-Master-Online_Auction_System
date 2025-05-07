@@ -51,7 +51,7 @@ function AddReport() {
         <Nav />
         
         <div className="AR-header-overlay">
-          <h1 className="AR-page-title">Add New Report</h1>
+          
         </div>
       </header>
       <main className="AR-content-container">
