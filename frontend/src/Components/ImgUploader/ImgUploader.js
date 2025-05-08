@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Nav from "../Nav/Nav";
 import axios from "axios";
-import "./ImgUploader.css"; // Import the CSS file if using separate file
+import "./ImgUploader.css";
 
 function ImgUploader() {
   const [image, setImage] = useState(null);
   const [allImage, setAllImage] = useState([]);
+  const [popupMessage, setPopupMessage] = useState("");
 
   const submitImage = async (e) => {
     e.preventDefault();
+    if (!image) {
+      setPopupMessage("Please select an image to upload.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("image", image);
 
@@ -16,9 +22,14 @@ function ImgUploader() {
       await axios.post("http://localhost:5000/upload-img", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      setPopupMessage("Image uploaded successfully!");
+      setImage(null);
       getImage();
     } catch (e) {
       console.error("Error uploading image", e);
+      setPopupMessage("Error uploading image.");
+    } finally {
+      setTimeout(() => setPopupMessage(""), 3000);
     }
   };
 
@@ -38,9 +49,13 @@ function ImgUploader() {
   const deleteImage = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/delete-image/${id}`);
+      setPopupMessage("Image deleted successfully.");
       getImage();
     } catch (e) {
       console.error("Error deleting image", e);
+      setPopupMessage("Failed to delete image.");
+    } finally {
+      setTimeout(() => setPopupMessage(""), 3000);
     }
   };
 
@@ -50,8 +65,11 @@ function ImgUploader() {
 
   return (
     <div className="image-uploader-container">
-      <Nav /><br/><br/>
+      <Nav /><br /><br />
       <h1>Image</h1>
+
+      {popupMessage && <div className="popup-message">{popupMessage}</div>}
+
       <form onSubmit={submitImage} className="upload-form">
         <input type="file" accept="image/*" onChange={onImageChange} />
         <button type="submit">Upload</button>
@@ -63,7 +81,7 @@ function ImgUploader() {
             <div key={data._id} className="image-item">
               <img
                 src={`http://localhost:5000/files/${data.image}`}
-                alt="photos"
+                alt="uploaded"
               />
               <button
                 onClick={() => deleteImage(data._id)}

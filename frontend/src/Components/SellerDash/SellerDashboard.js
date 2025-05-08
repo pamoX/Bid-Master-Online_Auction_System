@@ -18,14 +18,38 @@ const fetchImages = async () => {
 function SellerDashboard() {
   const [items, setItems] = useState([]);
   const [images, setImages] = useState([]);
+  const [popup, setPopup] = useState({ message: "", type: "", visible: false });
+
+  // Function to show popup with a message and type (success/error)
+  const showPopup = (message, type) => {
+    setPopup({ message, type, visible: true });
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+      setPopup({ message: "", type: "", visible: false });
+    }, 3000);
+  };
 
   useEffect(() => {
-    fetchItems().then((data) => setItems(data.items || []));
-    fetchImages().then((data) => {
-      if (data.status === "ok") {
-        setImages(data.data || []);
+    const loadData = async () => {
+      try {
+        const itemsData = await fetchItems();
+        const imagesData = await fetchImages();
+
+        setItems(itemsData.items || []);
+        setImages(imagesData.status === "ok" ? imagesData.data || [] : []);
+
+        // Show success popup if items are loaded
+        if (itemsData.items && itemsData.items.length > 0) {
+          showPopup("Items loaded successfully!", "success");
+        } else {
+          showPopup("No items available.", "info");
+        }
+      } catch (error) {
+        showPopup("Failed to load items. Please try again.", "error");
       }
-    });
+    };
+
+    loadData();
   }, []);
 
   return (
@@ -52,6 +76,13 @@ function SellerDashboard() {
           )}
         </div>
       </div>
+
+      {/* Popup Message */}
+      {popup.visible && (
+        <div className={`popup-message ${popup.type}`}>
+          <span>{popup.message}</span>
+        </div>
+      )}
     </div>
   );
 }
