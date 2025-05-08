@@ -100,12 +100,16 @@ const EmployeeDetails = () => {
         <div className="details-section">
           <h3>Name: {employee.name}</h3>
           <p>Email: {employee.email}</p>
+          <p>Username: {employee.username}</p>
           <p>Phone: {employee.phone}</p>
           <p>Address: {employee.address}</p>
           <p>Salary: {employee.salary}</p>
           <p>Role: {employee.role}</p>
           <p>Department: {employee.department}</p>
           <p>Task: {employee.task}</p>
+          {employee.skills && employee.skills.length > 0 && (
+          <p>Skills: {employee.skills.join(', ')}</p>
+          )}
         </div>
       </div>
 

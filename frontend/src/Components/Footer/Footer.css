@@ -49,7 +49,7 @@
   .social-icons {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 0px;
   }
   
   .social-icons a {

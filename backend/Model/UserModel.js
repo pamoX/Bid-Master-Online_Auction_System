@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    profileImage: {
+        type: String,
+        default: ""
+      },
+      
     name:{
         type:String,
         required:true  // validate form
@@ -27,6 +32,8 @@ const userSchema = new Schema({
         type:String,
         required:true 
     },
+
+
 });
 
 module.exports = mongoose.model(

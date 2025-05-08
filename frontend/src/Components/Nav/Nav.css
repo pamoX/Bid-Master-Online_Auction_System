@@ -127,6 +127,51 @@
   .logout-btn:hover {
     background: darkred;
   }
+
+
+  .notification-container {
+    position: relative;
+    cursor: pointer;
+    margin-right: 15px;
+  }
+  
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 50%;
+  }
+  
+  .notification-dropdown {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+    border-radius: 5px;
+  }
+  
+  .notification-item {
+    padding: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .notification-empty {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
   
   /* Responsive Design */
   @media (max-width: 768px) {
@@ -172,4 +217,5 @@
       padding: 5px;
     }
   }
+
   

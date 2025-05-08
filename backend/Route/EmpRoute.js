@@ -19,6 +19,7 @@ const upload = multer({ storage });
 // Routes
 router.post("/add", EmpControl.addEmployee);
 router.get("/", EmpControl.getAllEmployees);
+router.get('/count', EmpControl.getEmployeeCount);
 router.get("/:id", EmpControl.getEmployeeById); // Get employee by ID
 router.put("/:id", EmpControl.updateEmployee);
 router.delete("/:id", EmpControl.deleteEmpDetails);

@@ -14,6 +14,11 @@ const addEmpSchema = new Schema({
         type:String,
         required:true  
     },
+    username:{
+        type:String,
+        required:true,
+        unique: true
+    },
     phone:{
         type:String,
         required:true  
@@ -40,7 +45,12 @@ const addEmpSchema = new Schema({
     },
     image: {
         type: String,  
-    }
+    },
+
+    skills: [String],
+    
+taskHistory: [{ taskId: String, status: String }],
+
 });
 
 module.exports = mongoose.model(

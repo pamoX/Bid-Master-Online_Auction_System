@@ -30,30 +30,41 @@ const getAllUsers = async(req,res,next) =>{
 
 //data insert
 
-const addUsers = async(req, res, next) => {
-    const { name, username, email, phone, password, confirmPassword } = req.body;
-  
-    let user;
-  
-    try {
-      // Check if the username already exists
-      const existingUser = await User.findOne({ username });
-      if (existingUser) {
-        return res.status(400).json({ message: "Username already exists!" });
-      }
-  
-      // Create new user object
-      user = new User({ name, username, email, phone, password, confirmPassword });
-  
-      // Save user to database
-      await user.save();
-  
-      return res.status(201).json({ success: true, message: "Registration successful!", user });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ success: false, message: "An error occurred while registering." });
+const addUsers = async (req, res, next) => {
+  const { name, username, email, phone, password, confirmPassword } = req.body;
+
+  let user;
+
+  try {
+    // Check if the username already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: "Username already exists!" });
     }
-  };
+
+    
+
+    // 🆕 Create new user and link to employee if found
+    user = new User({
+      name,
+      username,
+      email,
+      phone,
+      password,
+      confirmPassword,
+     
+    });
+
+    // Save user to DB
+    await user.save();
+
+    return res.status(201).json({ success: true, message: "Registration successful!", user });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ success: false, message: "An error occurred while registering." });
+  }
+};
+
   
 //get by id
 const getById = async (req,res,next) =>{
@@ -128,10 +139,29 @@ const deleteUser = async(req,res,next)=>{
     }
 
     return res.status(200).json({user});
-
-
-
 };
+
+const uploadProfileImage = async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const imagePath = `/uploads/${req.file.filename}`; // Relative path
+  
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { profileImage: imagePath },
+        { new: true }
+      );
+  
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      res.json({ message: "Image uploaded", user: updatedUser });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Upload failed" });
+    }
+  };  
 
 
 exports.getAllUsers = getAllUsers;
@@ -139,3 +169,4 @@ exports.addUsers = addUsers;
 exports.getById = getById;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
+exports.uploadProfileImage = uploadProfileImage;

@@ -10,9 +10,14 @@ const bidShipRoutes = require("./Route/BidShipRoutes");
 const bidFeedbackUserRoutes = require("./Route/BidFeedbackUserRoutes");
 const shipmentRouter = require("./Route/ShipmentRouter.js");
 const shipperRouter = require("./Route/ShipperRouter.js");
+const taskRoutes = require('./Route/TaskRoute');
+const notificationRoutes = require('./Route/TaskNotificationRoute');
 
 const Stripe = require('stripe');
 require('dotenv').config();
+require('./utils/TaskReminder');
+
+
 
 
 const path = require('path');
@@ -33,6 +38,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+
 app.use("/items", SellerRoute);
 app.use("/files", express.static(path.join(__dirname, "../frontend/src/Components/ImgUploader/files")));
 
@@ -45,6 +51,8 @@ app.use("/users", userRoutes); // User registration routes
 app.use("/auth", loginRoutes); // Login route
 app.use("/api/employees", empRoutes);
 app.use("/api/payroll", payrollRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Mount API routes
 app.use("/bid-users", bidUserRoutes);

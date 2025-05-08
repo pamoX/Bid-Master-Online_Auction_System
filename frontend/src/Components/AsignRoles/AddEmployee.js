@@ -9,12 +9,14 @@ const AddEmployee = () => {
     employeeId: "",
     name: "",
     email: "",
+    username: "",
     phone: "",
     address: "",
     salary: "",
     role: "",
     department: "",
     task: "",
+    skills: "",
   });
 
   const handleChange = (e) => {
@@ -44,16 +46,21 @@ const AddEmployee = () => {
       return;
     }
 
+    const payload = {
+      ...inputs,
+      skills: inputs.skills.split(',').map(skill => skill.trim()).filter(Boolean), // Convert to array
+    };
+
     const response = await fetch("http://localhost:5000/api/employees/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(inputs),
+      body: JSON.stringify(payload),
     });
 
     const data = await response.json();
     if (response.ok) {
       alert("Employee added successfully!");
-      setFormData({ employeeId: "", name: "", email: "", phone: "", address: "", salary: "", role: "", department: "", task: "" });
+      setFormData({ employeeId: "", name: "", email: "",username: "", phone: "", address: "", salary: "", role: "", department: "", task: "" });
       navigate("/employeeDashboard", { state: { refresh: true } });
     } else {
       alert(`Error: ${data.message}`);
@@ -105,6 +112,17 @@ const AddEmployee = () => {
                   type="email"
                   name="email"
                   value={inputs.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div>
+                <label>Username:</label>
+                <input
+                  type="username"
+                  name="username"
+                  value={inputs.username}
                   onChange={handleChange}
                   required
                 />
@@ -184,7 +202,24 @@ const AddEmployee = () => {
                   <option value="Shipping">Shipping</option>
                 </select>
               </div>
+
               <div>
+  <label>Skills:</label>
+  <input
+    type="text"
+    name="skills"
+    value={inputs.skills}
+    onChange={handleChange}
+    placeholder="JavaScript, MongoDB, React"
+  />
+</div>
+             
+
+            
+
+            </div>
+
+            <div>
                 <label>Task:</label>
                 <input
                   type="text"
@@ -194,7 +229,6 @@ const AddEmployee = () => {
                   required
                 />
               </div>
-            </div>
 
             <button type="submit" className="addEmp-button">Add Employee</button>
           </div>

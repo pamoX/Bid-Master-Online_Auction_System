@@ -1,32 +1,53 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom"; // Use NavLink instead of Link
-import "./Nav.css"; // Import CSS file
-import Sidebar from "../Sidebar/Sidebar"; // Import Sidebar
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { NavLink } from "react-router-dom";
+import "./Nav.css";
+import Sidebar from "../Sidebar/Sidebar";
+import NotificationBell from "../NotificationBell/NotificationBell";
 
 function Nav() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar visibility
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [notifications, setNotifications] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Function to toggle sidebar visibility
+  const user = JSON.parse(localStorage.getItem("user"));
+  const username = user?.username;
+
+  // Fetch notifications - memoized to avoid eslint warning
+  const fetchNotifications = useCallback(async () => {
+    if (!username) return;
+    try {
+      const res = await axios.get(`http://localhost:5000/api/notifications/${username}`);
+      setNotifications(res.data);
+    } catch (err) {
+      console.error("Error fetching notifications:", err);
+    }
+  }, [username]);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [fetchNotifications]);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  };
+
   return (
     <div>
-      {/* Upper Navbar */}
+      {/* Top Navbar */}
       <nav className="navbar">
-        {/* Logo Section */}
+        {/* Logo */}
         <div className="logo">
-          <NavLink to="/home" activeClassName="active">
+          <NavLink to="/home">
             <img src="/favicon.ico" alt="AuctionApp Logo" className="logo-img" />
           </NavLink>
         </div>
 
-        {/* Sidebar Toggle Button */}
-        <button className="sidebar-toggle" onClick={toggleSidebar}>
-          {isSidebarOpen ? "☰" : "☰"} {/* Open/Close Sidebar */}
-        </button>
+       
 
         {/* Search Bar */}
         <div className="search-bar">
@@ -40,27 +61,19 @@ function Nav() {
           <NavLink to="/aboutUs" activeClassName="active">About Us</NavLink>
           <NavLink to="/contactUs" activeClassName="active">Contact Us</NavLink>
 
-          {/* Conditionally Render Login or Profile/Logout */}
           {!user ? (
-            <NavLink to="/login" activeClassName="active" className="login-btn">Login</NavLink>
+            <NavLink to="/login" className="login-btn">Login</NavLink>
           ) : (
             <>
               <NavLink to="/profile" activeClassName="active">Profile</NavLink>
-              <button
-                className="logout-btn"
-                onClick={() => { 
-                  localStorage.removeItem("user"); 
-                  window.location.href = "/login"; // Redirect to login page after logout
-                }}
-              >
-                Logout
-              </button>
+              <NotificationBell username={username} fetchNotifications={fetchNotifications} />
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
             </>
           )}
         </div>
       </nav>
 
-      {/* Pass the state to Sidebar to control its visibility */}
+      {/* Sidebar */}
       <Sidebar role={user ? user.username.split("_")[0] : "guest"} isOpen={isSidebarOpen} />
     </div>
   );

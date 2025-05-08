@@ -1,4 +1,6 @@
 const Employee = require("../Model/EmpModel");
+const Payroll = require("../Model/PayrollModel");
+
 const path = require('path');
 const fs = require('fs');
 
@@ -119,9 +121,16 @@ const uploadImage = async (req, res) => {
 };
 
 
+const getEmployeeCount = async (req, res) => {
+    try {
+      const count = await Employee.countDocuments();
+      res.json({ count });
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
+    }
+  };
 
 
-
-module.exports = { addEmployee,getAllEmployees,getEmployeeById, updateEmployee,deleteEmpDetails,uploadImage};
+module.exports = { addEmployee,getAllEmployees,getEmployeeById, updateEmployee,deleteEmpDetails,uploadImage,getEmployeeCount};
 
 

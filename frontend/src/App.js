@@ -1,9 +1,12 @@
 
 import { Routes, Route } from "react-router-dom";
 import React from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import "./App.css";
+import Sidebar from "./Components/Sidebar/Sidebar.js";
 import Nav from "./Components/Nav/Nav";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
@@ -18,10 +21,12 @@ import UpdateEmployee from "./Components/UpdateEmployee/UpdateEmployee";
 import Terms from "./Components/Terms/Terms";
 import EmployeeDetails from "./Components/EmployeeDetails/EmployeeDetails";
 import Payroll from "./Components/Payroll/Payroll";
+import Profile from "./Components/Profile/Profile";
+import TaskDashboard from './Components/TaskDashboard/TaskDashboard';
+import HRDashboard from "./Components/HRDashboard/HRDashboard.js";
 
 //im
 import ReportedItems from "./Components/ReportedItems/ReportedItems";
-
 import AddReport from "./Components/AddReport/AddReport";
 import UpdateReport from "./Components/UpdateReport/UpdateReport";
 import InspectionDashboard from "./Components/InspectionDashboard/InspectionDashboard";
@@ -71,6 +76,9 @@ function App() {
     <div >
    
    <Nav></Nav>
+   <Sidebar></Sidebar>
+
+   <ToastContainer />
 
     <React.Fragment>
       <Routes>
@@ -86,6 +94,11 @@ function App() {
         <Route path="/payroll" element={<Payroll/>}/>
         <Route path="/employeeDashboard/:id" element={<UpdateEmployee/>}/>
         <Route path="/employeeDetails/:id" element={<EmployeeDetails />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/tasks" element={<TaskDashboard />} />
+        <Route path="/hrDashboard" element={<HRDashboard />} />
+
+
 
 
         <Route path="/addReport" element={<AddReport/>}/>
@@ -137,11 +150,6 @@ function App() {
           <Route path="/shippers/:id" element={<UpdateShipper/>}/>
 
 
-
-
-
-
-         
 
       </Routes>
     </React.Fragment>
