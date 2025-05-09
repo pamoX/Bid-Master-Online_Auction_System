@@ -110,7 +110,7 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #c08607;
+  background-color: #3f424b;
   color: black;
 }
 
@@ -121,8 +121,8 @@
   left: 0;
   width: 200px;
   height: calc(100vh - 60px); /* Full height minus navbar */
-  background-color: #bb721ec9;
-  border-right: 1px solid #916a15c5;
+  background-color: #262630;
+  border-right: 1px solid #262630;
   transform: translateX(-100%); /* Hidden by default */
   transition: transform 0.3s ease-in-out;
   z-index: 999;
@@ -144,12 +144,12 @@
   text-decoration: none;
   font-size: 16px;
   padding: 10px;
-  border: 1px solid #b3711b;
+  border: 1px solid #262630;
   text-align: center;
 }
 
 .sidebar-content a:hover {
-  background-color: #6e391b;
+  background-color: #3d3b39;
 }
 
 /* Responsive Design */
