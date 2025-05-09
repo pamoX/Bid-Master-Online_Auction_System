@@ -1,117 +1,113 @@
-// frontend/src/Components/RejectedItems/RejectedItems.js
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import './RejectedItems.css';
 
-const RejectedItems = () => {
-  // State for the list of rejected items
-  const [items, setItems] = useState([
-    { id: 1, name: 'Item 1', reason: 'Poor Quality', date: '2025-03-24' },
-    { id: 2, name: 'Item 2', reason: 'Incomplete Description', date: '2025-03-23' },
-  ]);
+function RejectedItems() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { item } = location.state || {};
+  const [reason, setReason] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [rejectedItems, setRejectedItems] = useState([]);
 
-  // State to manage the edit form visibility and the item being edited
-  const [editItemId, setEditItemId] = useState(null);
-  const [editReason, setEditReason] = useState('');
-
-  // Handle delete action
-  const handleDelete = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
-
-  // Handle edit feedback action (open the edit form)
-  const handleEditFeedback = (item) => {
-    setEditItemId(item.id);
-    setEditReason(item.reason); // Pre-fill the textbox with the current reason
-  };
-
-  // Handle saving the updated feedback
-  const handleSaveFeedback = (id) => {
-    setItems(
-      items.map((item) =>
-        item.id === id ? { ...item, reason: editReason } : item
-      )
-    );
-    setEditItemId(null); // Close the edit form
-    setEditReason(''); // Reset the textbox
-  };
-
-  // Handle canceling the edit
-  const handleCancelEdit = () => {
-    setEditItemId(null);
-    setEditReason('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Log the rejection reason
+    console.log(`Item ${item?.id} rejected with reason: ${reason}`);
+    // Add the rejected item to the list with the reason
+    setRejectedItems([
+      ...rejectedItems,
+      { ...item, status: 'Rejected', rejectionReason: reason },
+    ]);
+    // Mark the form as submitted
+    setIsSubmitted(true);
   };
 
   return (
-    <div className="rejected-items">
+    <div className="rejected-items-container">
       <Nav />
-      <br />
-      <br />
-      <br />
-      <h1>Rejected Items</h1>
-
-      {/* Table of Rejected Items */}
-      <table>
-        <thead>
-          <tr>
-            <th>Item ID</th>
-            <th>Name</th>
-            <th>Rejection Reason</th>
-            <th>Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.reason}</td>
-              <td>{item.date}</td>
-              <td>
+      <div className="rejected-items-content">
+        <h1>Reject Item</h1>
+        {item ? (
+          <div className="item-details">
+            <h2>Item Details</h2>
+            <p><strong>Name:</strong> {item.name}</p>
+            <p><strong>Description:</strong> {item.description}</p>
+            <p><strong>Price:</strong> ${item.price}</p>
+            <p><strong>Status:</strong> {item.status}</p>
+            {isSubmitted ? (
+              <div className="confirmation-message">
+                <h3>Rejection Submitted</h3>
+                <p><strong>Reason for Rejection:</strong> {reason}</p>
                 <button
-                  onClick={() => handleEditFeedback(item)}
-                  className="action-btn edit-btn"
+                  className="cancel-btn"
+                  onClick={() => navigate('/display-items')}
                 >
-                  Edit Feedback
+                  Back to Dashboard
                 </button>
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="action-btn delete-btn"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Edit Feedback Form (shown when Edit Feedback is clicked) */}
-      {editItemId && (
-        <div className="edit-form-container">
-          <h2>Edit Rejection Reason</h2>
-          <div className="form-group">
-            <label>Rejection Reason:</label>
-            <textarea
-              value={editReason}
-              onChange={(e) => setEditReason(e.target.value)}
-              required
-            />
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="rejection-form">
+                <div className="form-group">
+                  <label htmlFor="reason">Reason for Rejection</label>
+                  <textarea
+                    id="reason"
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    required
+                  ></textarea>
+                </div>
+                <div className="button-group">
+                  <button type="submit" className="submit-btn">Submit Rejection</button>
+                  <button
+                    type="button"
+                    className="cancel-btn"
+                    onClick={() => navigate('/display-items')}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
-          <button
-            onClick={() => handleSaveFeedback(editItemId)}
-            className="submit-btn"
-          >
-            Save
-          </button>
-          <button onClick={handleCancelEdit} className="cancel-btn">
-            Cancel
-          </button>
+        ) : (
+          <p>No item details available.</p>
+        )}
+        <div className="rejected-items-table">
+          <h2>All Rejected Items</h2>
+          {rejectedItems.length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Rejection Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rejectedItems.map((rejectedItem) => (
+                  <tr key={rejectedItem.id}>
+                    <td>{rejectedItem.id}</td>
+                    <td>{rejectedItem.name}</td>
+                    <td>{rejectedItem.description}</td>
+                    <td>${rejectedItem.price}</td>
+                    <td>{rejectedItem.status}</td>
+                    <td>{rejectedItem.rejectionReason}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No items have been rejected yet.</p>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
-};
+}
 
 export default RejectedItems;

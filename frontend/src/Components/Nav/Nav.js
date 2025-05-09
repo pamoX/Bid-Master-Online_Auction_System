@@ -60,11 +60,11 @@ const Nav = () => {
           <Link to="/flagged-items" onClick={toggleSidebar}>
             Reports Dashboard
           </Link>
-          <Link to="/display-items" onClick={toggleSidebar}>
-            Display Items
+          <Link to="/item-form" onClick={toggleSidebar}>
+            Items
           </Link>
-          <Link to="/reject-items" onClick={toggleSidebar}>
-            Reject Items
+          <Link to="/item-manager" onClick={toggleSidebar}>
+          Manage Items
           </Link>
           <Link to="/items-gallery" onClick={toggleSidebar}>
             Bidding Items

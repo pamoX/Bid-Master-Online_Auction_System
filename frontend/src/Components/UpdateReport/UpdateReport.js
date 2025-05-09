@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Nav from '../Nav/Nav';
-import './UpdateReport.css'; // Import the CSS file
+import './UpdateReport.css';
 
 function UpdateReport() {
   const [inputs, setInputs] = useState({});
@@ -48,51 +48,62 @@ function UpdateReport() {
 
   return (
     <div className="UR-update-report-page">
-      <Nav />
-      <br />
-      <br />
-      <br />
-      <br />
-      <h1 className="UR-page-title">Update Report</h1>
-      <main className="AR-form-container">
-        <form onSubmit={handleSubmit} className="AR-report-form">
-          <div className="AR-form-group">
-            <label htmlFor="ReportName">Report Name</label>
-            <input
-              type="text"
-              id="ReportName"
-              name="ReportName"
-              onChange={handleChange}
-              value={inputs.ReportName || ''}
-              required
-              placeholder="Enter report name"
-            />
-          </div>
-          <div className="AR-form-group">
-            <label htmlFor="ReportReason">Report Reason</label>
-            <input
-              type="text"
-              id="ReportReason"
-              name="ReportReason"
-              onChange={handleChange}
-              value={inputs.ReportReason || ''}
-              required
-              placeholder="Enter reason for report"
-            />
-          </div>
-          <div className="AR-form-group">
-            <label htmlFor="Date">Date</label>
-            <input
-              type="date"
-              id="Date"
-              name="Date"
-              onChange={handleChange}
-              value={inputs.Date || ''}
-              required
-            />
-          </div>
-          <button type="submit" className="AR-submit-btn">Submit Report</button>
-        </form>
+      <header className="UR-header-banner">
+        <br/><br/><br/>
+        <Nav />
+        <div className="UR-header-overlay">
+          
+        </div>
+      </header>
+      <main className="AR-content-container">
+        <div className="AR-image-container">
+          <img
+            src="https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHJlcG9ydHxlbnwwfHwwfHx8MA%3D%3D"
+            alt="Update report illustration"
+            className="AR-side-image"
+          />
+        </div>
+        <br/><br/>
+        <div className="AR-form-container">
+          <form onSubmit={handleSubmit} className="AR-report-form">
+            <div className="AR-form-group">
+              <label htmlFor="ReportName">Report Name</label>
+              <input
+                type="text"
+                id="ReportName"
+                name="ReportName"
+                onChange={handleChange}
+                value={inputs.ReportName || ''}
+                required
+                placeholder="Enter report name"
+              />
+            </div>
+            <div className="AR-form-group">
+              <label htmlFor="ReportReason">Report Reason</label>
+              <input
+                type="text"
+                id="ReportReason"
+                name="ReportReason"
+                onChange={handleChange}
+                value={inputs.ReportReason || ''}
+                required
+                placeholder="Enter reason for report"
+              />
+            </div>
+            <div className="AR-form-group">
+              <label htmlFor="Date">Date</label>
+              <input
+                type="date"
+                id="Date"
+                name="Date"
+                onChange={handleChange}
+                value={inputs.Date || ''}
+                required
+              />
+            </div>
+            <button type="submit" className="AR-submit-btn">Update Report</button>
+          </form>
+        </div>
       </main>
     </div>
   );
