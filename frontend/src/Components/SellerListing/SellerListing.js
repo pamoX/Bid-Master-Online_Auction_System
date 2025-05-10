@@ -82,7 +82,6 @@ function ItemListing() {
   };
 
   return (
-<<<<<<< Updated upstream
     <div className="item-listing">
       <Nav />
       <br />
@@ -93,36 +92,6 @@ function ItemListing() {
         <div className="items-table-container">
           {items.length > 0 ? (
             <table className="items-table">
-=======
-    <div className="seller-listings-page">
-      <Nav /><br/><br/>
-      <h1>Item Listings</h1>
-      <p>Manage your auction listings below.</p>
-
-      <div className="navigation-links">
-        <Link to="/create-listing">Create Listing</Link>
-        <Link to="/live-bids">Live Bids</Link>
-        <Link to="/seller-dashboard">Dashboard</Link>
-      </div>
-
-      <div className="grid-container">
-        <div className="card listings-container">
-          <h2>Your Listings</h2>
-          <div className="filter-section">
-            <label>Filter by Status: </label>
-            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-              <option value="All">All</option>
-              <option value="Pending">Pending</option>
-              <option value="Draft">Draft</option>
-              <option value="Live">Live</option>
-              <option value="Ended">Ended</option>
-            </select>
-          </div>
-          {sortedListings.length === 0 ? (
-            <p>No listings available.</p>
-          ) : (
-            <table className="listings-table">
->>>>>>> Stashed changes
               <thead>
                 <tr>
                   <th>Name</th>

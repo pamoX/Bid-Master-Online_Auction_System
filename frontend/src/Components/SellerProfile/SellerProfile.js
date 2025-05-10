@@ -163,13 +163,8 @@ const SellerProfile = () => {
   return (
     <div className="seller-profile-page">
       <Nav />
-<<<<<<< Updated upstream
       <br /><br/><br/><br/>
       <h1>Seller Profile</h1>
-=======
-      <br /><br/><br/>
-      <h1>Seller Dashboard</h1>
->>>>>>> Stashed changes
       {loading && <p className="loading">Loading...</p>}
       {message && <p className={`message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</p>}
 

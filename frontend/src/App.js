@@ -11,10 +11,6 @@ import Terms from './Components/Terms/Terms';
 import SellerListings from './Components/SellerListing/SellerListing';
 import AddItem from './Components/AddItem/AddItem';
 import UpdateItem from './Components/UpdateItem/UpdateItem';
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 
 function App() {
