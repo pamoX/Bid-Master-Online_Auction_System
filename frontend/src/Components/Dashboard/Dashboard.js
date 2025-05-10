@@ -1,38 +1,84 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import './Dashboard.css';
-import pendingIcon from '../../assets/pending-icon.png';
-import liveIcon from '../../assets/live-icon.png';
-import rejectedIcon from '../../assets/rejected-icon.png';
-import flaggedIcon from '../../assets/flagged-icon.png';
-import reviewIcon from '../../assets/review-icon.png';
-import viewIcon from '../../assets/view-icon.png';
-import reportIcon from '../../assets/report-icon.png';
-import summaryIcon from '../../assets/summary-icon.png';
-import alertIcon from '../../assets/alert-icon.png';
+// Remove icon imports since we'll use CSS-based icons and font icons
 
 const Dashboard = () => {
-  const recentActivity = [
-    { id: 123, name: 'Lamp', status: 'Pending', date: '03/29/25', image: 'https://images.unsplash.com/photo-1609223732832-fd47d91a8747?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGxhbXBzaGFkZXxlbnwwfHwwfHx8MA%3D%3D' },
-    { id: 124, name: 'Phone', status: 'Live', date: '03/30/25', image: 'https://images.unsplash.com/photo-1551806235-6692cbfc690b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHZpbnRhZ2UlMjBwaG9uZXxlbnwwfHwwfHx8MA%3D%3D' },
-    { id: 125, name: 'Toy Car', status: 'Flagged', date: '03/30/25', image: 'https://media.istockphoto.com/id/842671004/photo/retro-taxi.webp?a=1&b=1&s=612x612&w=0&k=20&c=DptkF2AfY5p7ZTiKUuN8yD_b-HMyzqNLyLQkyUS5p6w=' },
-  ];
+  const navigate = useNavigate();
+  const [itemStats, setItemStats] = useState({
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+    flagged: 0
+  });
+  const [recentItems, setRecentItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const alerts = [
-    'Item #123 overdue for inspection (submitted 3 days ago)',
-    'Item #125 flagged as fraudulent by 2 users',
-  ];
+  useEffect(() => {
+    // Fetch item statistics
+    fetchItemStats();
+    // Fetch recent items
+    fetchRecentItems();
+  }, []);
 
-  const quickActions = [
-    { title: 'Review Items', icon: reviewIcon, action: 'Review Items', link: '#' },
-    { title: 'View Live Bids', icon: viewIcon, action: 'View Live Bids', link: '#' },
-    { title: 'Check Reports', icon: reportIcon, action: 'Check Reports', link: '/flagged-items' },
-    { title: 'Generate Summary', icon: summaryIcon, action: 'Generate Summary', link: '#' },
-  ];
+  const fetchItemStats = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/items/stats');
+      if (!response.ok) {
+        throw new Error('Failed to fetch item statistics');
+      }
+      const data = await response.json();
+      setItemStats({
+        pending: data.pending || 0,
+        approved: data.approved || 0,
+        rejected: data.rejected || 0,
+        flagged: data.flagged || 0
+      });
+    } catch (err) {
+      // Error handling
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const handleTileClick = (section) => console.log(`Navigating to ${section}`);
-  const handleActionClick = (action) => console.log(`Action triggered: ${action}`);
+  const fetchRecentItems = async () => {
+    try {
+      // Instead of using a specific 'recent' endpoint, fetch all items and take the most recent ones
+      const response = await fetch('http://localhost:5000/items');
+      if (!response.ok) {
+        throw new Error('Failed to fetch items');
+      }
+      const data = await response.json();
+      // Sort by creation date (newest first) and take only the first 3 items
+      const sortedItems = data.sort((a, b) => 
+        new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now())
+      ).slice(0, 3); // Changed from 6 to 3 items
+      
+      setRecentItems(sortedItems);
+    } catch (err) {
+      console.error('Error fetching recent items:', err);
+      // Fallback to dummy data if API not implemented yet - limited to 3 items
+      setRecentItems([
+        { _id: '123', name: 'Antique Lamp', status: 'Pending', createdAt: '2025-03-29', image: '/uploads/lamp.jpg' },
+        { _id: '124', name: 'Vintage Phone', status: 'Approved', createdAt: '2025-03-30', image: '/uploads/phone.jpg' },
+        { _id: '125', name: 'Collectible Toy Car', status: 'Rejected', createdAt: '2025-03-30', image: '/uploads/toy.jpg' },
+      ]);
+    }
+  };
+
+  const handleItemViewClick = (item) => {
+    // Navigate to the item view page for the selected item
+    navigate(`/item/${item._id}`);
+  };
+
+  const handleManageItemsClick = () => {
+    navigate('/item-manager');
+  };
+
+  const handleAddItemClick = () => {
+    navigate('/item-form');
+  };
 
   return (
     <div className="dashboard-page">
@@ -40,35 +86,9 @@ const Dashboard = () => {
       
       {/* Hero Section */}
       <section className="dash-hero-section">
-      </section>
-
-      <h1 className="dash-hero-title">Welcome, Pamodini</h1>
-      <p className="dash-hero-subtitle">Your Auction Dashboard</p>
-
-      {/* Metrics Section */}
-      <section className="dash-metrics-section">
-        <h2 className="dash-section-title">Dashboard Overview</h2>
-        <div className="dash-metrics-grid">
-          <div className="dash-metric-item" onClick={() => handleTileClick('Inspection Manager')}>
-            <img src={pendingIcon} alt="Pending" className="metric-icon" />
-            <h3>Pending Inspections</h3>
-            <p>12 Items</p>
-          </div>
-          <div className="dash-metric-item" onClick={() => handleTileClick('Bidding Page')}>
-            <img src={liveIcon} alt="Live" className="metric-icon" />
-            <h3>Live Auctions</h3>
-            <p>8 Items</p>
-          </div>
-          <div className="dash-metric-item" onClick={() => handleTileClick('Deleted/Rejected Page')}>
-            <img src={rejectedIcon} alt="Rejected" className="metric-icon" />
-            <h3>Rejected Items</h3>
-            <p>5 Items</p>
-          </div>
-          <div className="dash-metric-item" onClick={() => handleTileClick('Reported Items Page')}>
-            <img src={flaggedIcon} alt="Flagged" className="metric-icon" />
-            <h3>Flagged Items</h3>
-            <p>3 Items</p>
-          </div>
+        <div className="dash-hero-content">
+          <h1 className="dash-hero-title">Inspection Manager Dashboard</h1>
+          <p className="dash-hero-subtitle">Monitor and manage auction items</p>
         </div>
       </section>
 
@@ -76,53 +96,80 @@ const Dashboard = () => {
       <section className="dash-actions-section">
         <h2 className="dash-section-title">Quick Actions</h2>
         <div className="dash-actions-grid">
-          {quickActions.map((action, index) => (
-            <Link
-              key={index}
-              to={action.link}
-              className="dash-action-card"
-              onClick={() => handleActionClick(action.action)}
-            >
-              <img src={action.icon} alt={action.title} className="action-icon" />
-              <h3>{action.title}</h3>
-            </Link>
-          ))}
+          <div className="dash-action-card" onClick={handleAddItemClick}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-plus"></i>
+            </div>
+            <h3>Add New Item</h3>
+          </div>
+          <div className="dash-action-card" onClick={handleManageItemsClick}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-tasks"></i>
+            </div>
+            <h3>Manage Items</h3>
+          </div>
+          <div className="dash-action-card" onClick={() => navigate('/items-gallery')}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-images"></i>
+            </div>
+            <h3>View Gallery</h3>
+          </div>
+          <div className="dash-action-card" onClick={() => navigate('/add-report')}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-flag"></i>
+            </div>
+            <h3>Add New Report</h3>
+          </div>
+          <div className="dash-action-card" onClick={() => navigate('/flagged-items')}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-exclamation-circle"></i>
+            </div>
+            <h3>View Reports</h3>
+          </div>
         </div>
       </section>
 
-      {/* Recent Activity Section */}
+      {/* Recent Items Section - Limited to 3 items */}
       <section className="dash-activity-section">
-        <h2 className="dash-section-title">
-          <img src={summaryIcon} alt="Activity" className="section-icon" />
-          Recent Activity
-        </h2>
-        <div className="dash-activity-grid">
-          {recentActivity.map((item) => (
-            <div key={item.id} className="dash-activity-item">
-              <img src={item.image} alt={item.name} className="activity-image" />
-              <div className="activity-details">
-                <h3>{item.name}</h3>
-                <p>Status: {item.status}</p>
-                <p>Date: {item.date}</p>
-              </div>
-            </div>
-          ))}
+        <div className="section-header">
+          <h2 className="dash-section-title">Recent Items</h2>
+          <button className="view-all-btn" onClick={() => navigate('/items-gallery')}>View All</button>
         </div>
-      </section>
-
-      {/* Alerts Section */}
-      <section className="dash-alerts-section">
-        <h2 className="dash-section-title">
-          <img src={alertIcon} alt="Alerts" className="section-icon" />
-          Alerts
-        </h2>
-        <div className="dash-alerts-grid">
-          {alerts.map((alert, index) => (
-            <div key={index} className="dash-alert-item">
-              <img src={alertIcon} alt="Alert" className="alert-icon" />
-              <p>{alert}</p>
-            </div>
-          ))}
+        <div className="dash-activity-grid">
+          {recentItems.length === 0 ? (
+            <p className="no-items">No items available.</p>
+          ) : (
+            recentItems.map((item) => (
+              <div key={item._id} className="dash-activity-item">
+                <div className={`activity-status status-${item.status?.toLowerCase() || 'pending'}`}>
+                  {item.status || 'Pending'}
+                </div>
+                <img 
+                  src={item.image && item.image.startsWith('/uploads') 
+                    ? `http://localhost:5000${item.image}` 
+                    : `https://via.placeholder.com/150?text=${encodeURIComponent(item.name || 'Item')}`} 
+                  alt={item.name} 
+                  className="activity-image" 
+                />
+                <div className="activity-details">
+                  <h3>{item.name}</h3>
+                  <p><i className="far fa-calendar-alt"></i> Added: {new Date(item.createdAt || Date.now()).toLocaleDateString()}</p>
+                  {item.price && (
+                    <p className="item-price"><i className="fas fa-tag"></i> ${parseFloat(item.price).toFixed(2)}</p>
+                  )}
+                  {item.status === 'Approved' && item.startingPrice && (
+                    <p className="starting-bid"><i className="fas fa-gavel"></i> Starting bid: ${parseFloat(item.startingPrice).toFixed(2)}</p>
+                  )}
+                  <button 
+                    className="view-item-btn"
+                    onClick={() => handleItemViewClick(item)}
+                  >
+                    <i className="fas fa-search"></i> Review Item
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </section>
     </div>
