@@ -11,6 +11,7 @@ function AddItem() {
 
     const [inputs, setInputs] = useState({
         title: "",
+        image:"",
         description: "",
         startingBid: "",
     });

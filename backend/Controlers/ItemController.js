@@ -2,6 +2,7 @@ const SellerItem = require("../models/SellerItem");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { default: UpdateItem } = require("../../frontend/src/Components/UpdateItem/UpdateItem");
 
 // Configure storage for multer
 const storage = multer.diskStorage({
@@ -101,7 +102,7 @@ const getItemById = async (req, res) => {
 };
 
 // PUT update item
-const updateItem = async (req, res) => {
+const UpdateItem = async (req, res) => {
   try {
     const updatedItem = await SellerItem.findByIdAndUpdate(
       req.params.id,
@@ -149,7 +150,7 @@ module.exports = {
   getAllItems,
   createItem,
   getItemById,
-  updateItem,
+  UpdateItem,
   deleteItem,
   upload // Export the multer middleware
 };
