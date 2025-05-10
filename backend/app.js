@@ -1,11 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
+const fs = require("fs");
 const UserRoute = require("./Route/UserRoute");
 const SellerRoute = require("./Route/SellerRoute");
 const cors = require("cors");
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs"); // Add fs for file deletion
 
 const app = express();
 
@@ -13,10 +12,37 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Create uploads directory if it doesn't exist
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Define routes
 app.use("/users", UserRoute);
 app.use("/items", SellerRoute);
-app.use("/files", express.static(path.join(__dirname, "../frontend/src/Components/ImgUploader/files")));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    
+    // Handle multer errors specifically
+    if (err.name === 'MulterError') {
+        return res.status(400).json({
+            success: false,
+            message: err.message
+        });
+    }
+    
+    res.status(500).json({
+        success: false,
+        message: 'Something went wrong on the server',
+        error: err.message
+    });
+});
 
 // MongoDB connection
 mongoose
@@ -28,63 +54,3 @@ mongoose
     });
   })
   .catch((err) => console.log("MongoDB connection error:", err));
-
-// Image Handling
-const ImgSchema = require("./Model/ImgModel");
-
-const storageimg = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "../frontend/src/Components/ImgUploader/files");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + "-" + file.originalname);
-  },
-});
-
-const uploadimg = multer({ storage: storageimg });
-
-app.post("/upload-img", uploadimg.single("image"), async (req, res) => {
-  const imageName = req.file.filename;
-  try {
-    await ImgSchema.create({ image: imageName });
-    res.json({ status: "ok" });
-  } catch (error) {
-    res.json({ status: "error", error: error.message });
-  }
-});
-
-app.get("/getImage", async (req, res) => {
-  try {
-    const data = await ImgSchema.find({});
-    res.json({ status: "ok", data: data });
-  } catch (error) {
-    res.json({ status: "error", error: error.message });
-  }
-});
-
-// New Delete Endpoint
-app.delete("/delete-image/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    // Find the image document
-    const imageDoc = await ImgSchema.findById(id);
-    if (!imageDoc) {
-      return res.status(404).json({ status: "error", message: "Image not found" });
-    }
-
-    // Delete the file from the filesystem
-    const filePath = path.join(__dirname, "../frontend/src/Components/ImgUploader/files", imageDoc.image);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath); // Remove the file
-    }
-
-    // Delete the document from MongoDB
-    await ImgSchema.findByIdAndDelete(id);
-
-    res.json({ status: "ok", message: "Image deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ status: "error", error: error.message });
-  }
-});

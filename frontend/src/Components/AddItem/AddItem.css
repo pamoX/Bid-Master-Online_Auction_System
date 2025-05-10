@@ -1,156 +1,197 @@
-/* Full page styling */
-.AR-add-item-page {
-  min-height: 100vh;
-  background: url('https://images.unsplash.com/photo-1612817288484-6f916006741a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+/* AddItem.css */
 
-/* Header banner */
-.AR-header-banner {
-  position: absolute;
-  top: 0;
+.AR-add-item-page {
   width: 100%;
-  padding: 20px 0;
-  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: 'Arial', sans-serif;
 }
 
 .AR-header {
-  position: relative;
-  z-index: 1;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.AR-page-title {
-  font-size: 2rem;
-  color: #1f1c1c;
-  margin: 20px 0;
-  font-weight: 500;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+.AR-header h1 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
 }
 
-/* Form container */
 .AR-form-container {
-  max-width: 400px;
-  width: 100%;
-  min-height: 450px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
   padding: 30px;
-  background: rgba(201, 23, 23, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(235, 168, 168, 0.2);
-  border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Form styling */
-.AR-report-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .AR-form-group {
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
+  width: 100%;
 }
 
-.AR-form-group input {
-  padding: 12px 15px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 5px;
-  color: #362e2e;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.AR-form-group input::placeholder {
-  color: rgba(5, 5, 5, 0.808);
-}
-
-.AR-form-group input:focus {
-  border-color: rgba(235, 172, 172, 0.5);
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.AR-form-group input[type="date"] {
-  color: #fff;
-}
-
-.AR-form-group input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  cursor: pointer;
-}
-
-/* Submit button */
-.AR-submit-btn {
-  padding: 12px 20px;
-  background-color: rgba(94, 12, 53, 0.459);
-  color: #fff;
-  border: 1px solid rgba(11, 170, 45, 0.3);
-  border-radius: 5px;
-  font-size: 1rem;
+.AR-form-container label {
+  display: block;
+  margin-bottom: 8px;
   font-weight: 500;
+  color: #333;
+}
+
+.AR-form-group input,
+.AR-form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border 0.3s ease;
+}
+
+.AR-form-group input:focus,
+.AR-form-group textarea:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.AR-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.image-upload-container {
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
-.AR-submit-btn:hover {
-  background-color: rgba(39, 175, 5, 0.3);
-  transform: translateY(-2px);
+.image-upload-container:hover {
+  border-color: #4a90e2;
+  background-color: rgba(74, 144, 226, 0.05);
 }
 
-/* Responsive design */
+.image-upload-container.active {
+  border-color: #4a90e2;
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.image-preview {
+  margin-top: 15px;
+  max-width: 100%;
+  position: relative;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.remove-image {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff4d4f;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.file-input {
+  display: none;
+}
+
+.submit-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #357abD;
+}
+
+.popup-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: fadeInOut 3s ease;
+}
+
+.popup-message.error {
+  background-color: #f44336;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .AR-form-container {
-      max-width: 350px;
-      min-height: 400px;
-      margin: 20px;
-      padding: 20px;
+    padding: 20px;
   }
-
-  .AR-page-title {
-      font-size: 1.8rem;
+  
+  .AR-header h1 {
+    font-size: 24px;
   }
-
-  .AR-form-group input {
-      padding: 10px 12px;
-      font-size: 0.95rem;
-  }
-
-  .AR-submit-btn {
-      padding: 10px 16px;
-      font-size: 0.95rem;
+  
+  .popup-message {
+    left: 20px;
+    right: 20px;
+    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
+  .AR-form-group input,
+  .AR-form-group textarea,
+  .submit-button {
+    font-size: 14px;
+  }
+  
   .AR-form-container {
-      max-width: 300px;
-      min-height: 350px;
-      margin: 10px;
-      padding: 15px;
-  }
-
-  .AR-page-title {
-      font-size: 1.5rem;
-  }
-
-  .AR-form-group input {
-      padding: 8px 10px;
-      font-size: 0.9rem;
-  }
-
-  .AR-submit-btn {
-      width: 100%;
-      padding: 10px;
+    padding: 15px;
   }
 }

@@ -17,7 +17,6 @@ const fetchImages = async () => {
 
 function SellerDashboard() {
   const [items, setItems] = useState([]);
-  const [images, setImages] = useState([]);
   const [popup, setPopup] = useState({ message: "", type: "", visible: false });
 
   // Function to show popup with a message and type (success/error)
@@ -33,10 +32,7 @@ function SellerDashboard() {
     const loadData = async () => {
       try {
         const itemsData = await fetchItems();
-        const imagesData = await fetchImages();
-
         setItems(itemsData.items || []);
-        setImages(imagesData.status === "ok" ? imagesData.data || [] : []);
 
         // Show success popup if items are loaded
         if (itemsData.items && itemsData.items.length > 0) {
@@ -55,22 +51,18 @@ function SellerDashboard() {
   return (
     <div className="seller-dashboard">
       <Nav />
-      <br /><br /><br />
+      <br />
+      <br />
+      <br />
       <div>
         <h2 className="seller-header">Seller Dashboard</h2>
         <div className="items-container">
           {items.length > 0 ? (
-            items.map((item, i) => {
-              const itemImage = images.find((img) => img.itemId === item._id) || images[i];
-              const imageUrl = itemImage ? `http://localhost:5000/files/${itemImage.image}` : null;
-              const imageId = itemImage ? itemImage._id : null;
-
-              return (
-                <div key={i} className="item-card">
-                  <Item item={{ ...item, imageUrl, imageId }} />
-                </div>
-              );
-            })
+            items.map((item, i) => (
+              <div key={i} className="item-card">
+                <Item item={item} />
+              </div>
+            ))
           ) : (
             <p>No items available.</p>
           )}

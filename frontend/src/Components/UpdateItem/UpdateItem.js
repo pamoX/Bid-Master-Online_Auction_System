@@ -74,6 +74,7 @@ function UpdateItem() {
   return (
     <div className="AR-add-item-page">
       <Nav />
+      <br/><br/><br/><br/>
       <div>
         <div className="AR-header">
           <h1>Update Item</h1>

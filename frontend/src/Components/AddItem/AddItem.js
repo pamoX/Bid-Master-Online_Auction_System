@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import { useNavigate } from "react-router";
@@ -6,16 +6,20 @@ import axios from 'axios';
 import './AddItem.css';
 
 function AddItem() {
-    const history = useNavigate();
+    const navigate = useNavigate();
+    const fileInputRef = useRef(null);
 
     const [inputs, setInputs] = useState({
         title: "",
-        image:"",
         description: "",
         startingBid: "",
     });
 
-    const [popupMessage, setPopupMessage] = useState(""); // State for popup message
+    const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState("");
+    const [isDragging, setIsDragging] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
+    const [popupType, setPopupType] = useState("success"); // success or error
 
     const handleChange = (e) => {
         setInputs((prevState) => ({
@@ -24,32 +28,100 @@ function AddItem() {
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(inputs);
-        sendRequest()
-            .then(() => {
-                setPopupMessage("Item added successfully!"); // Set success message
-                setTimeout(() => {
-                    setPopupMessage(""); // Clear message after some time (optional)
-                    history("/seller-dashboard");
-                }, 3000); // Adjust timeout duration as needed
-            })
-            .catch(error => {
-                setPopupMessage("Failed to add item. Please try again."); // Set error message
-            });
+    const handleImageClick = () => {
+        fileInputRef.current.click();
     };
 
-    const sendRequest = async () => {
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            handleFileUpload(file);
+        }
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = () => {
+        setIsDragging(false);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
+        
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            handleFileUpload(e.dataTransfer.files[0]);
+        }
+    };
+
+    const handleFileUpload = (file) => {
+        if (file.type.startsWith('image/')) {
+            setImage(file);
+            
+            // Create preview
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            showPopup("Please upload an image file", "error");
+        }
+    };
+
+    const removeImage = (e) => {
+        e.stopPropagation();
+        setImage(null);
+        setImagePreview("");
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
+    const showPopup = (message, type) => {
+        setPopupMessage(message);
+        setPopupType(type);
+        setTimeout(() => {
+            setPopupMessage("");
+        }, 3000);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!image) {
+            showPopup("Please upload an image for the item", "error");
+            return;
+        }
+
         try {
-            const res = await axios.post("http://localhost:5000/items", {
-                title: String(inputs.title),
-                description: String(inputs.description),
-                startingBid: Number(inputs.startingBid),
+            // Create form data for multipart/form-data request (for image upload)
+            const formData = new FormData();
+            formData.append("title", inputs.title);
+            formData.append("description", inputs.description);
+            formData.append("startingBid", inputs.startingBid);
+            formData.append("image", image);
+
+            // Send the request
+            await axios.post("http://localhost:5000/items", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             });
-            return res.data;
+
+            showPopup("Item added successfully!", "success");
+            
+            // Navigate after popup display
+            setTimeout(() => {
+                navigate("/seller-dashboard");
+            }, 3000);
+            
         } catch (error) {
-            throw error;
+            console.error("Error adding item:", error);
+            showPopup("Failed to add item. Please try again.", "error");
         }
     };
 
@@ -75,10 +147,38 @@ function AddItem() {
                     />
                 </div>
 
+                <label>Image:</label>
+                <div 
+                    className={`image-upload-container ${isDragging ? 'active' : ''}`}
+                    onClick={handleImageClick}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                >
+                    <input 
+                        type="file" 
+                        ref={fileInputRef}
+                        className="file-input"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
+                    
+                    {!imagePreview ? (
+                        <div>
+                            <p>Click to upload or drag and drop</p>
+                            <p style={{ fontSize: '12px', color: '#888' }}>JPG, PNG or GIF (max 10MB)</p>
+                        </div>
+                    ) : (
+                        <div className="image-preview">
+                            <img src={imagePreview} alt="Item preview" />
+                            <div className="remove-image" onClick={removeImage}>×</div>
+                        </div>
+                    )}
+                </div>
+
                 <label>Description:</label>
                 <div className="AR-form-group">
                     <textarea
-                        type="text"
                         name="description"
                         onChange={handleChange}
                         value={inputs.description}
@@ -88,13 +188,14 @@ function AddItem() {
                     />
                 </div>
 
-                <label>Starting Bid:</label>
+                <label>Starting Bid ($):</label>
                 <div className="AR-form-group">
                     <input
                         type="number"
                         name="startingBid"
                         onChange={handleChange}
                         min="0"
+                        step="0.01"
                         value={inputs.startingBid}
                         placeholder="Enter starting bid"
                         required
@@ -105,7 +206,7 @@ function AddItem() {
             </form>
 
             {popupMessage && (
-                <div className="popup-message">
+                <div className={`popup-message ${popupType}`}>
                     <p>{popupMessage}</p>
                 </div>
             )}

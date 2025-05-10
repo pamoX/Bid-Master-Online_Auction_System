@@ -123,7 +123,7 @@ const SellerProfile = () => {
   return (
     <div className="seller-profile-page">
       <Nav />
-      <br />
+      <br /><br/><br/><br/>
       <h1>Seller Profile</h1>
       {loading && <p className="loading">Loading...</p>}
       {message && <p className={`message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</p>}
