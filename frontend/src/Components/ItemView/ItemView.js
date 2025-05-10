@@ -89,8 +89,11 @@ function ItemView() {
               onClick={() => handleThumbnailClick(item.image.startsWith('/uploads') ? `http://localhost:5000${item.image}` : `https://via.placeholder.com/400x300?text=${encodeURIComponent(item.name)}`)}
             >
               <img 
-                src={item.image.startsWith('/uploads') ? `http://localhost:5000${item.image}` : `https://via.placeholder.com/100x100?text=${encodeURIComponent(item.name)}`} 
-                alt={item.name} 
+                src={item.image.startsWith('/uploads')
+                  ? `http://localhost:5000${item.image}`
+                  : `https://via.placeholder.com/150?text=${encodeURIComponent(item.name)}`}
+                alt={item.name}
+                className="item-image"
               />
             </div>
             {item.additionalImages && item.additionalImages.map((img, index) => (
