@@ -4,20 +4,33 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+<<<<<<< Updated upstream
   padding: 0 20px;
+=======
+  padding: 20px;
+>>>>>>> Stashed changes
   font-family: 'Arial', sans-serif;
 }
 
 .seller-header {
+<<<<<<< Updated upstream
   color: #333;
   font-size: 28px;
   font-weight: 600;
   margin-bottom: 30px;
   text-align: center;
+=======
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 32px;
+  font-weight: 600;
+>>>>>>> Stashed changes
 }
 
 .items-container {
   display: grid;
+<<<<<<< Updated upstream
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   margin-top: 20px;
@@ -60,11 +73,46 @@
 
 .popup-message.info {
   background-color: #2196f3;
+=======
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 15px 0;
+}
+
+
+
+/* Popup message styling */
+.popup-message {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  z-index: 1000;
+  animation: fadeInOut 3s forwards;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-message.success {
+  background-color: #4CAF50;
+}
+
+.popup-message.error {
+  background-color: #F44336;
+}
+
+.popup-message.info {
+  background-color: #2196F3;
+>>>>>>> Stashed changes
 }
 
 @keyframes fadeInOut {
   0% {
     opacity: 0;
+<<<<<<< Updated upstream
     transform: translateY(20px);
   }
   10% {
@@ -85,10 +133,34 @@
 @media (max-width: 768px) {
   .items-container {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+=======
+    transform: translate(-50%, 20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+}
+
+/* Responsive styling */
+@media screen and (max-width: 768px) {
+  .items-container {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+>>>>>>> Stashed changes
   }
   
   .seller-header {
     font-size: 24px;
+<<<<<<< Updated upstream
   }
   
   .popup-message {
@@ -100,6 +172,13 @@
 }
 
 @media (max-width: 480px) {
+=======
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+>>>>>>> Stashed changes
   .items-container {
     grid-template-columns: 1fr;
   }

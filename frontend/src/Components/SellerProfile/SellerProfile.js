@@ -16,7 +16,7 @@ const SellerProfile = () => {
     totalSales: 0,
     successfulAuctions: 0,
     pendingPayments: 0,
-    earnings: { daily: 0, monthly: 0, yearly: 0 }
+    earnings: { daily: 0, monthly: 0, yearly: 0 },
   });
 
   const [reviews, setReviews] = useState([]);
@@ -29,6 +29,7 @@ const SellerProfile = () => {
     newPassword: '',
     confirmPassword: '',
   });
+  const [liveBids, setLiveBids] = useState([]); // New state for live bids
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +37,14 @@ const SellerProfile = () => {
     fetchSellerData();
     fetchSalesData();
     fetchReviews();
+    setupWebSocket(); // Initialize WebSocket for live bids
+
+    // Cleanup WebSocket on component unmount
+    return () => {
+      if (window.ws) {
+        window.ws.close();
+      }
+    };
   }, [timeFilter]);
 
   const fetchSellerData = async () => {
@@ -75,6 +84,37 @@ const SellerProfile = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Initialize WebSocket for live bids
+  const setupWebSocket = () => {
+    const ws = new WebSocket('ws://your-websocket-url/seller/bids'); // Replace with your WebSocket URL
+    window.ws = ws;
+
+    ws.onopen = () => {
+      console.log('WebSocket connected');
+      // Optionally send seller ID to subscribe to their bids
+      ws.send(JSON.stringify({ sellerId: sellerData._id })); // Adjust based on your API
+    };
+
+    ws.onmessage = (event) => {
+      const bidData = JSON.parse(event.data);
+      setLiveBids((prevBids) => {
+        const updatedBids = [...prevBids.filter((bid) => bid.itemId !== bidData.itemId), bidData];
+        return updatedBids.sort((a, b) => b.bidAmount - a.bidAmount); // Sort by highest bid
+      });
+    };
+
+    ws.onerror = (error) => {
+      setMessage('Error connecting to live bids');
+      console.error(error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket disconnected');
+      // Optionally attempt to reconnect
+      setTimeout(setupWebSocket, 5000);
+    };
   };
 
   const handleInputChange = (e) => {
@@ -123,12 +163,36 @@ const SellerProfile = () => {
   return (
     <div className="seller-profile-page">
       <Nav />
+<<<<<<< Updated upstream
       <br /><br/><br/><br/>
       <h1>Seller Profile</h1>
+=======
+      <br /><br/><br/>
+      <h1>Seller Dashboard</h1>
+>>>>>>> Stashed changes
       {loading && <p className="loading">Loading...</p>}
       {message && <p className={`message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</p>}
 
       <div className="dashboard-grid">
+        {/* Live Bids Section */}
+        <div className="live-bids-container grid-item embossed-card">
+          <h2>Live Bids</h2>
+          {liveBids.length > 0 ? (
+            <div className="bids-list">
+              {liveBids.map((bid) => (
+                <div key={bid.itemId} className="bid-item">
+                  <p><strong>Item:</strong> {bid.itemName}</p>
+                  <p><strong>Current Bid:</strong> ${bid.bidAmount.toLocaleString()}</p>
+                  <p><strong>Bidder:</strong> {bid.bidderName}</p>
+                  <p><strong>Time:</strong> {new Date(bid.bidTime).toLocaleTimeString()}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="no-bids">No live bids currently</p>
+          )}
+        </div>
+
         {/* Sales Overview */}
         <div className="sales-container grid-item embossed-card">
           <h2>Sales Overview</h2>

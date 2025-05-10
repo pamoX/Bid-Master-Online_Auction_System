@@ -1,144 +1,386 @@
 /* SellerProfile.css */
 
 .seller-profile-page {
-  padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
-  background-color: #f4f4f4;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding-bottom: 3rem;
 }
 
-h1 {
+.seller-profile-page h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #2a3b4c;
+  margin: 1.5rem 0 1rem;
   text-align: center;
-  margin-bottom: 2rem;
 }
 
 .loading {
   text-align: center;
-  color: #ff9800;
+  color: #6c757d;
+  margin: 1rem 0;
 }
 
 .message {
   text-align: center;
-  font-weight: bold;
-  padding: 0.75rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  margin: 1rem auto;
+  border-radius: 4px;
+  max-width: 600px;
+  font-weight: 500;
 }
 
 .message.success {
-  color: #155724;
   background-color: #d4edda;
+  color: #155724;
   border: 1px solid #c3e6cb;
 }
 
 .message.error {
-  color: #721c24;
   background-color: #f8d7da;
+  color: #721c24;
   border: 1px solid #f5c6cb;
 }
 
-/* 2x2 grid layout */
+/* Dashboard Grid Layout */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 90%;
+  max-width: 1300px;
+  margin: 1.5rem auto;
 }
 
-/* Card styling */
 .grid-item {
   background-color: white;
+  border-radius: 8px;
   padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .embossed-card {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e1e5eb;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Profile & Form styling */
-.profile-display p,
-.profile-form .form-group {
-  margin-bottom: 0.8rem;
+.embossed-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.profile-form input,
-.profile-form textarea,
-.password-form input {
+/* Grid Item Positioning */
+.live-bids-container {
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+
+.sales-container {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.profile-container {
+  grid-column: 1;
+  grid-row: 2 / 4;
+}
+
+.reviews-container {
+  grid-column: 2 / 4;
+  grid-row: 2;
+}
+
+.password-container {
+  grid-column: 2 / 4;
+  grid-row: 3;
+}
+
+/* Section Headers */
+.grid-item h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2a3b4c;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+/* Live Bids Section */
+.bids-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.bid-item {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 1rem;
+  border-left: 4px solid #3a7bd5;
+}
+
+.bid-item p {
+  margin: 0.5rem 0;
+}
+
+.no-bids {
+  color: #6c757d;
+  font-style: italic;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+/* Sales Overview */
+.time-filter {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.time-filter button {
+  padding: 0.4rem 0.8rem;
+  background-color: #f1f3f5;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.time-filter button:hover {
+  background-color: #e9ecef;
+}
+
+.time-filter button.active {
+  background-color: #3a7bd5;
+  color: white;
+  border-color: #3a7bd5;
+}
+
+.sales-stats {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.sales-stats p {
+  margin: 0.75rem 0;
+}
+
+/* Profile Information */
+.profile-display p {
+  margin: 0.75rem 0;
+}
+
+.profile-display button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #3a7bd5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.profile-display button:hover {
+  background-color: #2b6cb0;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-group input,
+.form-group textarea {
   width: 100%;
   padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.95rem;
 }
 
-.profile-form label,
-.password-form label {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-weight: 600;
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 .form-buttons {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .form-buttons button,
-.profile-display button,
-.password-form button,
-.time-filter button {
-  padding: 0.5rem 1rem;
+.password-form button {
+  padding: 0.6rem 1.2rem;
   border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.form-buttons button[type="submit"],
+.password-form button {
+  background-color: #28a745;
+  color: white;
+}
+
+.form-buttons button[type="submit"]:hover,
+.password-form button:hover {
+  background-color: #218838;
+}
+
+.form-buttons button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #5a6268;
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.65;
   cursor: not-allowed;
 }
 
-.time-filter {
+/* Reviews Section */
+.rating-summary {
+  background-color: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 6px;
   margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
 
-.time-filter button {
-  margin-right: 0.5rem;
-  background-color: #e0e0e0;
-  color: #333;
+.reviews-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
-.time-filter button.active {
-  background-color: #007bff;
-  color: white;
+.review-item {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #ffc107;
 }
 
-/* Reviews */
-.reviews-list .review-item {
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
-  margin-top: 1rem;
+.review-item p {
+  margin: 0.5rem 0;
 }
 
-.reviews-list .review-date {
-  color: #888;
-  font-size: 0.9rem;
+.review-date {
+  font-size: 0.85rem;
+  color: #6c757d;
+  text-align: right;
 }
 
 .no-reviews {
+  color: #6c757d;
   font-style: italic;
-  color: #999;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* Password Section */
+.password-form {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.password-form button {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .live-bids-container {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  
+  .sales-container {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  
+  .profile-container {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  
+  .reviews-container {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+  
+  .password-container {
+    grid-column: 1 / 3;
+    grid-row: 4;
+  }
+}
+
+@media (max-width: 768px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .live-bids-container,
+  .sales-container,
+  .profile-container,
+  .reviews-container,
+  .password-container {
+    grid-column: 1;
+  }
+  
+  .live-bids-container {
+    grid-row: 1;
+  }
+  
+  .sales-container {
+    grid-row: 2;
+  }
+  
+  .profile-container {
+    grid-row: 3;
+  }
+  
+  .reviews-container {
+    grid-row: 4;
+  }
+  
+  .password-container {
+    grid-row: 5;
+  }
+  
+  .time-filter {
+    flex-direction: column;
+  }
+  
+  .time-filter button {
+    width: 100%;
   }
 }

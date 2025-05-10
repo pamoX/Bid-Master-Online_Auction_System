@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 .item-listing {
   padding: 20px;
   min-height: 100vh;
@@ -11,10 +12,64 @@
 }
 
 .items-table-container {
+=======
+/* SellerListing.css */
+
+.seller-listings-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding-bottom: 3rem;
+}
+
+.seller-listings-page h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #2a3b4c;
+  margin: 1.5rem 0 0.5rem;
+  text-align: center;
+}
+
+.seller-listings-page p {
+  text-align: center;
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+.navigation-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.navigation-links a {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #3a7bd5;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navigation-links a:hover {
+  background-color: #2b6cb0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.grid-container {
+  width: 90%;
+>>>>>>> Stashed changes
   max-width: 1200px;
   margin: 0 auto;
 }
 
+<<<<<<< Updated upstream
 .items-table {
   width: 100%;
   border-collapse: collapse;
@@ -47,10 +102,76 @@
 .item-image {
   width: 50px;
   height: 50px;
+=======
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.listings-container h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2a3b4c;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.filter-section label {
+  margin-right: 0.75rem;
+  font-weight: 500;
+}
+
+.filter-section select {
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  background-color: white;
+  min-width: 150px;
+}
+
+.listings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.listings-table th,
+.listings-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+.listings-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.listings-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.listing-image {
+  width: 80px;
+  height: 80px;
+>>>>>>> Stashed changes
   object-fit: cover;
   border-radius: 4px;
 }
 
+<<<<<<< Updated upstream
 .items-table td button {
   padding: 6px 12px;
   border: none;
@@ -105,4 +226,95 @@ button:disabled {
 
 .popup-message.info {
   background-color: #17a2b8;
+=======
+.approve-btn,
+.edit-btn {
+  padding: 0.4rem 0.75rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+}
+
+.reject-btn,
+.delete-btn {
+  padding: 0.4rem 0.75rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+}
+
+.approve-btn:hover,
+.edit-btn:hover {
+  background-color: #218838;
+}
+
+.reject-btn:hover,
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .listings-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .navigation-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .navigation-links a {
+    width: 200px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .seller-listings-page h1 {
+    font-size: 1.8rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .filter-section select {
+    width: 100%;
+  }
+}
+
+/* Loading and error states */
+.seller-listings-page .loading,
+.seller-listings-page .error {
+  text-align: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.seller-listings-page .error {
+  color: #dc3545;
+>>>>>>> Stashed changes
 }
