@@ -1,3 +1,4 @@
+// Updated AboutUs.js file
 import React from 'react';
 import Nav from '../Nav/Nav';
 import './AboutUs.css';
@@ -55,13 +56,16 @@ function AboutUs() {
         {/* Our Mission Section */}
         <section className="aboutus-section aboutus-mission-section">
           <h2 className="aboutus-section-title">Our Mission</h2>
-          <p className="aboutus-section-text">
-            We strive to revolutionize online auctions by creating a dynamic marketplace 
-            that is accessible to everyone. From rare collectibles to everyday essentials, 
-            we empower our community to bid confidently and sell effortlessly. Our goal is 
-            to deliver excitement, value, and trust in every click—making auctions not just 
-            a transaction, but an experience.
-          </p>
+          <div className="aboutus-mission-content">
+            <p className="aboutus-section-text">
+              We strive to revolutionize online auctions by creating a dynamic marketplace 
+              that is accessible to everyone. From rare collectibles to everyday essentials, 
+              we empower our community to bid confidently and sell effortlessly. Our goal is 
+              to deliver excitement, value, and trust in every click—making auctions not just 
+              a transaction, but an experience.
+            </p>
+            <div className="aboutus-mission-image"></div>
+          </div>
         </section>
 
         {/* Our Journey Section */}
@@ -90,34 +94,33 @@ function AboutUs() {
           </div>
         </section>
 
-         {/* Team Stats Section */}
-      <section className="aboutus-stats-section">
-        <h2 className="aboutus-stats-title">Our Team</h2>
-        <div className="aboutus-stats-grid">
-          <div className="aboutus-stat-item">
-            <h2>HR Manager</h2>
-            <p>Durangi Abeykoon</p>
+        {/* Team Stats Section */}
+        <section className="aboutus-stats-section">
+          <h2 className="aboutus-stats-title">Our Team</h2>
+          <div className="aboutus-team-line">
+            <div className="aboutus-stat-item">
+              <h2>HR Manager</h2>
+              <p>Durangi Abeykoon</p>
+            </div>
+            <div className="aboutus-stat-item">
+              <h2>Inspection Manager</h2>
+              <p>Pamodini Perera</p>
+            </div>
+            <div className="aboutus-stat-item">
+              <h2>Shipping Manager</h2>
+              <p>Lahiruni Ariyawansa</p>
+            </div>
+            <div className="aboutus-stat-item">
+              <h2>Financial Manager</h2>
+              <p>Poornima Liyanage</p>
+            </div>
+            <div className="aboutus-stat-item">
+              <h2>Custom Care</h2>
+              <p>Sewwandi Koodituwakku</p>
+            </div>
           </div>
-          <div className="aboutus-stat-item">
-            <h2>Inapection Manager</h2>
-            <p>Pamodini Perera</p>
-          </div>
-          <div className="aboutus-stat-item">
-            <h2>Shipping Manager</h2>
-            <p>Lahiruni Ariyawansa</p>
-          </div>
-          <div className="aboutus-stat-item">
-            <h2>Financial Manager</h2>
-            <p>Poornima Liyanage</p>
-          </div>
-          <div className="aboutus-stat-item">
-            <h2>Custom Care</h2>
-            <p>Sewwandi Koodituwakku</p>
-          </div>
-        </div>
-      </section>
+        </section>
       </div>
-    
     </div>
   );
 }
