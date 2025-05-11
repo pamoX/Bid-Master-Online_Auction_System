@@ -195,42 +195,42 @@ function EditItem() {
     });
   };
 
-  if (loading) return <div className="form-container"><Nav /><div className="loading">Loading item data...</div></div>;
-  if (error) return <div className="form-container"><Nav /><div className="error">Error: {error}</div></div>;
+  if (loading) return <div className="item-container"><Nav /><div className="loading">Loading item data...</div></div>;
+  if (error) return <div className="item-container"><Nav /><div className="error">Error: {error}</div></div>;
 
   return (
-    <div className="form-container">
+    <div className="item-container">
       <Nav />
-      <div className="form-content">
+      <div className="item-content">
         <div className="illustration-container">
           <div className="illustration-bg">
             <div className="desk-illustration"></div>
           </div>
         </div>
-        <div className="form-wrapper">
-          <h1 className="form-title">Edit Item</h1>
+        <div className="item-wrapper">
+          <h1 className="item-title">Edit Item</h1>
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="name">Item Name</label>
               <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
             </div>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="description">Item Description</label>
               <textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
             </div>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="price">Item Price ($)</label>
               <input type="number" id="price" name="price" value={formData.price} onChange={handleChange} min="0" step="0.01" required />
             </div>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="startingPrice">Starting Bid Price ($)</label>
               <input type="number" id="startingPrice" name="startingPrice" value={formData.startingPrice} onChange={handleChange} min="0" step="0.01" placeholder="Default is Item Price" />
             </div>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="biddingEndTime">Bidding End Time</label>
               <input type="datetime-local" id="biddingEndTime" name="biddingEndTime" value={formData.biddingEndTime} onChange={handleChange} />
             </div>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="status">Status</label>
               <select id="status" name="status" value={formData.status} onChange={handleChange} required>
                 <option value="Pending">Pending</option>
@@ -238,7 +238,7 @@ function EditItem() {
                 <option value="Rejected">Rejected</option>
               </select>
             </div>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="image">Main Item Image</label>
               <input type="file" id="image" name="image" accept="image/*" onChange={handleChange} />
               {previewUrl ? (
@@ -253,7 +253,7 @@ function EditItem() {
                 </div>
               ) : null}
             </div>
-            <div className="form-group">
+            <div className="item-group">
               <label htmlFor="additionalImages">Additional Images (Up to 4)</label>
               <input type="file" id="additionalImages" name="additionalImages" accept="image/*" onChange={handleChange} multiple />
               {additionalPreviews.length > 0 ? (
@@ -282,7 +282,7 @@ function EditItem() {
                 </div>
               ) : null}
             </div>
-            <div className="form-buttons">
+            <div className="item-buttons">
               <button type="button" className="cancel-btn" onClick={() => navigate('/item-manager')}>Cancel</button>
               <button type="submit" className="submit-btn">Update Item</button>
             </div>
