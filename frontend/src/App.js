@@ -56,7 +56,7 @@ import BidShipSuccess from "./Components/BidShipUsers/BidShipSuccess";
 // Bidder feedback
 import BidFeedbackPage from './Components/BidFeedbackUsers/BidFeedbackPage';
 // Bidder pay
-import Checkout from './Components/Payment/Checkout.js';
+import Checkout from './Components/Payment/Checkout';
 import Success from './Components/Payment/Success.js';
 import Cancel from './Components/Payment/Cancel.js';
 // Bidder dashboard
@@ -146,7 +146,7 @@ function App() {
           <Route path="/BidFeedbackPage" element={<BidFeedbackPage />} />
 
           {/* Payment */}
-          <Route path="/payment" element={<Checkout />} />
+          <Route path="/payment/:id" element={<Checkout />} />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
 

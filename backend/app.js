@@ -18,6 +18,7 @@ const bidNowRoutes = require("./Route/BidNowRoutes");
 const Stripe = require('stripe');
 require('dotenv').config();
 require('./utils/TaskReminder');
+require('./utils/auctionWinnerNotifier');
 
 
 
