@@ -1,318 +1,245 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../Nav/Nav';
-import './SellerProfile.css';
+import Item from '../Item/Item';
 import axios from 'axios';
+import { Bar } from 'react-chartjs-2'; // Import Bar chart component
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'; // Chart.js components
+import './SellerProfile.css';
+
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const SellerProfile = () => {
-  const [sellerData, setSellerData] = useState({
-    name: 'Lakshi Sewwandi',
-    email: 'lakshi@gmail.com',
-    phone: '0769325412',
-    address: '65/4, Maharagama, Lane Street',
-    paymentMethod: 'PayPal: lakshi@gmail.com',
+  const navigate = useNavigate();
+  const [seller, setSeller] = useState({
+    username: '',
+    email: '',
+    profilePicture: '',
+    bio: '',
+    joinedDate: ''
   });
-
-  const [salesData, setSalesData] = useState({
-    totalSales: 0,
-    successfulAuctions: 0,
-    pendingPayments: 0,
-    earnings: { daily: 0, monthly: 0, yearly: 0 },
-  });
-
-  const [reviews, setReviews] = useState([]);
-  const [averageRating, setAverageRating] = useState(0);
-  const [timeFilter, setTimeFilter] = useState('monthly');
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ ...sellerData });
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-  });
-  const [liveBids, setLiveBids] = useState([]); // New state for live bids
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [sellerItems, setSellerItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchSellerData();
-    fetchSalesData();
-    fetchReviews();
-    setupWebSocket(); // Initialize WebSocket for live bids
+    fetchSellerProfile();
+    fetchSellerItems();
+  }, []);
 
-    // Cleanup WebSocket on component unmount
-    return () => {
-      if (window.ws) {
-        window.ws.close();
+  const fetchSellerProfile = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/seller/profile');
+      if (response.status !== 200) {
+        throw new Error('Failed to fetch seller profile');
       }
-    };
-  }, [timeFilter]);
-
-  const fetchSellerData = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('/api/seller/profile');
-      setSellerData(response.data);
-      setFormData(response.data);
-    } catch (error) {
-      setMessage('Error fetching profile data');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchSalesData = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`/api/seller/sales?filter=${timeFilter}`);
-      setSalesData(response.data);
-    } catch (error) {
-      setMessage('Error fetching sales data');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchReviews = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('/api/seller/reviews');
-      setReviews(response.data);
-      const avgRating = response.data.reduce((acc, review) => acc + review.rating, 0) / response.data.length;
-      setAverageRating(avgRating || 0);
-    } catch (error) {
-      setMessage('Error fetching reviews');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Initialize WebSocket for live bids
-  const setupWebSocket = () => {
-    const ws = new WebSocket('ws://your-websocket-url/seller/bids'); // Replace with your WebSocket URL
-    window.ws = ws;
-
-    ws.onopen = () => {
-      console.log('WebSocket connected');
-      // Optionally send seller ID to subscribe to their bids
-      ws.send(JSON.stringify({ sellerId: sellerData._id })); // Adjust based on your API
-    };
-
-    ws.onmessage = (event) => {
-      const bidData = JSON.parse(event.data);
-      setLiveBids((prevBids) => {
-        const updatedBids = [...prevBids.filter((bid) => bid.itemId !== bidData.itemId), bidData];
-        return updatedBids.sort((a, b) => b.bidAmount - a.bidAmount); // Sort by highest bid
+      const data = response.data;
+      setSeller({
+        username: data.username || 'Unknown Seller',
+        email: data.email || 'N/A',
+        profilePicture: data.profilePicture || '/Uploads/default-profile.jpg',
+        bio: data.bio || 'No bio provided.',
+        joinedDate: data.joinedDate || new Date().toISOString()
       });
-    };
-
-    ws.onerror = (error) => {
-      setMessage('Error connecting to live bids');
-      console.error(error);
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket disconnected');
-      // Optionally attempt to reconnect
-      setTimeout(setupWebSocket, 5000);
-    };
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handlePasswordChange = (e) => {
-    const { name, value } = e.target;
-    setPasswordData({ ...passwordData, [name]: value });
-  };
-
-  const handleSaveChanges = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await axios.put('/api/seller/profile', formData);
-      setSellerData({ ...formData });
-      setIsEditing(false);
-      setMessage('Profile updated successfully!');
-    } catch (error) {
-      setMessage('Error updating profile');
+    } catch (err) {
+      console.error('Error fetching seller profile:', err);
+      setSeller({
+        username: 'Official Seller',
+        email: 'seller@auction.com',
+        profilePicture: "http://yourdomain.com/backend/uploads/1746976809600-785179484.jpeg",
+        bio: 'Passionate about antiques and collectibles.',
+        joinedDate: '2025-01-01'
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePasswordSubmit = async (e) => {
-    e.preventDefault();
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setMessage('Passwords do not match');
-      return;
-    }
-    setLoading(true);
+  const fetchSellerItems = async () => {
     try {
-      await axios.put('/api/seller/password', passwordData);
-      setMessage('Password updated successfully!');
-      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
-    } catch (error) {
-      setMessage('Error updating password');
-    } finally {
-      setLoading(false);
+      const response = await axios.get('http://localhost:5000/items');
+      if (response.status !== 200) {
+        throw new Error('Failed to fetch seller items');
+      }
+      const data = response.data.items || [];
+      const sortedItems = data
+        .sort((a, b) => new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now()))
+        .slice(0, 3);
+      setSellerItems(sortedItems);
+    } catch (err) {
+      console.error('Error fetching seller items:', err);
+      setSellerItems([
+        { _id: '123', title: 'Antique Lamp', status: 'pending', createdAt: '2025-03-29', image: '/Uploads/lamp.jpg', description: 'A vintage antique lamp from the 1920s.', startingBid: 50.00 },
+        { _id: '124', title: 'Vintage Phone', status: 'accepted', createdAt: '2025-03-30', image: '/Uploads/phone.jpg', description: 'A classic rotary phone in mint condition.', startingBid: 75.00 },
+        { _id: '125', title: 'Collectible Toy Car', status: 'rejected', createdAt: '2025-03-30', image: '/Uploads/toy.jpg', description: 'A rare toy car from the 1960s.', startingBid: 30.00 }
+      ]);
     }
+  };
+
+  // Calculate item status counts
+  const getItemStatusCounts = () => {
+    const counts = {
+      pending: 0,
+      accepted: 0,
+      rejected: 0
+    };
+    sellerItems.forEach(item => {
+      if (item.status === 'pending') counts.pending++;
+      else if (item.status === 'accepted') counts.accepted++;
+      else if (item.status === 'rejected') counts.rejected++;
+    });
+    return counts;
+  };
+
+  // Chart data for Bar chart
+  const statusCounts = getItemStatusCounts();
+  const chartData = {
+    labels: ['Pending', 'Approved', 'Rejected'],
+    datasets: [
+      {
+        label: 'Item Status',
+        data: [statusCounts.pending, statusCounts.accepted, statusCounts.rejected],
+        backgroundColor: ['#FFCE56', '#36A2EB', '#FF6384'],
+        borderColor: ['#FFCE56', '#36A2EB', '#FF6384'],
+        borderWidth: 1
+      }
+    ]
+  };
+
+  // Chart options
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Item Status Distribution'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1 // Ensure whole numbers for item counts
+        }
+      }
+    }
+  };
+
+  const handleEditProfileClick = () => {
+    navigate('/edit-profile');
+  };
+
+  const handleAddItemClick = () => {
+    navigate('/add-item');
+  };
+
+  const handleDashboardClick = () => {
+    navigate('/seller-dashboard');
+  };
+
+  const handleItemRefresh = () => {
+    fetchSellerItems();
   };
 
   return (
     <div className="seller-profile-page">
       <Nav />
-      <br /><br/><br/><br/>
-      <h1>Seller Profile</h1>
-      {loading && <p className="loading">Loading...</p>}
-      {message && <p className={`message ${message.includes('Error') ? 'error' : 'success'}`}>{message}</p>}
 
-      <div className="dashboard-grid">
-        {/* Live Bids Section */}
-        <div className="live-bids-container grid-item embossed-card">
-          <h2>Live Bids</h2>
-          {liveBids.length > 0 ? (
-            <div className="bids-list">
-              {liveBids.map((bid) => (
-                <div key={bid.itemId} className="bid-item">
-                  <p><strong>Item:</strong> {bid.itemName}</p>
-                  <p><strong>Current Bid:</strong> ${bid.bidAmount.toLocaleString()}</p>
-                  <p><strong>Bidder:</strong> {bid.bidderName}</p>
-                  <p><strong>Time:</strong> {new Date(bid.bidTime).toLocaleTimeString()}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="no-bids">No live bids currently</p>
-          )}
+      {/* Hero Section */}
+      <section className="profile-hero-section">
+        <div className="profile-hero-content">
+          <h1 className="profile-hero-title">Seller Profile</h1>
+          <p className="profile-hero-subtitle">Manage your profile and listed items</p>
         </div>
+      </section>
 
-        {/* Sales Overview */}
-        <div className="sales-container grid-item embossed-card">
-          <h2>Sales Overview</h2>
-          <div className="time-filter">
-            {['daily', 'monthly', 'yearly'].map((filter) => (
-              <button
-                key={filter}
-                className={timeFilter === filter ? 'active' : ''}
-                onClick={() => setTimeFilter(filter)}
-              >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
-              </button>
-            ))}
-          </div>
-          <div className="sales-stats">
-            <p><strong>Total Sales:</strong> ${salesData.totalSales.toLocaleString()}</p>
-            <p><strong>Auctions:</strong> {salesData.successfulAuctions.toLocaleString()}</p>
-            <p><strong>Pending:</strong> ${salesData.pendingPayments.toLocaleString()}</p>
-            <p><strong>Earnings:</strong> ${salesData.earnings[timeFilter].toLocaleString()}</p>
-          </div>
-        </div>
-
-        {/* Profile Information */}
-        <div className="profile-container grid-item embossed-card">
-          <h2>Your Details</h2>
-          {!isEditing ? (
-            <div className="profile-display">
-              <p><strong>Name:</strong> {sellerData.name}</p>
-              <p><strong>Email:</strong> {sellerData.email}</p>
-              <p><strong>Phone:</strong> {sellerData.phone}</p>
-              <p><strong>Address:</strong> {sellerData.address}</p>
-              <p><strong>Payment:</strong> {sellerData.paymentMethod}</p>
-              <button onClick={() => setIsEditing(true)} disabled={loading}>
-                Edit Profile
+      {/* Seller Info Section */}
+      <section className="seller-info-section">
+        {loading ? (
+          <p>Loading profile...</p>
+        ) : (
+          <div className="seller-info-card">
+            <img
+              src={
+                seller.profilePicture && seller.profilePicture.startsWith('/Uploads')
+                  ? `http://localhost:5000${seller.profilePicture}`
+                  : 'https://via.placeholder.com/150?text=Profile'
+              }
+              alt="Profile"
+              className="seller-profile-picture"
+            />
+            <div className="seller-details">
+              <h2 className="seller-username">{seller.username}</h2>
+              <p className="seller-email"><i className="fas fa-envelope"></i> {seller.email}</p>
+              <p className="seller-bio">{seller.bio}</p>
+              <p className="seller-joined">
+                <i className="far fa-calendar-alt"></i> Joined:{' '}
+                {new Date(seller.joinedDate).toLocaleDateString()}
+              </p>
+              <button className="edit-profile-btn" onClick={handleEditProfileClick}>
+                <i className="fas fa-edit"></i> Edit Profile
               </button>
             </div>
-          ) : (
-            <form onSubmit={handleSaveChanges} className="profile-form">
-              <div className="form-group">
-                <label>Name</label>
-                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
-              </div>
-              <div className="form-group">
-                <label>Phone</label>
-                <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} required />
-              </div>
-              <div className="form-group">
-                <label>Address</label>
-                <textarea name="address" value={formData.address} onChange={handleInputChange} required />
-              </div>
-              <div className="form-group">
-                <label>Payment</label>
-                <input type="text" name="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange} required />
-              </div>
-              <div className="form-buttons">
-                <button type="submit" disabled={loading}>Save</button>
-                <button type="button" onClick={() => setIsEditing(false)} disabled={loading}>Cancel</button>
-              </div>
-            </form>
-          )}
-        </div>
+          </div>
+        )}
+      </section>
 
-        {/* Ratings and Reviews */}
-        <div className="reviews-container grid-item embossed-card">
-          <h2>Your Reputation</h2>
-          <p className="rating-summary">
-            <strong>Rating:</strong> {averageRating.toFixed(1)} / 5 ({reviews.length})
-          </p>
-          <div className="reviews-list">
-            {reviews.length > 0 ? (
-              reviews.map((review) => (
-                <div key={review._id} className="review-item">
-                  <p><strong>{review.buyerName}</strong> - {review.rating}/5 ★</p>
-                  <p>{review.comment}</p>
-                  <p className="review-date">{new Date(review.date).toLocaleDateString()}</p>
-                </div>
-              ))
-            ) : (
-              <p className="no-reviews">No reviews yet</p>
-            )}
+      {/* Item Status Chart Section */}
+      <section className="item-status-chart-section">
+        <h2 className="profile-section-title">Item Status Overview</h2>
+        <div className="chart-container" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <Bar data={chartData} options={chartOptions} />
+        </div>
+      </section>
+
+      {/* Quick Actions Section */}
+      <section className="profile-actions-section">
+        <h2 className="profile-section-title">Quick Actions</h2>
+        <div className="profile-actions-grid">
+          <div className="profile-action-card" onClick={handleAddItemClick}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-plus"></i>
+            </div>
+            <h3>Add New Item</h3>
+          </div>
+          <div className="profile-action-card" onClick={handleDashboardClick}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-tachometer-alt"></i>
+            </div>
+            <h3>View Dashboard</h3>
+          </div>
+          <div className="profile-action-card" onClick={() => navigate('/items-gallery')}>
+            <div className="action-icon-container">
+              <i className="action-icon fas fa-images"></i>
+            </div>
+            <h3>View Gallery</h3>
           </div>
         </div>
+      </section>
 
-        {/* Password Section */}
-        <div className="password-container grid-item embossed-card">
-          <h2>Change Password</h2>
-          <form onSubmit={handlePasswordSubmit} className="password-form">
-            <div className="form-group">
-              <label>Current</label>
-              <input
-                type="password"
-                name="currentPassword"
-                value={passwordData.currentPassword}
-                onChange={handlePasswordChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>New</label>
-              <input
-                type="password"
-                name="newPassword"
-                value={passwordData.newPassword}
-                onChange={handlePasswordChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Confirm</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={passwordData.confirmPassword}
-                onChange={handlePasswordChange}
-                required
-              />
-            </div>
-            <button type="submit" disabled={loading}>Update</button>
-          </form>
+      {/* Seller's Listed Items Section */}
+      <section className="seller-items-section">
+        <div className="section-header">
+          <h2 className="profile-section-title">Your Listed Items</h2>
+          <button className="view-all-btn" onClick={handleDashboardClick}>
+            View All
+          </button>
         </div>
-      </div>
+        <div className="seller-items-grid">
+          {sellerItems.length === 0 ? (
+            <p className="no-items">No items listed yet.</p>
+          ) : (
+            sellerItems.map((item) => (
+              <div key={item._id} className="item-grid-cell">
+                <Item item={item} onRefresh={handleItemRefresh} />
+              </div>
+            ))
+          )}
+        </div>
+      </section>
     </div>
   );
 };

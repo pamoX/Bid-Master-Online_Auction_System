@@ -1,59 +1,91 @@
-import React, { useEffect, useState } from 'react';
-import Nav from '../Nav/Nav';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import './UpdateItem.css';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Nav from "../Nav/Nav";
+import "./UpdateItem.css";
 
 function UpdateItem() {
-  const [inputs, setInputs] = useState({ id: '', title: '', description: '', startingBid: '' }); // Include id in state
+  const [inputs, setInputs] = useState({ id: "", title: "", description: "", startingBid: "" });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [popup, setPopup] = useState({ message: "", type: "", visible: false });
   const navigate = useNavigate();
   const { id } = useParams();
 
-  console.log('Item ID from URL:', id); // Verify ID from URL
+  // Show popup with a message and type (success/error)
+  const showPopup = (message, type) => {
+    setPopup({ message, type, visible: true });
+    setTimeout(() => {
+      setPopup({ message: "", type: "", visible: false });
+    }, 3000);
+  };
 
+  // Fetch item details
   useEffect(() => {
     const fetchHandler = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/items/${id}`);
-        console.log('Fetched Item Data:', res.data); // Log API response
-        const itemData = res.data;
-        setInputs({
-          id: itemData._id || id || '', // Use _id from API if available, else URL id
-          title: itemData.title || '',
-          description: itemData.description || '',
-          startingBid: itemData.startingBid || '',
+        setLoading(true);
+        const res = await axios.get(`http://localhost:5000/items/${id}`, {
+          timeout: 10000, // 10-second timeout
         });
+        const itemData = res.data.items || res.data; // Handle different response formats
+        if (!itemData) {
+          throw new Error("Item not found in response data.");
+        }
+        setInputs({
+          id: itemData._id || id,
+          title: itemData.title || "",
+          description: itemData.description || "",
+          startingBid: itemData.startingBid || "",
+        });
+        setLoading(false);
       } catch (err) {
-        console.error('Error fetching item:', err);
-        setError('Failed to load item data. Check if the item ID is valid.');
-      } finally {
+        console.error("Error fetching item:", {
+          message: err.message,
+          code: err.code,
+          response: err.response?.data,
+        });
+        setError(
+          err.response?.status === 404
+            ? "Item not found."
+            : "Failed to load item data. Please try again."
+        );
         setLoading(false);
       }
     };
-    fetchHandler();
+    if (id) {
+      fetchHandler();
+    } else {
+      setError("Invalid item ID.");
+      setLoading(false);
+    }
   }, [id]);
 
-  useEffect(() => {
-    console.log('Current Form Inputs:', inputs); // Log state changes
-  }, [inputs]);
-
+  // Update item
   const sendRequest = async () => {
     try {
+      // Validate inputs
+      if (!inputs.title.trim() || !inputs.description.trim()) {
+        throw new Error("Title and description cannot be empty.");
+      }
+      if (isNaN(inputs.startingBid) || Number(inputs.startingBid) < 0) {
+        throw new Error("Starting bid must be a non-negative number.");
+      }
       const res = await axios.put(`http://localhost:5000/items/${id}`, {
-        title: String(inputs.title),
-        description: String(inputs.description),
+        title: String(inputs.title).trim(),
+        description: String(inputs.description).trim(),
         startingBid: Number(inputs.startingBid),
       });
-      console.log('Update Response:', res.data); // Log update response
+      showPopup("Item updated successfully!", "success");
       return res.data;
     } catch (err) {
-      console.error('Error updating item:', err);
+      console.error("Error updating item:", err);
+      showPopup(err.message || "Failed to update item. Please try again.", "error");
       throw err;
     }
   };
 
+  // Handle input changes
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -61,36 +93,54 @@ function UpdateItem() {
     }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting Form with Inputs:', inputs); // Log submission data
-    await sendRequest();
-    navigate('/seller-dashboard');
+    try {
+      await sendRequest();
+      setTimeout(() => navigate("/seller-dashboard"), 2000);
+    } catch (err) {
+      // Error is handled in sendRequest via popup
+    }
   };
 
-  if (loading) return <div>Loading item details...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) {
+    return (
+      <div className="AR-add-item-page">
+        <Nav />
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading item details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="AR-add-item-page">
+        <Nav />
+        <div className="error-message">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="AR-add-item-page">
       <Nav />
-      <br/><br/><br/><br/>
-      <div>
-        <div className="AR-header">
-          <h1>Update Item</h1>
-        </div>
+      <br/><br/><br/><br/><br/>
+      <div className="AR-header">
+        <h1>Update Item</h1>
       </div>
-
       <form onSubmit={handleSubmit} className="AR-form-container AR-report-form">
-        {/* Item ID Field (Read-Only) */}
         <label>Item ID:</label>
         <div className="AR-form-group">
           <input
             type="text"
             name="id"
-            value={inputs.id || id} // Display fetched ID or URL ID
-            readOnly // Make it non-editable
-            className="readonly-input" // Optional: Add CSS to style it differently
+            value={inputs.id}
+            readOnly
+            className="readonly-input"
           />
         </div>
 
@@ -100,7 +150,7 @@ function UpdateItem() {
             type="text"
             name="title"
             onChange={handleChange}
-            value={inputs.title || ''}
+            value={inputs.title}
             placeholder="Enter item title"
             required
           />
@@ -111,7 +161,7 @@ function UpdateItem() {
           <textarea
             name="description"
             onChange={handleChange}
-            value={inputs.description || ''}
+            value={inputs.description}
             placeholder="Enter item description"
             required
             rows="5"
@@ -125,14 +175,19 @@ function UpdateItem() {
             name="startingBid"
             onChange={handleChange}
             min="0"
-            value={inputs.startingBid || ''}
+            step="0.01"
+            value={inputs.startingBid}
             placeholder="Enter starting bid"
             required
           />
         </div>
-        <br />
         <button type="submit" className="submit-button">Update Item</button>
       </form>
+      {popup.visible && (
+        <div className={`popup-message ${popup.type}`}>
+          <span>{popup.message}</span>
+        </div>
+      )}
     </div>
   );
 }

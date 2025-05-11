@@ -4,6 +4,7 @@ import Nav from "../Nav/Nav";
 import Item from "../Item/Item";
 import axios from "axios";
 import "./SellerDashboard.css";
+import Footer from "../Footer/Footer";
 
 const ITEMS_URL = "http://localhost:5000/items";
 
@@ -55,6 +56,7 @@ function SellerDashboard() {
   return (
     <div className="seller-dashboard">
       <Nav />
+      <br/><br/><br/><br/>
       <div className="dashboard-container">
         <header className="dashboard-header">
           <h2>Seller Dashboard</h2>
@@ -113,8 +115,11 @@ function SellerDashboard() {
           <span>{popup.message}</span>
         </div>
       )}
+
     </div>
+    
   );
+  
 }
 
 export default SellerDashboard;

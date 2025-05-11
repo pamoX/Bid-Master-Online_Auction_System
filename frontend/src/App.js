@@ -11,6 +11,7 @@ import Terms from './Components/Terms/Terms';
 import SellerListings from './Components/SellerListing/SellerListing';
 import AddItem from './Components/AddItem/AddItem';
 import UpdateItem from './Components/UpdateItem/UpdateItem';
+import EditProfile from './Components/SellerProfile/EditProfile';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs/>}/>
          <Route path="/register-seller" element={<SellerRegistration />} />
          <Route path="/seller-profile" element={<SellerProfile />} />
+         <Route path="/edit-profile" element={<EditProfile />} />
          <Route path="/terms" element={<Terms />} />
          <Route path="/seller-listing" element={<SellerListings/>}/>
          <Route path="/add-item" element={<AddItem/>}/>
