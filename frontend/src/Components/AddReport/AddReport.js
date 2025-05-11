@@ -64,6 +64,8 @@ function AddReport() {
         </div>
         <br/><br/>
         <div className="AR-form-container">
+          {/* Added title for the form */}
+          <h1 className="AR-form-title">Add Report Form</h1>
           <form onSubmit={handleSubmit} className="AR-report-form">
             <div className="AR-form-group">
               <label htmlFor="ReportName">Report Name</label>
