@@ -18,8 +18,11 @@ const loginUser = async (req, res) => {
 
         res.status(200).json({ 
             success: true, 
-            user: { name: user.name, username: user.username, role } 
+            user: { _id: user._id, name: user.name, username: user.username, role,
+                
+             } 
         });
+        
     } catch (err) {
         res.status(500).json({ success: false, message: "Server error" });
     }

@@ -1,37 +1,73 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom"; // Use NavLink instead of Link
-import "./Nav.css"; // Import CSS file
-import Sidebar from "../Sidebar/Sidebar"; // Import Sidebar
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { NavLink } from "react-router-dom";
+import "./Nav.css";
+import NotificationBell from "../NotificationBell/NotificationBell";
 
 function Nav() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar visibility
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [notifications, setNotifications] = useState([]);
+  const [user, setUser] = useState(null);
 
-  // Function to toggle sidebar visibility
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+  const userId = localStorage.getItem("userId");
+  const username = JSON.parse(localStorage.getItem("user"))?.username;
+
+  // Fetch notifications
+  const fetchNotifications = useCallback(async () => {
+    if (!username) return;
+    try {
+      const res = await axios.get(`http://localhost:5000/api/notifications/${username}`);
+      setNotifications(res.data);
+    } catch (err) {
+      console.error("Error fetching notifications:", err);
+    }
+  }, [username]);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [fetchNotifications]);
+
+  // Fetch user profile data
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        if (!userId) {
+          setUser(null); // Clear if no userId found
+          return;
+        }
+
+        const { data } = await axios.get(`http://localhost:5000/users/${userId}`);
+        setUser(data.user);
+      } catch (err) {
+        console.error("Failed to load user info", err);
+        setUser(null); // Reset on failure
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    setUser(null); // Clear user state
+    window.location.href = "/login"; // Full refresh to clear navbar
   };
 
   return (
     <div>
-      {/* Upper Navbar */}
+      {/* Top Navbar */}
       <nav className="navbar">
-        {/* Logo Section */}
+        {/* Logo */}
         <div className="logo">
-          <NavLink to="/home" activeClassName="active">
+          <NavLink to="/home">
             <img src="/favicon.ico" alt="AuctionApp Logo" className="logo-img" />
           </NavLink>
         </div>
 
-        {/* Sidebar Toggle Button */}
-        <button className="sidebar-toggle" onClick={toggleSidebar}>
-          {isSidebarOpen ? "☰" : "☰"} {/* Open/Close Sidebar */}
-        </button>
-
         {/* Search Bar */}
-        <div className="search-bar">
+        <div className="navsearch-bar">
           <input type="text" placeholder="Search auctions..." />
-          <button className="search-btn">Search</button>
+          <button className="navsearch-btn">Search</button>
         </div>
 
         {/* Navigation Links */}
@@ -40,28 +76,29 @@ function Nav() {
           <NavLink to="/aboutUs" activeClassName="active">About Us</NavLink>
           <NavLink to="/contactUs" activeClassName="active">Contact Us</NavLink>
 
-          {/* Conditionally Render Login or Profile/Logout */}
           {!user ? (
-            <NavLink to="/login" activeClassName="active" className="login-btn">Login</NavLink>
+            <NavLink to="/login" className="login-btn">Login</NavLink>
           ) : (
             <>
-              <NavLink to="/profile" activeClassName="active">Profile</NavLink>
-              <button
-                className="logout-btn"
-                onClick={() => { 
-                  localStorage.removeItem("user"); 
-                  window.location.href = "/login"; // Redirect to login page after logout
-                }}
-              >
-                Logout
-              </button>
+              <NotificationBell username={username} fetchNotifications={fetchNotifications} />
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
+              <NavLink to="/profile" className="profile-widget">
+  <img
+    src={
+      user.profileImage
+        ? `http://localhost:5000${user.profileImage}`
+        : "/images/default-avatar.png"
+    }
+    alt="Profile"
+    className="nav-profile-image"
+  />
+  <span className="nav-profile-name">{user.name}</span>
+</NavLink>
+
             </>
           )}
         </div>
       </nav>
-
-      {/* Pass the state to Sidebar to control its visibility */}
-      <Sidebar role={user ? user.username.split("_")[0] : "guest"} isOpen={isSidebarOpen} />
     </div>
   );
 }

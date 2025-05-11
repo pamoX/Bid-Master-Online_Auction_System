@@ -1,55 +1,85 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  FaUser, FaUsers, FaTasks, FaMoneyCheckAlt, FaBoxOpen, FaImage,
+  FaGavel, FaShippingFast, FaFileAlt, FaUserShield, FaRegClipboard, FaBars,FaPlusSquare
+} from 'react-icons/fa';
 import './Sidebar.css';
 
-function Sidebar({ role, isOpen }) {
+function Sidebar() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = localStorage.getItem("role");
+
+  const [isOpen, setIsOpen] = useState(() => {
+    // get persisted value on load
+    return localStorage.getItem("sidebarOpen") === "true";
+  });
+
+  useEffect(() => {
+    // update localStorage on state change
+    localStorage.setItem("sidebarOpen", isOpen);
+  }, [isOpen]);
+
+  if (!user || !role) return null;
+
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const renderLink = (to, Icon, label) => (
+    <Link to={to} className="sidebar-link">
+      <Icon className="sidebar-icon" />
+      {isOpen && <span>{label}</span>}
+    </Link>
+  );
+
   return (
     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-   
-      {/* Role-Based Sidebar Navigation */}
+      <button className="toggle-btn" onClick={toggleSidebar}>
+        <FaBars />
+      </button>
+
       {role === "sl" && (
         <>
-          <Link to="/seller-dashboard">Seller Dashboard</Link>
-          <Link to="/seller-listing">Item Listing</Link>
-          <Link to="/seller-profile">Seller Profile</Link>
-          <Link to="/add-item">Add Item</Link>
-          <Link to="/upload-img">Upload image</Link>
-        
+          {renderLink("/seller-dashboard", FaUser, "Seller Dashboard")}
+          {renderLink("/seller-listing", FaBoxOpen, "Item Listing")}
+          {renderLink("/seller-profile", FaUser, "Seller Profile")}
+          {renderLink("/add-item", FaGavel, "Add Item")}
+          {renderLink("/upload-img", FaImage, "Upload Image")}
         </>
       )}
       {role === "bid" && (
         <>
-          <Link to="/BidDashboard">Bidder Dashboard</Link>
-          <Link to="/bid-now">Bid Now</Link>
-          <Link to="/shipping">Shipping Details</Link>
-          <Link to="/payment">Payment</Link>
-          <Link to="/bidder-profile">Profile</Link>
-          <Link to="/BidFeedbackPage">Feedback</Link>
-
+          {renderLink("/BidDashboard", FaUser, "Bidder Dashboard")}
+          {renderLink("/bid-now/:itemId?", FaGavel, "Bid Now")}
+          {renderLink("/shipping", FaShippingFast, "Shipping Details")}
+          {renderLink("/payment", FaMoneyCheckAlt, "Payment")}
+          {renderLink("/bidder-profile", FaUser, "Profile")}
+          {renderLink("/BidFeedbackPage", FaRegClipboard, "Feedback")}
         </>
       )}
       {role === "ship" && (
         <>
-          <Link to="/shipmanagedash">Shipping Dashboard</Link>
-          <Link to="/shipments">Manage Shipments</Link>
-          <Link to="/shippers">Manage Shipment Service Providers</Link>
-         
+          {renderLink("/shipmanagedash", FaShippingFast, "Shipping Dashboard")}
+          {renderLink("/shipments", FaTasks, "Manage Shipments")}
+          {renderLink("/shippers", FaUsers, "Shipment Providers")}
         </>
       )}
       {role === "hr" && (
         <>
-          <Link to="/employeeDashboard">Employee Management</Link>
-          <Link to="/employeeReports">Employee Reports</Link>
-          <Link to="/trackPerformance">Track Performance</Link>
-          <Link to="/payroll">Payroll</Link>
+          {renderLink("/hrDashboard", FaUserShield, "HR Dashboard")}
+          {renderLink("/employeeDashboard", FaUsers, "Employee Management")}
+          {renderLink("/employeeReports", FaFileAlt, "Employee Reports")}
+          {renderLink("/tasks", FaTasks, "Task Management")}
+          {renderLink("/payroll", FaMoneyCheckAlt, "Payroll")}
         </>
       )}
       {role === "im" && (
         <>
-          <Link to="/inspectionDashboard">Dashboard</Link>
-          <Link to="/addReport">Add Report</Link>
-          <Link to="/flagged-items">Report Dashboard</Link>
-          <Link to="/inspectionReport">Inspection Report</Link>
+         {renderLink("/inspectionDashboard", FaUserShield, "Dashboard")}
+{renderLink("/add-report", FaRegClipboard, "Add Report")}
+{renderLink("/flagged-items", FaFileAlt, "Report Dashboard")}
+{renderLink("/item-form", FaPlusSquare, "Items")}                
+{renderLink("/item-manager", FaTasks, "Manage Items")}          
+{renderLink("/items-gallery", FaGavel, "Bidding Items")}    
         </>
       )}
     </div>

@@ -35,21 +35,29 @@ function UpdateEmployee() {
 
     const sendRequest = async () => {
         try {
+            // Convert skills to array only if it's a string
+            const updatedSkills = Array.isArray(inputs.skills)
+                ? inputs.skills
+                : inputs.skills.split(',').map(skill => skill.trim()).filter(Boolean);
+    
             await axios.put(`http://localhost:5000/api/employees/${id}`, {
                 employeeId: String(inputs.employeeId),
                 name: String(inputs.name),
                 email: String(inputs.email),
+                username: String(inputs.username),
                 phone: String(inputs.phone),
                 address: String(inputs.address),
                 salary: String(inputs.salary),
                 role: String(inputs.role),
                 department: String(inputs.department),
                 task: String(inputs.task),
+                skills: updatedSkills,
             });
         } catch (error) {
             console.error('Error updating employee data:', error);
         }
     };
+    
 
     const handleChange = (e) => {
         setInputs((prevState) => ({
@@ -72,6 +80,7 @@ function UpdateEmployee() {
         }
 
         await sendRequest();
+        alert("Employee updated successfully!")
         navigate("/employeeDashboard");
     };
 
@@ -126,6 +135,17 @@ function UpdateEmployee() {
                                     type="email"
                                     name="email"
                                     value={inputs.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label>Username:</label>
+                                <input
+                                    type="username"
+                                    name="username"
+                                    value={inputs.username}
                                     onChange={handleChange}
                                     required
                                 />
@@ -205,7 +225,22 @@ function UpdateEmployee() {
                                     <option value="Shipping">Shipping</option>
                                 </select>
                             </div>
+                           
                             <div>
+                                <label>Skills:</label>
+                                <input
+                                    type="text"
+                                    name="skills"
+                                    value={inputs.skills}
+                                    onChange={handleChange}
+                                    placeholder="JavaScript, MongoDB, React"
+                                />
+                                </div>
+
+
+                        </div>
+
+                        <div>
                                 <label>Task:</label>
                                 <input
                                     type="text"
@@ -215,8 +250,7 @@ function UpdateEmployee() {
                                     required
                                 />
                             </div>
-                        </div>
-
+    
                         <button type="submit" className="addEmp-button">
                             Update Employee
                         </button>

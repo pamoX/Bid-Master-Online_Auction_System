@@ -120,10 +120,12 @@ const EmployeeDashboard = () => {
 
   return (
     <div>
+    
       <div className="empDashboard-container">
         <div className="empDashboard">
           <h2>Employee Management Dashboard</h2>
         </div>
+       
         <div className="empDashboard-controls">
           <div className="empDashboard-search">
             <input

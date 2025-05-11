@@ -1,9 +1,12 @@
 
 import { Routes, Route } from "react-router-dom";
 import React from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import "./App.css";
+import Sidebar from "./Components/Sidebar/Sidebar.js";
 import Nav from "./Components/Nav/Nav";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
@@ -18,18 +21,26 @@ import UpdateEmployee from "./Components/UpdateEmployee/UpdateEmployee";
 import Terms from "./Components/Terms/Terms";
 import EmployeeDetails from "./Components/EmployeeDetails/EmployeeDetails";
 import Payroll from "./Components/Payroll/Payroll";
+import Profile from "./Components/Profile/Profile";
+import TaskDashboard from './Components/TaskDashboard/TaskDashboard';
+import HRDashboard from "./Components/HRDashboard/HRDashboard.js";
 
 //im
-import ReportedItems from "./Components/ReportedItems/ReportedItems";
 
 import AddReport from "./Components/AddReport/AddReport";
 import UpdateReport from "./Components/UpdateReport/UpdateReport";
 import InspectionDashboard from "./Components/InspectionDashboard/InspectionDashboard";
+import ReportedItems from "./Components/ReportedItems/ReportedItems";
+import ItemForm from "./Components/ItemForm/ItemForm";
+import ItemsGallery from "./Components/ItemsGallery/ItemsGallery";
+import ItemManager from "./Components/ItemManager/ItemManager";
+import EditItem from "./Components/ItemForm/EditItem";
+import ItemView from "./Components/ItemView/ItemView"; 
 
 //sl
 import SellerDashboard from './Components/SellerDashboard/SellerDashboard';
 import SellerListings from './Components/SellerListings/SellerListings';
-import AddItem from './Components/AddItem/AddItem';
+//import AddItem from './Components/AddItem/AddItem';
 import UpdateItem from './Components/UpdateItem/UpdateItem';
 import ImgUploader from './Components/ImgUploader/ImgUploader';
 import SellerProfile from './Components/SellerProfile/SellerProfile';
@@ -52,9 +63,8 @@ import Cancel from './Components/Payment/Cancel.js';
 import BidDashboard from './Components/BidDashboard/BidDashboard';
 // BidNowBidder component
 import BidNowBidder from './Components/BidNowBidder/BidNowBidder';
+
   
-
-
 import Shippers from './Components/Shippers/Shippers';
 import Shipments from './Components/Shipments/Shipments';
 import NewShipment from './Components/NewShipment/NewShipment';
@@ -71,6 +81,9 @@ function App() {
     <div >
    
    <Nav></Nav>
+   <Sidebar></Sidebar>
+
+   <ToastContainer />
 
     <React.Fragment>
       <Routes>
@@ -86,15 +99,31 @@ function App() {
         <Route path="/payroll" element={<Payroll/>}/>
         <Route path="/employeeDashboard/:id" element={<UpdateEmployee/>}/>
         <Route path="/employeeDetails/:id" element={<EmployeeDetails />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/tasks" element={<TaskDashboard />} />
+        <Route path="/hrDashboard" element={<HRDashboard />} />
 
 
-        <Route path="/addReport" element={<AddReport/>}/>
-        <Route path="/flagged-items" element={<ReportedItems/>}/>
-        <Route path="/flagged-items/:_id" element={<UpdateReport/>}/>
+
+
+       
         <Route path="/inspectionDashboard" element={<InspectionDashboard/>}/>
+        <Route path="/item-form" element={<ItemForm />} />
+          <Route path="/item-manager" element={<ItemManager/>} />
+          <Route path="/item/:id" element={<ItemView />} />
+          <Route path="/edit-item/:id" element={<EditItem />} />
+          <Route path="/items-gallery" element={<ItemsGallery />} />
+          <Route path="/flagged-items" element={<ReportedItems/>}/>
+          <Route path="/flagged-items/:_id" element={<UpdateReport/>}/>
+          <Route path="/add-report" element={<AddReport/>}/>
+        
+       
+         
+          
+
 
         <Route path="/seller-listing" element={<SellerListings/>}/>
-        <Route path="/add-item" element={<AddItem/>}/>
+        
         <Route path="/upload-img" element={<ImgUploader/>}/>
          <Route path="/seller-dashboard" element={<SellerDashboard />} />
          <Route path="/seller-dashboard/:id" element={<UpdateItem />} />
@@ -125,7 +154,9 @@ function App() {
           <Route path="/BidDashboard" element={<BidDashboard />} />
 
           {/* BidNowBidder route */}
-          <Route path="/bid-now" element={<BidNowBidder />} />
+          <Route path="/bid-now/:itemId?" element={<BidNowBidder />} />
+
+
 
 
           <Route path="/shipmanagedash" element={<ShipManageDash />} />
@@ -137,11 +168,6 @@ function App() {
           <Route path="/shippers/:id" element={<UpdateShipper/>}/>
 
 
-
-
-
-
-         
 
       </Routes>
     </React.Fragment>

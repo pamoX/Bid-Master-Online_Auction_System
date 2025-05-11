@@ -1,43 +1,205 @@
 .payroll-container {
-    width: 90%;
-    margin: 20px auto;
-    text-align: center;
-    height: 80vh;
-    margin-top: 150px;
-  }
+  width: 90%;
+  margin: 20px auto;
+  text-align: center;
+  height: 220vh;
+  margin-top: 100px;
+}
+
+.payroll-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.payroll-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.payroll-form input,
+.payroll-form select {
+  padding: 10px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.payroll-form button {
+  padding: 10px 20px;
+  background-color: #355cdf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payroll-form button:hover {
+  background-color: #5e66db;
+}
+
+.payroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.payroll-header h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+.payroll-search-bar {
+  margin-bottom: 1rem;
+  text-align: left;
   
-  .payroll-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .payroll-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .payroll-table th, .payroll-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-  }
-  
-  .payroll-table th {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .status-paid {
-    color: green;
-    font-weight: bold;
-  }
-  
-  .status-pending {
-    color: red;
-    font-weight: bold;
-  }
-  
-  .payroll-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
+  margin-right: 1000px;
+}
+
+
+.download-pdf-btn {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.download-pdf-btn:hover {
+  background-color: #0056b3;
+}
+
+
+
+.payroll-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payroll-table th,
+.payroll-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.payroll-table th {
+  background-color:#355cdf;
+  color: white;
+}
+
+.status-paid {
+  color: green;
+  font-weight: bold;
+}
+
+.payroll-status-pending {
+  color: red;
+  font-weight: bold;
+}
+
+.payroll-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+button.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button.delete-btn:hover {
+  background-color: darkred;
+}
+
+
+.payroll-chart-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.payroll-chart-card h3 {
+  margin-bottom: 16px;
+  text-align: center;
+  color: #333;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pagination span {
+  font-weight: bold;
+}
+
+
+
+.payroll-search-bar input {
+  padding: 8px;
+  width: 300px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+ 
+}
+
+.line-chart-selector {
+  margin: 20px auto;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.line-chart-selector label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #444;
+}
+
+.line-chart-selector select {
+  padding: 10px;
+  font-size: 15px;
+  border: 2px solid #8884d8;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.line-chart-selector select:focus {
+  border-color: #4a2ab8;
+  outline: none;
+  box-shadow: 0 0 5px rgba(138, 101, 255, 0.4);
+}
+
+

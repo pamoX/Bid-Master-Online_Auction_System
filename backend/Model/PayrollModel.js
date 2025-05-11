@@ -1,15 +1,20 @@
 const mongoose = require("mongoose");
 
-const PayrollSchema = new mongoose.Schema({
-  employeeId: { type: mongoose.Schema.Types.ObjectId, ref: "EmpModel", required: true },
-  role: { type: String, required: true },
-  salary: { type: Number, required: true },
+const payrollSchema = new mongoose.Schema({
+  employeeId: { type: String, required: true },
+  employeeName: { type: String },
+  role: { type: String },
+  salary: { type: Number },
   commission: { type: Number, default: 0 },
-  totalEarnings: { type: Number, required: true },
-  deductions: { type: Number, required: true },
-  netPay: { type: Number, required: true },
-  month: { type: String, required: true }, // Format: YYYY-MM
-  status: { type: String, enum: ["Pending", "Paid"], default: "Pending" }
-});
+  totalEarnings: { type: Number },
+  deductions: { type: Number, default: 0 },
+  netPay: { type: Number },
+  month: { type: String },
+  status: { type: String, default: "Pending" }
+  },
+  {
+    timestamps: true 
+  }
+);
 
-module.exports = mongoose.model("PayrollModel", PayrollSchema);
+module.exports = mongoose.model("PayrollModel", payrollSchema);

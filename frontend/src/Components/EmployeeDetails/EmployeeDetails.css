@@ -170,3 +170,16 @@
   
     
   }
+
+  @media (max-width: 768px) {
+  .employee-details {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .employee-details .image-section,
+  .employee-details .details-section {
+    margin-right: 0;
+    width: 100%;
+  }
+}
