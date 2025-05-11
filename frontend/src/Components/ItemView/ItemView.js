@@ -22,9 +22,10 @@ function ItemView() {
       })
       .then(data => {
         setItem(data);
-        setMainImage(data.image.startsWith('/uploads') 
+        const mainImagePath = data.image && data.image.startsWith('/uploads') 
           ? `http://localhost:5000${data.image}` 
-          : `https://via.placeholder.com/400x300?text=${encodeURIComponent(data.name)}`);
+          : `https://via.placeholder.com/400x300?text=${encodeURIComponent(data.name)}`;
+        setMainImage(mainImagePath);
         setLoading(false);
       })
       .catch(err => {

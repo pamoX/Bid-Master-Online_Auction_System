@@ -24,7 +24,9 @@ const addItem = async (req, res) => {
   const { id, name, description, price, status, startingPrice, biddingEndTime } = req.body;
   
   // Get main image path from multer
-  const imagePath = req.file ? `/uploads/${req.file.filename}` : '/uploads/placeholder.png';
+  const imagePath = req.files && req.files.image && req.files.image[0] 
+    ? `/uploads/${req.files.image[0].filename}` 
+    : '/uploads/placeholder.png';
   
   // Handle additional images if they exist
   const additionalImages = [];

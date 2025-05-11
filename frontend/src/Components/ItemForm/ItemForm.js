@@ -86,19 +86,20 @@ function ItemForm() {
       submitData.append('biddingEndTime', new Date(formData.biddingEndTime).toISOString());
     }
     
+    // Ensure image is properly appended
     if (formData.image) {
       submitData.append('image', formData.image);
     }
     
     if (formData.additionalImages && formData.additionalImages.length > 0) {
-      for (let i = 0; i < formData.additionalImages.length; i++) {
-        submitData.append('additionalImages', formData.additionalImages[i]);
-      }
+      formData.additionalImages.forEach((file, index) => {
+        submitData.append('additionalImages', file);
+      });
     }
     
     fetch('http://localhost:5000/items', {
       method: 'POST',
-      body: submitData // Don't set Content-Type header - FormData sets it automatically
+      body: submitData
     })
     .then(response => {
       if (!response.ok) {
