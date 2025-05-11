@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Assuming you're using React Router
+import { Link } from 'react-router-dom';
 import './Home.css';
 import Nav from '../Nav/Nav';
 
 const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(3600); // 1 hour countdown
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const auctionItems = [
     {
@@ -48,11 +49,13 @@ const Home = () => {
 
   // Carousel auto-slide
   useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % auctionItems.length);
-    }, 5000);
-    return () => clearInterval(slideInterval);
-  }, [auctionItems.length]);
+    if (isImageLoaded) {
+      const slideInterval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % auctionItems.length);
+      }, 5000);
+      return () => clearInterval(slideInterval);
+    }
+  }, [auctionItems.length, isImageLoaded]);
 
   // Countdown timer
   useEffect(() => {
@@ -73,7 +76,11 @@ const Home = () => {
   const goToNextImage = () => setCurrentImageIndex((prev) => (prev + 1) % auctionItems.length);
   const goToPrevImage = () => setCurrentImageIndex((prev) => (prev === 0 ? auctionItems.length - 1 : prev - 1));
 
-  const handleGetStarted = () => alert('Welcome to BidMaster! Start bidding now!');
+  const handleGetStarted = () => {
+    // Smoother scrolling to services instead of alert
+    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+  };
+  
   const scrollToSection = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
@@ -82,113 +89,149 @@ const Home = () => {
 
       {/* Hero Section */}
       <section className="hp-hero-section" id="hero">
-        <h1 className="hp-hero-title">Welcome to BidMaster</h1>
-        <p className="hp-hero-subtitle">Experience the Ultimate Auction Adventure</p>
+        <div className="hp-hero-content">
+          <h1 className="hp-hero-title">Welcome to BidMaster</h1>
+          <p className="hp-hero-subtitle">Experience the Ultimate Auction Adventure</p>
 
-        {/* Carousel */}
-        <div className="hp-carousel">
-          <button className="hp-carousel-btn prev" onClick={goToPrevImage}>←</button>
-          <div className="hp-carousel-image-wrapper">
-            <img
-              src={auctionItems[currentImageIndex].image}
-              alt={auctionItems[currentImageIndex].title}
-              className="hp-carousel-image"
-            />
-            <div className="hp-bid-info">
-              <div>
-                <h3>{auctionItems[currentImageIndex].title}</h3>
-                <p>Current Bid: <span>{auctionItems[currentImageIndex].currentBid}</span></p>
-                <p>Bids: {auctionItems[currentImageIndex].bids}</p>
-                <p className="hp-countdown">Time Left: <span>{formatTime(timeLeft)}</span></p>
+          {/* Carousel */}
+          <div className="hp-carousel">
+            <button className="hp-carousel-btn prev" onClick={goToPrevImage} aria-label="Previous item">
+              &larr;
+            </button>
+            <div className="hp-carousel-image-wrapper">
+              <img
+                src={auctionItems[currentImageIndex].image}
+                alt={auctionItems[currentImageIndex].title}
+                className="hp-carousel-image"
+                onLoad={() => setIsImageLoaded(true)}
+              />
+              <div className="hp-bid-info">
+                <div className="hp-bid-details">
+                  <h3>{auctionItems[currentImageIndex].title}</h3>
+                  <p>Current Bid: <span>{auctionItems[currentImageIndex].currentBid}</span></p>
+                  <p>Bids: {auctionItems[currentImageIndex].bids}</p>
+                  <p className="hp-countdown">Time Left: <span>{formatTime(timeLeft)}</span></p>
+                </div>
+                <button className="hp-bid-button">Bid Now</button>
               </div>
-              <button className="hp-bid-button">Bid Now</button>
             </div>
+            <button className="hp-carousel-btn next" onClick={goToNextImage} aria-label="Next item">
+              &rarr;
+            </button>
           </div>
-          <button className="hp-carousel-btn next" onClick={goToNextImage}>→</button>
-        </div>
 
-        <div className="hp-hero-buttons">
-          <button className="hp-cta-button" onClick={handleGetStarted}>Get Started</button>
-          <button className="hp-learn-more-btn" onClick={() => scrollToSection('features')}>
-            Learn More
-          </button>
+          <div className="hp-hero-buttons">
+            <button className="hp-cta-button" onClick={handleGetStarted}>Get Started</button>
+            <button className="hp-learn-more-btn" onClick={() => scrollToSection('features')}>
+              Learn More
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
       <section className="hp-features-section" id="features">
-        <h2 className="hp-features-title">Why BidMaster Stands Out</h2>
-        <div className="hp-features-grid">
-          <div className="hp-feature-item">
-            <h3>Intuitive Bidding</h3>
-            <p>Effortlessly place bids and track auctions with our user-friendly interface.</p>
-          </div>
-          <div className="hp-feature-item">
-            <h3>Real-Time Insights</h3>
-            <p>Stay updated with live notifications and auction progress.</p>
-          </div>
-          <div className="hp-feature-item">
-            <h3>Trusted Security</h3>
-            <p>Enjoy peace of mind with our encrypted payment system.</p>
-          </div>
-          <div className="hp-feature-item">
-            <h3>Global Reach</h3>
-            <p>Connect with buyers and sellers worldwide in one vibrant marketplace.</p>
+        <div className="hp-section-container">
+          <h2 className="hp-section-title">Why BidMaster Stands Out</h2>
+          <div className="hp-features-grid">
+            <div className="hp-feature-item">
+              <div className="hp-feature-icon">
+                <span>🔍</span>
+              </div>
+              <h3>Intuitive Bidding</h3>
+              <p>Effortlessly place bids and track auctions with our user-friendly interface.</p>
+            </div>
+            <div className="hp-feature-item">
+              <div className="hp-feature-icon">
+                <span>⚡</span>
+              </div>
+              <h3>Real-Time Insights</h3>
+              <p>Stay updated with live notifications and auction progress.</p>
+            </div>
+            <div className="hp-feature-item">
+              <div className="hp-feature-icon">
+                <span>🔒</span>
+              </div>
+              <h3>Trusted Security</h3>
+              <p>Enjoy peace of mind with our encrypted payment system.</p>
+            </div>
+            <div className="hp-feature-item">
+              <div className="hp-feature-icon">
+                <span>🌍</span>
+              </div>
+              <h3>Global Reach</h3>
+              <p>Connect with buyers and sellers worldwide in one vibrant marketplace.</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Our Services Section */}
       <section className="hp-services-section" id="services">
-        <h2 className="hp-services-title">Our Services</h2>
-        <div className="hp-services-grid">
-          {services.map((service, index) => (
-            <div key={index} className="hp-service-card">
-              <img
-                src={service.image}
-                alt={service.title}
-                className="hp-service-image"
-              />
-              <h3>{service.title}</h3>
-              <p>{service.description}</p>
-            </div>
-          ))}
+        <div className="hp-section-container">
+          <h2 className="hp-section-title">Our Services</h2>
+          <div className="hp-services-grid">
+            {services.map((service, index) => (
+              <div key={index} className="hp-service-card">
+                <div className="hp-service-image-container">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="hp-service-image"
+                  />
+                  <div className="hp-service-overlay">
+                    <span className="service-icon">{service.title[0]}</span>
+                  </div>
+                </div>
+                <div className="hp-service-content">
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Stats Section */}
       <section className="hp-stats-section">
-        <h2 className="hp-stats-title">Our Impact</h2>
-        <div className="hp-stats-grid">
-          <div className="hp-stat-item">
-            <h3>10K+</h3>
-            <p>Active Users</p>
-          </div>
-          <div className="hp-stat-item">
-            <h3>5K+</h3>
-            <p>Auctions Completed</p>
-          </div>
-          <div className="hp-stat-item">
-            <h3>$1M+</h3>
-            <p>Total Bids Value</p>
+        <div className="hp-section-container">
+          <h2 className="hp-section-title">Our Impact</h2>
+          <div className="hp-stats-grid">
+            <div className="hp-stat-item">
+              <h3>10K+</h3>
+              <p>Active Users</p>
+            </div>
+            <div className="hp-stat-item">
+              <h3>5K+</h3>
+              <p>Auctions Completed</p>
+            </div>
+            <div className="hp-stat-item">
+              <h3>$1M+</h3>
+              <p>Total Bids Value</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
       <section className="hp-testimonials-section">
-        <h2 className="hp-testimonials-title">What Our Users Say</h2>
-        <div className="hp-testimonials-grid">
-          <div className="hp-testimonial-item">
-            <p>"BidMaster made selling my old guitar so easy and profitable!"</p>
-            <h4>- Sarah M.</h4>
+        <div className="hp-section-container">
+          <h2 className="hp-section-title">What Our Users Say</h2>
+          <div className="hp-testimonials-grid">
+            <div className="hp-testimonial-item">
+              <div className="hp-testimonial-quote">"</div>
+              <p>BidMaster made selling my old guitar so easy and profitable!</p>
+              <h4>- Sarah M.</h4>
+            </div>
+            <div className="hp-testimonial-item">
+              <div className="hp-testimonial-quote">"</div>
+              <p>I found a rare collectible at an amazing price. Love this platform!</p>
+              <h4>- James T.</h4>
+            </div>
           </div>
-          <div className="hp-testimonial-item">
-            <p>"I found a rare collectible at an amazing price. Love this platform!"</p>
-            <h4>- James T.</h4>
-          </div>
+          <Link to="/about-us" className="hp-explore-more">Explore Our Story</Link>
         </div>
-        <Link to="/about-us" className="hp-explore-more">Explore Our Story</Link>
       </section>
     </div>
   );
