@@ -1,148 +1,156 @@
-/* Full page styling */
+/* General page styling */
 .AR-add-report-page {
-    min-height: 100vh;
-    background: url('https://media.istockphoto.com/id/462637395/photo/gallery.jpg?s=612x612&w=0&k=20&c=qtFkyW3HesmsGqEZJeWTjp3OZwkuzQdK7e23AOPaRtA=') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Roboto', sans-serif;
-    display: flex;
+  display: flex;
+  flex-direction: row;
+  min-height: 80vh;
+  background: linear-gradient(135deg, #ffffff 0%, #070707 100%);
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styling */
+.AR-header-banner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  z-index: 1;
+  
+}
+
+.AR-header-overlay {
+  text-align: center;
+  padding: 20px;
+}
+
+.AR-page-title {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 80px;
+}
+
+/* Main content container */
+.AR-content-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding:200px;
+  margin-top: 0px;
+  margin-left: 50px;
+  
+}
+
+/* Image container styling */
+.AR-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.AR-side-image {
+  width: 100%;
+  height: 550px;
+  max-width: 500px;
+  max-height: 600px;
+  object-fit: cover;
+  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Form container styling */
+.AR-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.AR-report-form {
+  background: #5a5959;
+  padding: 40px;
+  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+}
+
+.AR-form-group {
+  margin-bottom: 20px;
+}
+
+.AR-form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f8f5f5;
+  margin-bottom: 8px;
+}
+
+.AR-form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 5px solid #0f0f0f;
+  
+  outline:#000000;
+  transition: border-color 1.2s ease;
+}
+
+.AR-form-group input:focus {
+  border-color: #161616;
+  box-shadow: 5px 5px 5px rgba(19, 38, 58, 0.5);
+}
+
+.AR-form-group input::placeholder {
+  color: #000000;
+}
+
+.AR-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #ff6f91 0%, #ff8e53 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border:#0f0f0f;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.AR-submit-btn:hover {
+  background: linear-gradient(90deg, #ff8e53 0%, #ff6f91 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .AR-content-container {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-top: 120px;
   }
-  
-  /* Header banner */
-  .AR-header-banner {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding: 20px 0;
-    text-align: center;
+
+  .AR-image-container {
+    padding: 50px;
   }
-  
-  .AR-header-overlay {
-    position: relative;
-    z-index: 1;
+
+  .AR-side-image {
+    max-width: 100%;
+    max-height: 300px;
   }
-  
-  .AR-page-title {
-    font-size: 2rem;
-    color: #fff;
-    margin: 20px 0;
-    font-weight: 500;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  }
-  
-  /* Form container */
+
   .AR-form-container {
-    max-width: 400px;
-    width: 100%;
-    padding: 30px;
-    margin-top: 50px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 10px;
   }
-  
-  /* Form styling */
+
   .AR-report-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    padding: 50px;
   }
-  
-  .AR-form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .AR-form-group input {
-    padding: 12px 15px;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    color: #362e2e;
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-  
-  .AR-form-group input::placeholder {
-    color: rgb(255, 255, 255);
-  }
-  
-  .AR-form-group input:focus {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.3);
-  }
-  
-  .AR-form-group input[type="date"] {
-    color: #fff;
-  }
-  
-  .AR-form-group input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-  }
-  
-  /* Submit button */
-  .AR-submit-btn {
-    padding: 12px 20px;
-    background-color: rgba(10, 97, 24, 0.459);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-  }
-  
-  .AR-submit-btn:hover {
-    background-color: rgba(39, 175, 5, 0.3);
-    transform: translateY(-2px);
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .AR-form-container {
-      margin: 20px;
-      padding: 20px;
-    }
-  
-    .AR-page-title {
-      font-size: 1.8rem;
-    }
-  
-    .AR-form-group input {
-      padding: 10px 12px;
-      font-size: 0.95rem;
-    }
-  
-    .AR-submit-btn {
-      padding: 10px 16px;
-      font-size: 0.95rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .AR-form-container {
-      margin: 10px;
-      padding: 15px;
-    }
-  
-    .AR-page-title {
-      font-size: 1.5rem;
-    }
-  
-    .AR-form-group input {
-      padding: 8px 10px;
-      font-size: 0.9rem;
-    }
-  
-    .AR-submit-btn {
-      width: 100%;
-      padding: 10px;
-    }
-  }
+}

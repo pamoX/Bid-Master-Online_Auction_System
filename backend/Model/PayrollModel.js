@@ -11,6 +11,10 @@ const payrollSchema = new mongoose.Schema({
   netPay: { type: Number },
   month: { type: String },
   status: { type: String, default: "Pending" }
-});
+  },
+  {
+    timestamps: true 
+  }
+);
 
 module.exports = mongoose.model("PayrollModel", payrollSchema);

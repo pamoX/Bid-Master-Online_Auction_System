@@ -1,9 +1,7 @@
 /* Full page styling */
 .RI-reported-items-page {
   min-height: 100vh;
-  background: linear-gradient(rgba(189, 185, 185, 0.6), rgba(131, 130, 130, 0.6)),
-              url('https://plus.unsplash.com/premium_photo-1706287610561-6addeaa15846?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGFydCUyMGF1Y3Rpb258ZW58MHx8MHx8fDA%3D') no-repeat center center fixed;
-  background-size: cover;
+  background: linear-gradient(135deg, #ffffff 0%, #070707 100%);
   font-family: 'Roboto', sans-serif;
   color: #fff;
   display: flex;
@@ -83,11 +81,15 @@
   padding: 8px 16px;
   margin-right: 8px;
   border: none;
-  border-radius: 5px;
+  width: 100px; /* Fixed width for all buttons */
+  height: 40px; /* Fixed height for all buttons */
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
   transition: transform 0.2s ease, background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .RI-action-btn:hover {
@@ -95,7 +97,7 @@
 }
 
 .RI-update-btn {
-  background-color: #28a745;
+  background-color: #117428;
   color: #fff;
 }
 
@@ -122,6 +124,28 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
+/* Download button styling */
+.RI-download-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: 150px; /* Fixed width for download button */
+  height: 40px; /* Fixed height for download button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.RI-download-button:hover {
+  background-color: #0056b3;
+}
 
 /* Responsive design */
 @media (max-width: 1024px) {
@@ -143,8 +167,15 @@
   }
 
   .RI-action-btn {
-    padding: 6px 12px;
+    width: 90px; /* Slightly smaller width for smaller screens */
+    height: 36px; /* Slightly smaller height for smaller screens */
     font-size: 0.85rem;
+  }
+
+  .RI-download-button {
+    width: 130px; /* Slightly smaller width for smaller screens */
+    height: 36px; /* Slightly smaller height for smaller screens */
+    font-size: 0.95rem;
   }
 
   .RI-page-title {
@@ -163,7 +194,20 @@
     font-size: 0.85rem;
   }
 
+  .RI-action-btn {
+    display: block;
+    width: 100%;
+    height: 40px; /* Maintain height on mobile when stacked */
+    margin: 5px 0;
+    font-size: 0.85rem;
+  }
 
+  .RI-download-button {
+    width: 100%;
+    height: 40px; /* Maintain height on mobile */
+    margin: 10px 0;
+    font-size: 0.9rem;
+  }
 
   .RI-content-wrapper {
     margin: 10px;
@@ -185,63 +229,3 @@
     }
   }
 }
-
-/* Styles for FlaggedItems */
-.action-btn {
-  display: inline-block;
-  padding: 8px 12px;
-  margin: 5px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: background 0.3s ease-in-out;
-}
-
-.RI-update-btn {
-  background: #f39c12;
-  color: white;
-}
-
-.RI-update-btn:hover {
-  background: #e67e22;
-}
-
-.RI-delete-btn {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 8px 12px;
-}
-
-.RI-delete-btn:hover {
-  background: #c0392b;
-}
-
-.RI-download-button {
-  display: inline-block;
-  background-color: #4CAF50; /* Green color */
-  color: white;
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out, transform 0.2s ease;
-  text-decoration: none; /* Remove underline for anchor tags */
-  margin-top: 20px;
-  align-items: center;
-}
-
-.RI-download-button:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-.RI-download-button:active {
-  background-color: #3d8b40;
-  transform: scale(0.98);
-}
-

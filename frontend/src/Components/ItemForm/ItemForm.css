@@ -1,0 +1,242 @@
+/* ItemForm.css */ 
+:root {
+  --primary-blue: #3d4b64;
+  --dark-navy: #fcfcfd;
+  --light-cream: #fef6e9;
+  --text-dark: #2c3e50;
+  --form-bg: rgba(255, 255, 255, 0.85);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+}
+
+.item-form-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--primary-blue);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.2)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23pattern)"/></svg>');
+  overflow: hidden;
+}
+
+.item-form-content {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.item-illustration-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.item-illustration-bg {
+  width: 550px;
+  height: 550px;
+  background-color: white;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* This will ensure content doesn't overflow the circle */
+}
+
+.item-desk-illustration {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: url("https://images.unsplash.com/photo-1729714055320-4d1c5d5e213d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d29ya2luZyUyMG9uJTIwbGFwdG9wfGVufDB8fDB8fHww");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; /* Changed from 'contain' to 'cover' to fill the circle */
+  border-radius: 50%; /* Make the image container round as well */
+  top: 0;
+  left: 0;
+}
+
+.item-form-title {
+  color: var(--dark-navy);
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.item-form-wrapper {
+  flex: 1;
+  max-width: 450px;
+  padding: 2rem;
+}
+
+.item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.item-form-group {
+  margin-bottom: 1rem;
+}
+
+.item-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-navy);
+  font-size: 16px;
+}
+
+.item-form-group input[type="text"],
+.item-form-group input[type="number"],
+.item-form-group input[type="email"],
+.item-form-group textarea,
+.item-form-group input[type="file"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  background-color: var(--light-cream);
+  box-sizing: border-box;
+}
+
+.item-form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+  border-radius: 20px;
+}
+
+.item-form-group input[type="file"] {
+  padding: 10px 15px;
+  background-color: var(--light-cream);
+  border-radius: 30px;
+}
+
+.item-form-group input:focus,
+.item-form-group textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(42, 45, 60, 0.2);
+}
+
+.item-submit-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background-color: rgb(22, 136, 50);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.item-submit-btn:hover {
+  background-color: #3a3e54;
+  transform: translateY(-2px);
+}
+
+.item-submit-btn:active {
+  transform: translateY(0);
+}
+
+.item-form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.item-cancel-btn {
+  display: block;
+  padding: 14px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  flex: 1;
+}
+
+.item-cancel-btn:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-1px);
+}
+
+.item-cancel-btn:active {
+  transform: translateY(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .item-form-content {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .item-illustration-container {
+    margin-bottom: 2rem;
+  }
+
+  .item-form-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .item-illustration-bg {
+    width: 350px;  /* Increased from 250px to 350px */
+    height: 350px; /* Increased from 250px to 350px */
+  }
+
+  .item-desk-illustration {
+    width: 220px;
+    height: 220px;
+  }
+
+  .item-form-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .item-illustration-bg {
+    width: 280px;  /* Increased from 200px to 280px */
+    height: 280px; /* Increased from 200px to 280px */
+  }
+
+  .item-desk-illustration {
+    width: 180px;
+    height: 180px;
+  }
+
+  .item-form-group input,
+  .item-form-group textarea {
+    padding: 10px 12px;
+  }
+
+  .item-submit-btn {
+    padding: 12px;
+  }
+}

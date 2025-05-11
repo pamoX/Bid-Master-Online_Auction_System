@@ -158,3 +158,16 @@ exports.getCompletedTaskCount = async (req, res) => {
     res.status(500).json({ message: "Error fetching completed task count", error });
   }
 };
+
+// Controller function
+exports.getRecentTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find()
+      .sort({ createdAt: -1 })
+      .limit(3)
+      .populate('assignedTo', 'name employeeId'); 
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

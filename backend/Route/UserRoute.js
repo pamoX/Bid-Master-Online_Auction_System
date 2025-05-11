@@ -28,6 +28,7 @@ router.put("/:id",UserControl.updateUser);
 router.delete("/:id",UserControl.deleteUser);
 router.post("/upload/:id",upload.single("image"), UserControl.uploadProfileImage);
 
+router.get('/profile/:username', UserControl.getUserProfile);
 
 //export
 module.exports = router;

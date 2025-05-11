@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Nav from '../Nav/Nav';
 
 import { useNavigate } from "react-router";
 import axios from 'axios';
@@ -40,7 +39,7 @@ function AddItem() {
 
     return (
         <div className="AR-add-item-page">
-            <Nav /><br/><br/><br/><br/>
+           <br/><br/><br/><br/>
             <div>
                 <div className="AR-header">
                     <h1>Add Item</h1>

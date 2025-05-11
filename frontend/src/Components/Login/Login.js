@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "./Login.css";
 import { toast } from 'react-toastify';
+import { FaUser, FaLock, FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -63,44 +63,47 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Login</h2>
+        <h2>Welcome Back</h2>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit} className="login-form">
           <div className="input-group">
-            <span className="input-icon">👤</span>
+            <span className="input-icon"><FaUser /></span>
             <input
               type="text"
               name="username"
-              placeholder="Type your username"
+              placeholder="Username"
               onChange={handleChange}
               required
             />
           </div>
           <div className="input-group">
-            <span className="input-icon">🔒</span>
+            <span className="input-icon"><FaLock /></span>
             <input
               type="password"
               name="password"
-              placeholder="Type your password"
+              placeholder="Password"
               onChange={handleChange}
               required
             />
           </div>
-          <button type="submit" className="login-button">LOGIN</button>
+          <div className="forgot-password">
+            <Link to="/forgot-password">Forgot password?</Link>
+          </div>
+          <button type="submit" className="login-button">Sign In</button>
         </form>
 
         <div className="social-login">
-          <p>or Sign Up Using</p>
+          <p>Or continue with</p>
           <div className="social-buttons">
-            <button className="social-btn facebook">F</button>
-            <button className="social-btn twitter">T</button>
-            <button className="social-btn google">G</button>
+            <button className="social-btn facebook"><FaFacebookF /></button>
+            <button className="social-btn twitter"><FaTwitter /></button>
+            <button className="social-btn google"><FaGoogle /></button>
           </div>
         </div>
 
         <div className="signup-link">
-          <p>or</p>
-          <Link to="/register">SIGN UP</Link>
+          <p>Don't have an account?</p>
+          <Link to="/register">Create Account</Link>
         </div>
       </div>
     </div>
@@ -108,3 +111,4 @@ function Login() {
 }
 
 export default Login;
+

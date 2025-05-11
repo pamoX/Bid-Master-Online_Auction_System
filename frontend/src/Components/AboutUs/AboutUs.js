@@ -97,7 +97,7 @@ function AboutUs() {
         <h2 className="aboutus-stats-title">Our Team</h2>
         <div className="aboutus-stats-grid">
           <div className="aboutus-stat-item">
-          <img src="/images/durangiProfile.webp" alt="hrProfile" className="aboutus-profile" />
+          <img src="/images/durangiProfile.jpg" alt="hrProfile" className="aboutus-profile" />
             <h2>HR Manager</h2>
             <p>Durangi Abeykoon</p>
            
@@ -108,7 +108,7 @@ function AboutUs() {
             <p>Pamodini Perera</p>
           </div>
           <div className="aboutus-stat-item">
-          <img src="/images/lahi.jpg" alt="shippingProfile" className="aboutus-profile" />
+          <img src="/images/lahiProfile.jpg" alt="shippingProfile" className="aboutus-profile" />
             <h2>Shipping Manager</h2>
             <p>Lahiruni Ariyawansa</p>
           </div>

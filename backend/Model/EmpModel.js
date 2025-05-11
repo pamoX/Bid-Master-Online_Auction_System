@@ -49,9 +49,12 @@ const addEmpSchema = new Schema({
 
     skills: [String],
     
-taskHistory: [{ taskId: String, status: String }],
-
+ taskHistory: [{ taskId: String, status: String }]
+},
+{
+  timestamps: true  // ✅ This enables createdAt and updatedAt
 });
+
 
 module.exports = mongoose.model(
     "EmpModel",  // file name

@@ -26,15 +26,21 @@ import TaskDashboard from './Components/TaskDashboard/TaskDashboard';
 import HRDashboard from "./Components/HRDashboard/HRDashboard.js";
 
 //im
-import ReportedItems from "./Components/ReportedItems/ReportedItems";
+
 import AddReport from "./Components/AddReport/AddReport";
 import UpdateReport from "./Components/UpdateReport/UpdateReport";
 import InspectionDashboard from "./Components/InspectionDashboard/InspectionDashboard";
+import ReportedItems from "./Components/ReportedItems/ReportedItems";
+import ItemForm from "./Components/ItemForm/ItemForm";
+import ItemsGallery from "./Components/ItemsGallery/ItemsGallery";
+import ItemManager from "./Components/ItemManager/ItemManager";
+import EditItem from "./Components/ItemForm/EditItem";
+import ItemView from "./Components/ItemView/ItemView"; 
 
 //sl
 import SellerDashboard from './Components/SellerDashboard/SellerDashboard';
 import SellerListings from './Components/SellerListings/SellerListings';
-import AddItem from './Components/AddItem/AddItem';
+//import AddItem from './Components/AddItem/AddItem';
 import UpdateItem from './Components/UpdateItem/UpdateItem';
 import ImgUploader from './Components/ImgUploader/ImgUploader';
 import SellerProfile from './Components/SellerProfile/SellerProfile';
@@ -57,9 +63,8 @@ import Cancel from './Components/Payment/Cancel.js';
 import BidDashboard from './Components/BidDashboard/BidDashboard';
 // BidNowBidder component
 import BidNowBidder from './Components/BidNowBidder/BidNowBidder';
+
   
-
-
 import Shippers from './Components/Shippers/Shippers';
 import Shipments from './Components/Shipments/Shipments';
 import NewShipment from './Components/NewShipment/NewShipment';
@@ -101,13 +106,24 @@ function App() {
 
 
 
-        <Route path="/addReport" element={<AddReport/>}/>
-        <Route path="/flagged-items" element={<ReportedItems/>}/>
-        <Route path="/flagged-items/:_id" element={<UpdateReport/>}/>
+       
         <Route path="/inspectionDashboard" element={<InspectionDashboard/>}/>
+        <Route path="/item-form" element={<ItemForm />} />
+          <Route path="/item-manager" element={<ItemManager/>} />
+          <Route path="/item/:id" element={<ItemView />} />
+          <Route path="/edit-item/:id" element={<EditItem />} />
+          <Route path="/items-gallery" element={<ItemsGallery />} />
+          <Route path="/flagged-items" element={<ReportedItems/>}/>
+          <Route path="/flagged-items/:_id" element={<UpdateReport/>}/>
+          <Route path="/add-report" element={<AddReport/>}/>
+        
+       
+         
+          
+
 
         <Route path="/seller-listing" element={<SellerListings/>}/>
-        <Route path="/add-item" element={<AddItem/>}/>
+        
         <Route path="/upload-img" element={<ImgUploader/>}/>
          <Route path="/seller-dashboard" element={<SellerDashboard />} />
          <Route path="/seller-dashboard/:id" element={<UpdateItem />} />
@@ -138,7 +154,9 @@ function App() {
           <Route path="/BidDashboard" element={<BidDashboard />} />
 
           {/* BidNowBidder route */}
-          <Route path="/bid-now" element={<BidNowBidder />} />
+          <Route path="/bid-now/:itemId?" element={<BidNowBidder />} />
+
+
 
 
           <Route path="/shipmanagedash" element={<ShipManageDash />} />

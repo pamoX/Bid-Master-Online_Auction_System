@@ -163,6 +163,21 @@ const uploadProfileImage = async (req, res) => {
     }
   };  
 
+const getUserProfile = async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({
+      name: user.name,
+      profileImage: user.profileImage, // e.g., '/uploads/user123.jpg'
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 exports.getAllUsers = getAllUsers;
 exports.addUsers = addUsers;
@@ -170,3 +185,4 @@ exports.getById = getById;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
 exports.uploadProfileImage = uploadProfileImage;
+exports.getUserProfile = getUserProfile;

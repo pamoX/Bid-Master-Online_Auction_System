@@ -90,53 +90,61 @@ const Profile = () => {
           src={user.profileImage ? `http://localhost:5000${user.profileImage}` : "https://via.placeholder.com/150"}
           alt="Profile"
         />
-        <h2>{user.name}</h2>
-        <p>{user.username}</p>
-      
-        <form onSubmit={handleImageUpload} style={{ marginTop: "15px" }}>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          <button type="submit">Upload</button>
-        </form>
-        <div className="btn-group">
-          <button onClick={() => setEditMode(true)}>Edit Profile</button>
-        </div>
-        <div className="social-card">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /> facebook.com</a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /> twitter.com</a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /> instagram.com</a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer"><FaGithub /> github.com</a>
+        <div className="profile-details">
+          <h2>{user.name}</h2>
+          <p>{user.username}</p>
+          
+          <div className="profile-actions">
+            <form onSubmit={handleImageUpload}>
+              <input type="file" accept="image/*" onChange={handleImageChange} />
+              <button type="submit">Upload</button>
+            </form>
+            {!editMode && <button onClick={() => setEditMode(true)}>Edit Profile</button>}
+          </div>
         </div>
       </div>
 
-      <div className="info-card">
-        <h3>Information</h3>
-        {editMode ? (
-          <>
-            <div className="info-item">
-              <span>Name:</span>
-              <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
-            </div>
-            <div className="info-item">
-              <span>Email:</span>
-              <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
-            </div>
-            <div className="info-item">
-              <span>Phone:</span>
-              <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} />
-            </div>
-            <div className="btn-group">
-              <button onClick={handleSave}>Save</button>
-              <button onClick={() => setEditMode(false)}>Cancel</button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="info-item"><span>Name:</span> {user.name}</div>
-            <div className="info-item"><span>Email:</span> {user.email}</div>
-            <div className="info-item"><span>Phone:</span> {user.phone}</div>
-            <div className="info-item"><span>Username:</span> {user.username}</div>
-          </>
-        )}
+      <div className="content-grid">
+        <div className="info-card">
+          <h3>Information</h3>
+          {editMode ? (
+            <>
+              <div className="info-item">
+                <span>Name:</span>
+                <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
+              </div>
+              <div className="info-item">
+                <span>Email:</span>
+                <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
+              </div>
+              <div className="info-item">
+                <span>Phone:</span>
+                <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} />
+              </div>
+              <div className="btn-group">
+                <button onClick={handleSave}>Save</button>
+                <button onClick={() => setEditMode(false)}>Cancel</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="info-item"><span>Name:</span> {user.name}</div>
+              <div className="info-item"><span>Email:</span> {user.email}</div>
+              <div className="info-item"><span>Phone:</span> {user.phone}</div>
+              <div className="info-item"><span>Username:</span> {user.username}</div>
+            </>
+          )}
+        </div>
+
+        <div className="social-card">
+          <h3>Social Media</h3>
+          <div className="social-links">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /> Facebook</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /> Twitter</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /> Instagram</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer"><FaGithub /> GitHub</a>
+          </div>
+        </div>
       </div>
     </div>
   );

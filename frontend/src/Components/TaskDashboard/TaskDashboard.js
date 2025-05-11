@@ -124,7 +124,7 @@ const TaskDashboard = () => {
      
 
       {/* Search Bar */}
-      <div className="search-bar">
+      <div className="search">
         <input
           type="text"
           placeholder="Search by assigned employee"

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaUser, FaUsers, FaTasks, FaMoneyCheckAlt, FaBoxOpen, FaImage,
-  FaGavel, FaShippingFast, FaFileAlt, FaUserShield, FaRegClipboard, FaBars
+  FaGavel, FaShippingFast, FaFileAlt, FaUserShield, FaRegClipboard, FaBars,FaPlusSquare
 } from 'react-icons/fa';
 import './Sidebar.css';
 
@@ -49,7 +49,7 @@ function Sidebar() {
       {role === "bid" && (
         <>
           {renderLink("/BidDashboard", FaUser, "Bidder Dashboard")}
-          {renderLink("/bid-now", FaGavel, "Bid Now")}
+          {renderLink("/bid-now/:itemId?", FaGavel, "Bid Now")}
           {renderLink("/shipping", FaShippingFast, "Shipping Details")}
           {renderLink("/payment", FaMoneyCheckAlt, "Payment")}
           {renderLink("/bidder-profile", FaUser, "Profile")}
@@ -74,10 +74,12 @@ function Sidebar() {
       )}
       {role === "im" && (
         <>
-          {renderLink("/inspectionDashboard", FaUserShield, "Dashboard")}
-          {renderLink("/addReport", FaRegClipboard, "Add Report")}
-          {renderLink("/flagged-items", FaFileAlt, "Report Dashboard")}
-          {renderLink("/inspectionReport", FaFileAlt, "Inspection Report")}
+         {renderLink("/inspectionDashboard", FaUserShield, "Dashboard")}
+{renderLink("/add-report", FaRegClipboard, "Add Report")}
+{renderLink("/flagged-items", FaFileAlt, "Report Dashboard")}
+{renderLink("/item-form", FaPlusSquare, "Items")}                
+{renderLink("/item-manager", FaTasks, "Manage Items")}          
+{renderLink("/items-gallery", FaGavel, "Bidding Items")}    
         </>
       )}
     </div>

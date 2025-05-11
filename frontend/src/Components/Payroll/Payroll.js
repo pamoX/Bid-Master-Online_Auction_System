@@ -261,7 +261,7 @@ const lineChartData = payrollRecords
         <td>{parseFloat(record.totalEarnings).toFixed(2)}</td>
         <td>{parseFloat(record.netPay).toFixed(2)}</td>
         <td>{record.month}</td>
-        <td className={record.status === "Paid" ? "status-paid" : "status-pending"}>
+        <td className={record.status === "Paid" ? "status-paid" : "payroll-status-pending"}>
           {record.status}
         </td>
         <td>

@@ -37,6 +37,10 @@ const NotificationBell = ({ username }) => {
     fetchNotifications(); // initial fetch
   }, [fetchNotifications]);
 
+  const handleDismiss = (notificationId) => {
+    setNotifications(prev => prev.filter(n => n._id !== notificationId));
+  };
+
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
@@ -51,9 +55,10 @@ const NotificationBell = ({ username }) => {
             <p className="no-notifications">No notifications</p>
           ) : (
             notifications.map((n) => (
-              <p key={n._id} className={`notification-item ${n.read ? '' : 'unread'}`}>
-               {n.message}
-              </p>
+              <div key={n._id} className={`notification-item ${n.read ? '' : 'unread'}`}>
+                <span>{n.message}</span>
+                <button className="close-btn" onClick={() => handleDismiss(n._id)}>✖</button>
+              </div>
             ))
           )}
         </div>

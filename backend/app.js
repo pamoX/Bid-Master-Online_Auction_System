@@ -12,6 +12,8 @@ const shipmentRouter = require("./Route/ShipmentRouter.js");
 const shipperRouter = require("./Route/ShipperRouter.js");
 const taskRoutes = require('./Route/TaskRoute');
 const notificationRoutes = require('./Route/TaskNotificationRoute');
+const bidNowRoutes = require("./Route/BidNowRoutes");
+
 
 const Stripe = require('stripe');
 require('dotenv').config();
@@ -29,7 +31,9 @@ const fs = require("fs"); // Add fs for file deletion
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 //im
-const router = require("./Route/ReportRoutes");
+
+const itemRouter = require("./Route/ItemRoutes")
+const reportRouter = require("./Route/ReportRoutes");
 
 const app = express();
 
@@ -39,7 +43,7 @@ app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
-app.use("/items", SellerRoute);
+app.use("/item", SellerRoute);
 app.use("/files", express.static(path.join(__dirname, "../frontend/src/Components/ImgUploader/files")));
 
 app.use("/shipments", shipmentRouter);
@@ -54,14 +58,17 @@ app.use("/api/payroll", payrollRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/notifications', notificationRoutes);
 
+
 // Mount API routes
 app.use("/bid-users", bidUserRoutes);
 app.use("/bid-ship-users", bidShipRoutes);
 app.use("/bid-feedback-users", bidFeedbackUserRoutes);
+app.use("/api/bid-now", bidNowRoutes);
 
 
 //im
-app.use("/reports",router);
+app.use("/reports", reportRouter);
+app.use("/items", itemRouter);
 
 // Connect to MongoDB
 mongoose
