@@ -1,0 +1,108 @@
+.item-details-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.item-details-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.item-image-section {
+  position: relative;
+  width: 100%;
+}
+
+.item-main-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.item-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.item-name {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+}
+
+.item-description {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.item-pricing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.price-info, .bidding-info {
+  padding: 1rem;
+}
+
+.price-info h3, .bidding-info h3 {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 0.5rem 0;
+}
+
+.price {
+  font-size: 1.5rem;
+  color: #2c5282;
+  font-weight: bold;
+  margin: 0;
+}
+
+.place-bid-button {
+  background: #2c5282;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.place-bid-button:hover {
+  background: #2a4365;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  color: #e53e3e;
+}
+
+@media (max-width: 768px) {
+  .item-details-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .item-pricing {
+    grid-template-columns: 1fr;
+  }
+} 

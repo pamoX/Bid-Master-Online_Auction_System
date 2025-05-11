@@ -4,19 +4,19 @@ const BidNowModel = require('../Model/BidNowModel');
 const createBid = async (req, res) => {
     try {
         const { itemId, userId, bidAmount } = req.body;
-
+        
         // Check if bid amount is valid
         const currentHighestBid = await BidNowModel.findOne({ itemId, isHighestBid: true });
         if (currentHighestBid && bidAmount <= currentHighestBid.bidAmount) {
             return res.status(400).json({ message: 'Bid amount must be higher than current highest bid' });
         }
-
+        
         // Update previous highest bid status
         if (currentHighestBid) {
             currentHighestBid.isHighestBid = false;
             await currentHighestBid.save();
         }
-
+        
         // Create new bid
         const newBid = new BidNowModel({
             itemId,
@@ -24,7 +24,7 @@ const createBid = async (req, res) => {
             bidAmount,
             isHighestBid: true
         });
-
+        
         await newBid.save();
         res.status(201).json(newBid);
     } catch (error) {
@@ -72,20 +72,65 @@ const updateBidStatus = async (req, res) => {
     try {
         const { bidId } = req.params;
         const { bidStatus } = req.body;
-
+        
         const updatedBid = await BidNowModel.findByIdAndUpdate(
             bidId,
             { bidStatus },
             { new: true }
         );
-
+        
         if (!updatedBid) {
             return res.status(404).json({ message: 'Bid not found' });
         }
-
+        
         res.status(200).json(updatedBid);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+};
+
+// Delete a bid (retrieve bid)
+const deleteBid = async (req, res) => {
+    try {
+        const { bidId } = req.params;
+        // Try to get userId from body, query, or headers
+        const userId = req.body.userId || req.query.userId || req.headers['x-user-id'];
+        const itemId = req.body.itemId || req.query.itemId;
+        
+        if (!userId) return res.status(400).json({ message: "User ID required" });
+        if (!itemId) return res.status(400).json({ message: "Item ID required" });
+        
+        const bid = await BidNowModel.findById(bidId);
+        if (!bid) return res.status(404).json({ message: "Bid not found" });
+        if (bid.userId !== userId) return res.status(403).json({ message: "You can only retrieve your own bids" });
+        
+        // Check if this is the highest bid
+        const isHighestBid = bid.isHighestBid;
+        
+        // Delete the bid
+        await BidNowModel.findByIdAndDelete(bidId);
+        
+        // If this was the highest bid, update the next highest bid
+        if (isHighestBid) {
+            // Find the next highest bid for this item
+            const nextHighestBid = await BidNowModel.find({ itemId })
+                .sort({ bidAmount: -1 })
+                .limit(1);
+            
+            if (nextHighestBid && nextHighestBid.length > 0) {
+                // Set the next highest bid as the current highest
+                nextHighestBid[0].isHighestBid = true;
+                await nextHighestBid[0].save();
+            }
+        }
+        
+        res.status(200).json({ 
+            message: "Bid retrieved successfully",
+            nextHighestBid: nextHighestBid && nextHighestBid.length > 0 ? nextHighestBid[0] : null
+        });
+    } catch (error) {
+        console.error("Error in deleteBid:", error);
+        res.status(500).json({ message: "Failed to retrieve bid" });
     }
 };
 
@@ -94,5 +139,6 @@ module.exports = {
     getBidsByItem,
     getUserBids,
     getHighestBid,
-    updateBidStatus
-}; 
+    updateBidStatus,
+    deleteBid
+};

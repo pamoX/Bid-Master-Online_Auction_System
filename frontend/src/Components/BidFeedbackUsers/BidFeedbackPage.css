@@ -2,7 +2,8 @@
 
 /* Full-page wrapper for the background image */
 .bidfeedback-page-wrapper {
-    background-image: url('F:\Online_Auction_System\Online_Auction_system\frontend\public\BidImages\feedback.jpg');
+    background-image: url('../../assets/BidImages/feedback.jpg');
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

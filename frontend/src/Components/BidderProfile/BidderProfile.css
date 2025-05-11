@@ -9,7 +9,7 @@ body {
     margin: 0; 
     padding: 20px;
     font-family: 'Arial', sans-serif;
-    background: url("F:\Online_Auction_System\Online_Auction_system\frontend\public\BidImages\bc.jpg") no-repeat center center fixed;
+    background-image: url('../../assets/BidImages/bc.jpg');
     background-size: cover;
     min-height: 100vh; 
     position: relative;

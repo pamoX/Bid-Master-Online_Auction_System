@@ -17,7 +17,7 @@ body {
     width: 100%; 
     max-width: 800px; 
     box-sizing: border-box;
-    background: url("F:\Online_Auction_System\Online_Auction_system\frontend\public\BidImages\newback.jpg") no-repeat center center fixed;
+    background-image: url('../../assets/BidImages/newback.jpg');
     background-size: cover;
   }
   

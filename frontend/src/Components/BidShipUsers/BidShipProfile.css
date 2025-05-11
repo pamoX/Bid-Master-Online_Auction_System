@@ -28,7 +28,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("F:\Online_Auction_System\Online_Auction_system\frontend\public\BidImages\streetship.jpg") no-repeat center center fixed;
+    background-image: url('../../assets/BidImages/streetship.jpg');
     background-size: cover;
     z-index: 0; /* Place behind content */
   }

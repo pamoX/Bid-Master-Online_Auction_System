@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./BidDashboard.css";
+import { useNavigate } from "react-router-dom";
 
 const BidDashboard = () => {
+  const navigate = useNavigate();
   const images = [
-    "/BidImages/shutterstock.jpg",
-    "/BidImages/antiq.jpg",
-    "/BidImages/tele.jpg",
-    "/BidImages/antifurnit.jpg",
-    "/BidImages/watch.jpg",
-  ];
+  "/images/Bidder/shutterstock.jpg",
+  "/images/Bidder/antiq.jpg",
+  "/images/Bidder/tele.jpg",
+  "/images/Bidder/antifurnit.jpg",
+  "/images/Bidder/watch.jpg",
+];
+
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageOpacity, setImageOpacity] = useState(1);
 
@@ -28,7 +32,7 @@ const BidDashboard = () => {
     { bidder: "Poornima", amount: 250, time: "10:10 AM" },
   ]);
 
-  // image effect
+  // Image effect
   useEffect(() => {
     const interval = setInterval(() => {
       setImageOpacity(0);
@@ -40,7 +44,7 @@ const BidDashboard = () => {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  // date and time
+  // Date and time
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -48,7 +52,7 @@ const BidDashboard = () => {
       const minutes = String(now.getMinutes()).padStart(2, "0");
       const seconds = String(now.getSeconds()).padStart(2, "0");
       const period = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12 || 12; // convert 12 hr format
+      hours = hours % 12 || 12; // Convert to 12-hour format
       hours = String(hours).padStart(2, "0");
       const date = now.toLocaleDateString(); 
 
@@ -68,7 +72,7 @@ const BidDashboard = () => {
   // Handle button click
   const handleSeeAuctionsClick = () => {
     alert("Redirecting to auctions page...");
-    // Add navigation logic here if needed, e.g., useNavigate from react-router-dom
+    navigate("/items-gallery");
   };
 
   return (
@@ -141,7 +145,6 @@ const BidDashboard = () => {
             <button
               className="biddashboard-bid-bid-now-btn"
               onClick={handleSeeAuctionsClick}
-              disabled={!isConfirmed || isAuctionEnded}
             >
               See Auctions
             </button>

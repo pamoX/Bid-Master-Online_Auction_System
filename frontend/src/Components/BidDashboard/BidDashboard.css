@@ -8,7 +8,9 @@ body {
   .biddashboard-bid-dashboard-container {
     margin: 0; 
     padding: 25px;
-    background: url("F:\Online_Auction_System\Online_Auction_system\frontend\public\BidImages\blueleaves.jpg") no-repeat center center fixed;
+    /*background-image: url('../../assets/BidImages/blueleaves.jpg');*/
+
+
     background-size: cover;
     min-height: 100vh; 
     position: relative;
@@ -25,7 +27,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(66, 60, 92, 0.4); 
+    background: rgba(1, 1, 34, 0.4); 
     border-radius: 15px;
     z-index: 1;
   }

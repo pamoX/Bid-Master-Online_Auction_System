@@ -1,5 +1,5 @@
 .BidShipUserDetailsWrapper {
-    background-image: url("F:\Online_Auction_System\Online_Auction_system\frontend\public\BidImages\newwww.webp"); /* Replace with your image path */
+    background-image: url('../../assets/BidImages/newwww.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

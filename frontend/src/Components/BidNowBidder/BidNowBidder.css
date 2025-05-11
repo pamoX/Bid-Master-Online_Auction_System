@@ -1,0 +1,422 @@
+.BidNowBidderWrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.BidNowBidderMain {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.BidNowBidderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.BidNowBidderLeft h1 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+}
+
+.BidNowBidderImageGallery {
+  position: relative;
+  width: 100%;
+}
+
+.BidNowBidderZoomable {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.BidNowBidderDescription {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.BidNowBidderDescription h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.BidNowBidderDescription p {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.BidNowBidderHistory {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.BidNowBidderHistory h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.BidNowBidderHistoryList {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.BidNowBidderHistoryItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.BidNowBidderHistoryItem.your-bid {
+  background: #ebf8ff;
+  border: 1px solid #bee3f8;
+}
+
+.bid-amount {
+  font-weight: bold;
+  color: #2c5282;
+}
+
+.bid-user {
+  color: #666;
+}
+
+.bid-time {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.BidNowBidderRight {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.BidNowBidderPrices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.starting-price, .current-bid {
+  text-align: center;
+}
+
+.starting-price h3, .current-bid h3 {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 0.5rem 0;
+}
+
+.starting-price p, .current-bid p {
+  font-size: 1.5rem;
+  color: #2c5282;
+  font-weight: bold;
+  margin: 0;
+}
+
+.BidNowBidderTimer {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.BidNowBidderTimer h2 {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0 0 0.5rem 0;
+}
+
+.BidNowBidderTimer p {
+  font-size: 1.5rem;
+  color: #2c5282;
+  font-weight: bold;
+  margin: 0;
+  font-family: monospace;
+}
+
+.BidNowBidderTimer p.end-time {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: normal;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+
+.BidNowBidderTimer p.auction-ended {
+  color: #e53e3e;
+  animation: pulse 2s infinite;
+}
+
+.BidNowBidderTimer .warning-message {
+  color: #e53e3e;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.retrieve-bid-button {
+  background-color: #4a5568;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.retrieve-bid-button:hover {
+  background-color: #2d3748;
+}
+
+.proceed-to-pay-button {
+  background-color: #48bb78;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.proceed-to-pay-button:hover {
+  background-color: #38a169;
+}
+
+.auction-ended-message {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.auction-ended-message p {
+  font-size: 1.2rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.BidNowBidderBidForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.BidNowBidderBidForm input {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1.1rem;
+}
+
+.BidNowBidderBidForm button {
+  background: #2c5282;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.BidNowBidderBidForm button:hover {
+  background: #2a4365;
+}
+
+.confirmation-message, .outbid-alert {
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.confirmation-message {
+  background: #c6f6d5;
+  color: #2f855a;
+}
+
+.outbid-alert {
+  background: #fed7d7;
+  color: #c53030;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  color: #e53e3e;
+}
+
+@media (max-width: 768px) {
+  .BidNowBidderMain {
+    grid-template-columns: 1fr;
+  }
+  
+  .BidNowBidderPrices {
+    grid-template-columns: 1fr;
+  }
+}
+
+.outbid-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+.outbid-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.outbid-icon {
+  font-size: 1.5rem;
+}
+
+.outbid-notification p {
+  margin: 0;
+  color: #856404;
+  font-weight: 500;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.confirmation-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-dialog {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.confirmation-dialog h3 {
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.confirmation-dialog p {
+  color: #4a5568;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.confirmation-dialog .warning-text {
+  color: #e53e3e;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+.confirmation-buttons button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.confirm-button {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.confirm-button:hover {
+  background-color: #c53030;
+}
+
+.cancel-button {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.cancel-button:hover {
+  background-color: #cbd5e0;
+} 

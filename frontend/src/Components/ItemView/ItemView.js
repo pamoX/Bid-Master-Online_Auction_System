@@ -68,7 +68,7 @@ function ItemView() {
   
   const handlePlaceBid = () => {
     alert('Bid placed! This would typically open a bidding form.');
-    // navigate('/place-bid/' + id);  // For future implementation
+    navigate('/bid-now/' + id);  // For future implementation
   };
   
   if (loading) return <div className="item-view-container"><Nav /><div className="loading">Loading item details...</div></div>;
