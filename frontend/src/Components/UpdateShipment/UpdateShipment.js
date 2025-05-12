@@ -107,7 +107,7 @@ function UpdateShipment() {
                     'button',
                     {
                         type: 'button',
-                        onClick: () => navigate('/admin/shipments'),
+                        onClick: () => navigate('/shipments'),
                         className: 'w-full bg-gray-500 text-white p-2 rounded hover:bg-gray-600'
                     },
                     'Cancel'

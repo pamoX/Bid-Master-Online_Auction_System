@@ -22,6 +22,10 @@ function Home() {
         <button className="new-seller-button">Seller</button></Link>
         <Link to="/buyer">
         <button className="new-shippers-button">Buyer</button></Link>
+
+        <Link to="/shprofile">
+        <button className="profile-button">Profile</button></Link>
+        
     </div>
   )
 }

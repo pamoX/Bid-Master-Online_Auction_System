@@ -39,12 +39,10 @@ const addShipments = async (req, res, next) => {
     itemname,
     from,
     to,
-    sellername,
-    selleremail,
-    sellerphone,
-    buyername,
-    buyeremail,
-    buyerphone,
+    userName,
+    email,
+    phone,
+    
     weight,
     shipmenttype,
     cost,
@@ -55,12 +53,9 @@ const addShipments = async (req, res, next) => {
       itemname: itemname,
       from: from,
       to: to,
-      sellername: sellername,
-      selleremail: selleremail,
-      sellerphone: sellerphone,
-      buyername: buyername,
-      buyeremail: buyeremail,
-      buyerphone: buyerphone,
+      userName: userName,
+      email: email,
+      phone: phone,
       weight: weight,
       shipmenttype: shipmenttype,
       cost: cost,
@@ -77,7 +72,7 @@ const getUserShipments = async (req, res) => {
     try {
         const { email } = req.query;
         const shipments = await Shipment.find({
-            $or: [{ selleremail: email }, { buyeremail: email }]
+            $or: [{email: email }]
         }).sort({ createdAt: -1 });
         res.status(200).json({ success: true, data: shipments });
     } catch (error) {
@@ -105,12 +100,12 @@ const submitShippingDetails = async (req, res) => {
                 itemname: pendingShipment.sellerDetails.itemname,
                 from: pendingShipment.sellerDetails.from,
                 to: pendingShipment.buyerDetails.to,
-                sellername: pendingShipment.sellerDetails.sellername,
-                selleremail: pendingShipment.sellerDetails.selleremail,
-                sellerphone: pendingShipment.sellerDetails.sellerphone,
-                buyername: pendingShipment.buyerDetails.buyername,
-                buyeremail: pendingShipment.buyerDetails.buyeremail,
-                buyerphone: pendingShipment.buyerDetails.buyerphone,
+                userName: pendingShipment.sellerDetails.userName,
+                selleremail: pendingShipment.sellerDetails.email,
+                phone: pendingShipment.sellerDetails.phone,
+                //buyername: pendingShipment.buyerDetails.buyername,
+                //buyeremail: pendingShipment.buyerDetails.buyeremail,
+                //buyerphone: pendingShipment.buyerDetails.buyerphone,
                 weight: pendingShipment.sellerDetails.weight,
                 shipmenttype: pendingShipment.sellerDetails.shipmenttype,
                 cost,
@@ -118,9 +113,8 @@ const submitShippingDetails = async (req, res) => {
             });
             await shipment.save();
             await PendingShipment.deleteOne({ auctionid });
-            await sendNotification(shipment.selleremail, 'Shipment Created', `Your shipment ${shipment.itemid} is pending.`);
-            await sendNotification(shipment.buyeremail, 'Shipment Created', `Your shipment ${shipment.itemid} is pending.`);
-            req.io.emit('shipmentUpdate', { itemid: shipment.itemid, status: shipment.status });
+            await sendNotification(shipment.email, 'Shipment Created', `Your shipment ${shipment.itemid} is pending.`);
+           req.io.emit('shipmentUpdate', { itemid: shipment.itemid, status: shipment.status });
             res.status(201).json({ success: true, data: shipment });
         } else {
             res.status(200).json({ success: true, message: 'Details submitted, awaiting other party' });
@@ -147,8 +141,7 @@ const updateShipment = async (req, res) => {
         const shipment = await Shipment.findByIdAndUpdate(id, { status, courierid, cost }, { new: true });
         if (!shipment) return res.status(404).json({ success: false, message: 'Shipment not found' });
         if (status) {
-            await sendNotification(shipment.selleremail, `Shipment ${shipment.itemid} Updated`, `Status: ${status}`);
-            await sendNotification(shipment.buyeremail, `Shipment ${shipment.itemid} Updated`, `Status: ${status}`);
+            await sendNotification(shipment.email, `Shipment ${shipment.itemid} Updated`, `Status: ${status}`);
             req.io.emit('shipmentUpdate', { itemid: shipment.itemid, status });
         }
         res.status(200).json({ success: true, data: shipment });

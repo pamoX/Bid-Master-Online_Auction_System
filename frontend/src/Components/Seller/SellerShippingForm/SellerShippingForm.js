@@ -10,9 +10,9 @@ function SellerShippingForm() {
     const [formData, setFormData] = useState({
         itemid: '',
         itemname: '',
-        sellername: '',
-        selleremail: '',
-        sellerphone: '',
+        userName: '',
+        email: '',
+        phone: '',
         from: '',
         weight: '',
         shipmenttype: ''
@@ -137,6 +137,7 @@ function SellerShippingForm() {
                     required: true
                 })
             ),
+            /*
             React.createElement(
                 'div',
                 null,
@@ -155,6 +156,7 @@ function SellerShippingForm() {
                     React.createElement('option', { value: 'International' }, 'International')
                 )
             ),
+            */
             React.createElement(
                 'button',
                 { type: 'submit', className: 'w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600' },

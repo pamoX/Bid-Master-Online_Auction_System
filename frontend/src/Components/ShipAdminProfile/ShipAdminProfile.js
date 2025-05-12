@@ -19,7 +19,7 @@ function ShipAdminProfile() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await publicRequest.get('/admin/profile');
+                const res = await publicRequest.get('/shprofile');
                 setFormData(res.data);
                 setIsEditing(true);
             } catch (error) {
@@ -52,11 +52,11 @@ function ShipAdminProfile() {
 
         try {
             if (isEditing) {
-                const res = await publicRequest.put('/admin/profile', data);
+                const res = await publicRequest.put('/shprofile', data);
                 setFormData(res.data);
                 toast.success('Profile updated successfully!');
             } else {
-                const res = await publicRequest.post('/admin/profile', data);
+                const res = await publicRequest.post('/shprofile', data);
                 setFormData(res.data);
                 toast.success('Profile created successfully!');
                 setIsEditing(true);
@@ -70,7 +70,7 @@ function ShipAdminProfile() {
     const handleDelete = async () => {
         if (window.confirm('Are you sure you want to delete the admin profile?')) {
             try {
-                await publicRequest.delete('/admin/profile');
+                await publicRequest.delete('/shprofile');
                 toast.success('Profile deleted successfully!');
                 setFormData({ fullName: '', email: '', phone: '', password: '', profilePicture: '' });
                 setFile(null);

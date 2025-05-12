@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const shprofilerouter = express.Router();
 const multer = require('multer');
 const {
     createOrUpdateProfile,

@@ -14,12 +14,10 @@ function NewShipment() {
         itemname: "",
         from: "",
         to: "",
-        sellername: "",
-        selleremail: "",
-        sellerphone: "",
-        buyername: "",
-        buyeremail: "",
-        buyerphone: "",
+        userName: "",
+        email: "",
+        phone: "",
+       
         weight: "",
         shipmenttype: "",
         cost: ""
@@ -49,12 +47,10 @@ function NewShipment() {
             itemname: String(shipmentData.itemname),
             from: String(shipmentData.from),
             to: String(shipmentData.to),
-            sellername: String(shipmentData.sellername),
-            selleremail: String(shipmentData.selleremail),
-            sellerphone: String(shipmentData.sellerphone),
-            buyername: String(shipmentData.buyername),
-            buyeremail: String(shipmentData.buyeremail),
-            buyerphone: String(shipmentData.buyerphone),
+            userName: String(shipmentData.userName),
+            email: String(shipmentData.email),
+            phone: String(shipmentData.phone),
+           
             weight: Number(shipmentData.weight),
             shipmenttype: String(shipmentData.shipmenttype),
             cost: Number(shipmentData.cost)
@@ -71,7 +67,7 @@ function NewShipment() {
                     <input
                         type="text"
                         id="sh-itemid"
-                        name="sh-itemid"
+                        name="itemid"
                         value={shipmentData.itemid}
                         onChange={handleChange}
                         required
@@ -83,7 +79,7 @@ function NewShipment() {
                     <input
                         type="text"
                         id="sh-itemname"
-                        name="sh-itemname"
+                        name="itemname"
                         value={shipmentData.itemname}
                         onChange={handleChange}
                         required
@@ -95,7 +91,7 @@ function NewShipment() {
                     <input
                         type="text"
                         id="sh-from"
-                        name="sh-from"
+                        name="from"
                         value={shipmentData.from}
                         onChange={handleChange}
                         required
@@ -107,7 +103,7 @@ function NewShipment() {
                     <input
                         type="text"
                         id="sh-to"
-                        name="sh-to"
+                        name="to"
                         value={shipmentData.to}
                         onChange={handleChange}
                         required
@@ -115,83 +111,50 @@ function NewShipment() {
                 </div>
 
                 <div className="sh-form-group">
-                    <label htmlFor="sellername">Seller Name</label>
+                    <label htmlFor="userName">Customer Name</label>
                     <input
                         type="text"
-                        id="sh-sellername"
-                        name="sh-sellername"
-                        value={shipmentData.sellername}
+                        id="sh-name"
+                        name="userName"
+                        value={shipmentData.userName}
                         onChange={handleChange}
                         required
                     />
                 </div>
 
                 <div className="sh-form-group">
-                    <label htmlFor="selleremail">Seller Email</label>
+                    <label htmlFor="email">Email Address</label>
                     <input
                         type="email"
-                        id="sh-selleremail"
-                        name="sh-selleremail"
-                        value={shipmentData.selleremail}
+                        id="sh-email"
+                        name="email"
+                        value={shipmentData.email}
                         onChange={handleChange}
                         required
                     />
                 </div>
 
                 <div className="sh-form-group">
-                    <label htmlFor="sellerphone">Seller Phone</label>
+                    <label htmlFor="phone">Phone Number</label>
                     <input
                         type="text"
-                        id="sh-sellerphone"
-                        name="sh-sellerphone"
-                        value={shipmentData.sellerphone}
+                        id="sh-phone"
+                        name="phone"
+                        value={shipmentData.phone}
                         onChange={handleChange}
                         required
                     />
                 </div>
 
-                <div className="sh-form-group">
-                    <label htmlFor="buyername">Buyer Name</label>
-                    <input
-                        type="text"
-                        id="sh-buyername"
-                        name="sh-buyername"
-                        value={shipmentData.buyername}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="sh-form-group">
-                    <label htmlFor="buyeremail">Buyer Email</label>
-                    <input
-                        type="email"
-                        id="sh-buyeremail"
-                        name="sh-buyeremail"
-                        value={shipmentData.buyeremail}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="sh-form-group">
-                    <label htmlFor="buyerphone">Buyer Phone</label>
-                    <input
-                        type="text"
-                        id="sh-buyerphone"
-                        name="sh-buyerphone"
-                        value={shipmentData.buyerphone}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+              
+             
 
                 <div className="sh-form-group">
                     <label htmlFor="weight">Weight (g)</label>
                     <input
                         type="number"
                         id="sh-weight"
-                        name="sh-weight"
+                        name="weight"
                         value={shipmentData.weight}
                         onChange={handleChange}
                         step="0.1"
@@ -204,7 +167,7 @@ function NewShipment() {
                     <label htmlFor="shipmenttype">Shipment Type</label>
                     <select
                         id="sh-shipmenttype"
-                        name="sh-shipmenttype"
+                        name="shipmenttype"
                         value={shipmentData.shipmenttype}
                         onChange={handleChange}
                         required
@@ -220,7 +183,7 @@ function NewShipment() {
                     <input
                         type="number"
                         id="sh-cost"
-                        name="sh-cost"
+                        name="cost"
                         value={shipmentData.cost}
                         onChange={handleChange}
                         step="0.01"

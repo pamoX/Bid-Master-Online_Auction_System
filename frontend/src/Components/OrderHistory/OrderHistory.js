@@ -45,7 +45,7 @@ function OrderHistory() {
         React.createElement(
             'h1',
             { className: 'text-3xl font-bold mb-6' },
-            'Order History'
+            'Shipping History'
         ),
         React.createElement(
             'div',

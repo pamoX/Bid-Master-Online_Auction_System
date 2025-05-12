@@ -24,6 +24,9 @@ import BuyerShipping from './Components/Buyer/BuyerShipping';
 import Buyer from './Components/Buyer/Buyer';
 import SellerShipping from './Components/Seller/SellerShipping';
 import Seller from './Components/Seller/Seller';
+import ShipAdminProfile from './Components/ShipAdminProfile/ShipAdminProfile';
+import ShipProfile from './Components/ShipProfile/ShipProfile';
+import EditShipProfile from './Components/ShipProfile/EditShipProfile';
 
 function App() {
   return (
@@ -51,11 +54,14 @@ function App() {
           <Route path="/buyershipping" element={<BuyerShipping />} />
           <Route path="/sellershipping" element={<SellerShipping />} />
 
-
           <Route path="/buyer/shipping/:auctionid" element={<BuyerShippingForm />} />
           <Route path="/seller/shipping/:auctionid" element={<SellerShippingForm />} />
           <Route path="/orders" element={<OrderHistory />} />
           <Route path="/track/:id" element={<ShipmentTracking />} />
+          <Route path="/shprofile" element={<ShipAdminProfile />} />
+          <Route path="/shipprofile" element={<ShipProfile />} />
+          <Route path="/editshipprofile" element={<EditShipProfile />} />
+
         </Routes>
         </React.Fragment>
         

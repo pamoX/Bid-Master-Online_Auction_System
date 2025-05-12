@@ -7,6 +7,8 @@ const http = require('http');
 const { Server } = require('socket.io');
 const shipmentRouter = require('./Routes/ShipmentRouter.js');
 const shipperRouter = require('./Routes/ShipperRouter.js');
+const shipAdminRouter = require('./Routes/ShipAdminRouter.js');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -26,6 +28,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes
 app.use('/api/v1/shipments', shipmentRouter);
 app.use('/api/v1/shippers', shipperRouter);
+app.use('/api/v1/shipadmin', shipAdminRouter);
 app.use('/api/v1/shadmin', require('./Routes/ShipProfileRouter.js'));
 
 // Health check
