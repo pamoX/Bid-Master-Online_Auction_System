@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import Item from '../Item/Item';
 import axios from 'axios';
-import { Bar } from 'react-chartjs-2'; // Import Bar chart component
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'; // Chart.js components
+import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import './SellerProfile.css';
+import Footer from '../Footer/Footer';
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend);
 
 const SellerProfile = () => {
   const navigate = useNavigate();
@@ -21,6 +22,13 @@ const SellerProfile = () => {
   });
   const [sellerItems, setSellerItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCharts, setVisibleCharts] = useState({
+    status: true,
+    timeline: true,
+    bids: true
+  });
+  const [statusFilter, setStatusFilter] = useState('all'); // Filter for item status
+  const [dateRange, setDateRange] = useState('all'); // Filter for date range
 
   useEffect(() => {
     fetchSellerProfile();
@@ -62,10 +70,7 @@ const SellerProfile = () => {
         throw new Error('Failed to fetch seller items');
       }
       const data = response.data.items || [];
-      const sortedItems = data
-        .sort((a, b) => new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now()))
-        .slice(0, 3);
-      setSellerItems(sortedItems);
+      setSellerItems(data); // Fetch all items for analytics
     } catch (err) {
       console.error('Error fetching seller items:', err);
       setSellerItems([
@@ -76,14 +81,27 @@ const SellerProfile = () => {
     }
   };
 
+  // Filter items based on status and date range
+  const filteredItems = useMemo(() => {
+    let items = [...sellerItems];
+    // Status filter
+    if (statusFilter !== 'all') {
+      items = items.filter(item => item.status === statusFilter);
+    }
+    // Date range filter
+    if (dateRange !== 'all') {
+      const now = new Date();
+      const days = dateRange === '30days' ? 30 : dateRange === '90days' ? 90 : 365;
+      const cutoff = new Date(now.setDate(now.getDate() - days));
+      items = items.filter(item => new Date(item.createdAt) >= cutoff);
+    }
+    return items;
+  }, [sellerItems, statusFilter, dateRange]);
+
   // Calculate item status counts
   const getItemStatusCounts = () => {
-    const counts = {
-      pending: 0,
-      accepted: 0,
-      rejected: 0
-    };
-    sellerItems.forEach(item => {
+    const counts = { pending: 0, accepted: 0, rejected: 0 };
+    filteredItems.forEach(item => {
       if (item.status === 'pending') counts.pending++;
       else if (item.status === 'accepted') counts.accepted++;
       else if (item.status === 'rejected') counts.rejected++;
@@ -91,9 +109,44 @@ const SellerProfile = () => {
     return counts;
   };
 
-  // Chart data for Bar chart
+  // Calculate items listed per month for Line chart
+  const getItemsByMonth = () => {
+    const months = Array(12).fill(0);
+    const labels = [];
+    const now = new Date();
+    for (let i = 11; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      labels.push(date.toLocaleString('default', { month: 'short', year: 'numeric' }));
+    }
+    filteredItems.forEach(item => {
+      const createdAt = new Date(item.createdAt);
+      const monthIndex = (now.getFullYear() - createdAt.getFullYear()) * 12 + (now.getMonth() - createdAt.getMonth());
+      if (monthIndex >= 0 && monthIndex < 12) {
+        months[11 - monthIndex]++;
+      }
+    });
+    return { labels, data: months };
+  };
+
+  // Calculate starting bid distribution for Pie chart
+  const getBidDistribution = () => {
+    const ranges = { '0-50': 0, '51-100': 0, '101-200': 0, '201+': 0 };
+    filteredItems.forEach(item => {
+      const bid = item.startingBid;
+      if (bid <= 50) ranges['0-50']++;
+      else if (bid <= 100) ranges['51-100']++;
+      else if (bid <= 200) ranges['101-200']++;
+      else ranges['201+']++;
+    });
+    return {
+      labels: Object.keys(ranges),
+      data: Object.values(ranges)
+    };
+  };
+
+  // Chart data
   const statusCounts = getItemStatusCounts();
-  const chartData = {
+  const barChartData = {
     labels: ['Pending', 'Approved', 'Rejected'],
     datasets: [
       {
@@ -106,43 +159,62 @@ const SellerProfile = () => {
     ]
   };
 
+  const itemsByMonth = getItemsByMonth();
+  const lineChartData = {
+    labels: itemsByMonth.labels,
+    datasets: [
+      {
+        label: 'Items Listed',
+        data: itemsByMonth.data,
+        fill: false,
+        backgroundColor: '#36A2EB',
+        borderColor: '#36A2EB',
+        tension: 0.1
+      }
+    ]
+  };
+
+  const bidDistribution = getBidDistribution();
+  const pieChartData = {
+    labels: bidDistribution.labels,
+    datasets: [
+      {
+        label: 'Starting Bid Distribution',
+        data: bidDistribution.data,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+        borderColor: ['#FFFFFF'],
+        borderWidth: 1
+      }
+    ]
+  };
+
   // Chart options
-  const chartOptions = {
+  const barChartOptions = {
     responsive: true,
-    plugins: {
-      legend: {
-        position: 'top'
-      },
-      title: {
-        display: true,
-        text: 'Item Status Distribution'
-      }
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 1 // Ensure whole numbers for item counts
-        }
-      }
-    }
+    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Item Status Distribution' } },
+    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
   };
 
-  const handleEditProfileClick = () => {
-    navigate('/edit-profile');
+  const lineChartOptions = {
+    responsive: true,
+    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Items Listed Over Time' } },
+    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
   };
 
-  const handleAddItemClick = () => {
-    navigate('/add-item');
+  const pieChartOptions = {
+    responsive: true,
+    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Starting Bid Distribution ($)' } }
   };
 
-  const handleDashboardClick = () => {
-    navigate('/seller-dashboard');
+  // Toggle chart visibility
+  const toggleChart = (chart) => {
+    setVisibleCharts(prev => ({ ...prev, [chart]: !prev[chart] }));
   };
 
-  const handleItemRefresh = () => {
-    fetchSellerItems();
-  };
+  const handleEditProfileClick = () => navigate('/edit-profile');
+  const handleAddItemClick = () => navigate('/add-item');
+  const handleDashboardClick = () => navigate('/seller-dashboard');
+  const handleItemRefresh = () => fetchSellerItems();
 
   return (
     <div className="seller-profile-page">
@@ -176,8 +248,7 @@ const SellerProfile = () => {
               <p className="seller-email"><i className="fas fa-envelope"></i> {seller.email}</p>
               <p className="seller-bio">{seller.bio}</p>
               <p className="seller-joined">
-                <i className="far fa-calendar-alt"></i> Joined:{' '}
-                {new Date(seller.joinedDate).toLocaleDateString()}
+                <i className="far fa-calendar-alt"></i> Joined: {new Date(seller.joinedDate).toLocaleDateString()}
               </p>
               <button className="edit-profile-btn" onClick={handleEditProfileClick}>
                 <i className="fas fa-edit"></i> Edit Profile
@@ -187,11 +258,84 @@ const SellerProfile = () => {
         )}
       </section>
 
-      {/* Item Status Chart Section */}
-      <section className="item-status-chart-section">
-        <h2 className="profile-section-title">Item Status Overview</h2>
-        <div className="chart-container" style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <Bar data={chartData} options={chartOptions} />
+      {/* Charts Section */}
+      <section className="charts-section">
+        <h2 className="profile-section-title">Analytics Overview</h2>
+        {/* Chart Controls */}
+        <div className="chart-controls">
+          <div className="chart-toggles">
+            <label>
+              <input
+                type="checkbox"
+                checked={visibleCharts.status}
+                onChange={() => toggleChart('status')}
+              />
+              Status Chart
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={visibleCharts.timeline}
+                onChange={() => toggleChart('timeline')}
+              />
+              Timeline Chart
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={visibleCharts.bids}
+                onChange={() => toggleChart('bids')}
+              />
+              Bids Chart
+            </label>
+          </div>
+          <div className="chart-filters">
+            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="accepted">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <select value={dateRange} onChange={(e) => setDateRange(e.target.value)}>
+              <option value="all">All Time</option>
+              <option value="30days">Last 30 Days</option>
+              <option value="90days">Last 90 Days</option>
+              <option value="365days">Last Year</option>
+            </select>
+          </div>
+        </div>
+        {/* Charts Grid */}
+        <div className="charts-grid">
+          {visibleCharts.status && (
+            <div className="chart-card">
+              <div className="chart-header">
+                <h3>Item Status Distribution</h3>
+              </div>
+              <div className="chart-container">
+                <Bar data={barChartData} options={barChartOptions} />
+              </div>
+            </div>
+          )}
+          {visibleCharts.timeline && (
+            <div className="chart-card">
+              <div className="chart-header">
+                <h3>Items Listed Over Time</h3>
+              </div>
+              <div className="chart-container">
+                <Line data={lineChartData} options={lineChartOptions} />
+              </div>
+            </div>
+          )}
+          {visibleCharts.bids && (
+            <div className="chart-card">
+              <div className="chart-header">
+                <h3>Starting Bid Distribution</h3>
+              </div>
+              <div className="chart-container">
+                <Pie data={pieChartData} options={pieChartOptions} />
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -229,10 +373,10 @@ const SellerProfile = () => {
           </button>
         </div>
         <div className="seller-items-grid">
-          {sellerItems.length === 0 ? (
+          {filteredItems.length === 0 ? (
             <p className="no-items">No items listed yet.</p>
           ) : (
-            sellerItems.map((item) => (
+            filteredItems.slice(0, 3).map((item) => (
               <div key={item._id} className="item-grid-cell">
                 <Item item={item} onRefresh={handleItemRefresh} />
               </div>
@@ -240,6 +384,8 @@ const SellerProfile = () => {
           )}
         </div>
       </section>
+      <br/><br/><br/>
+      <Footer/>
     </div>
   );
 };

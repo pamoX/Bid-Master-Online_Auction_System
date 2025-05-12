@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './SellerListing.css';
-import Nav from '../Nav/Nav';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./SellerListing.css";
+import Nav from "../Nav/Nav";
+import axios from "axios";
+import Footer from "../Footer/Footer";
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 function SellerListing() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [buttonLoading, setButtonLoading] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,11 +21,11 @@ function SellerListing() {
   const fetchListings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/items');
+      const response = await axios.get(`${API_BASE_URL}/items`);
       setListings(response.data.items || []);
       setLoading(false);
     } catch (err) {
-      console.error('Error fetching listings:', err);
+      console.error("Error fetching listings:", err);
       setError(err.message);
       setLoading(false);
     }
@@ -29,64 +33,87 @@ function SellerListing() {
 
   const handleStatusChange = async (listingId, newStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/items/${listingId}/status`, {
-        status: newStatus,
+      setButtonLoading((prev) => ({ ...prev, [listingId]: newStatus }));
+      await axios.patch(`${API_BASE_URL}/items/${listingId}/status`, {
+        status: newStatus.toLowerCase(),
       });
-      alert(`Listing status updated to ${newStatus}`);
-      fetchListings();
+      setListings((prevListings) =>
+        prevListings.map((listing) =>
+          listing._id === listingId
+            ? { ...listing, status: newStatus.toLowerCase() }
+            : listing
+        )
+      );
+      // No need to call fetchListings since we're updating state directly
     } catch (err) {
-      console.error('Error updating status:', err);
-      alert('Failed to update status');
+      console.error("Error updating status:", err);
+      alert(`Failed to update status: ${err.message}`);
+    } finally {
+      setButtonLoading((prev) => ({ ...prev, [listingId]: null }));
     }
   };
 
   const handleAddNew = () => {
-    navigate('/add-item');
+    navigate("/add-item");
   };
 
   if (loading) {
     return (
-      <div className="seller-container">
+      <div className="SellerListing-page">
         <Nav />
-        <div className="loading">Loading listings...</div>
+        <div className="SellerListing-loading" aria-live="polite">
+          Loading listings...
+        </div>
+        <Footer />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="seller-container">
+      <div className="SellerListing-page">
         <Nav />
-        <div className="error">Error: {error}</div>
+        <div className="SellerListing-error" aria-live="assertive">
+          Error: {error}
+        </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="seller-container">
+    <div className="SellerListing-page">
       <Nav />
-      <div className="seller-header">
-        <br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br/><br/><br/><br/>
+      <div className="SellerListing-header">
         <h1>My Listings</h1>
-        <button className="add-listing-btn" onClick={handleAddNew}>Add New Listing</button>
+        <button
+          className="SellerListing-add-listing-btn"
+          onClick={handleAddNew}
+          aria-label="Add new listing"
+        >
+          Add New Listing
+        </button>
       </div>
 
-      <div className="table-container">
-        <table className="listings-table">
+      <div className="SellerListing-table-container">
+        <table className="SellerListing-table" aria-label="Seller listings table">
           <thead>
             <tr>
-              <th>Image</th>
-              <th>Item Name</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th scope="col">Image</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             {listings.length === 0 ? (
               <tr>
-                <td colSpan="6" className="no-listings">No listings available.</td>
+                <td colSpan="6" className="SellerListing-no-listings">
+                  No listings available.
+                </td>
               </tr>
             ) : (
               listings.map((listing) => (
@@ -94,32 +121,63 @@ function SellerListing() {
                   <td>
                     <img
                       src={
-                        listing.image?.startsWith('/Uploads')
-                          ? `http://localhost:5000${listing.image}`
-                          : `https://via.placeholder.com/50?text=${encodeURIComponent(listing.name)}`
+                        listing.image
+                          ? `${API_BASE_URL}/${listing.image}`
+                          : "https://via.placeholder.com/50?text=No+Image"
                       }
-                      alt={listing.name}
-                      className="listing-thumbnail"
+                      alt={listing.title}
+                      className="SellerListing-listing-thumbnail"
+                      onError={(e) => {
+                        e.target.src =
+                          "https://via.placeholder.com/50?text=No+Image";
+                      }}
                     />
                   </td>
-                  <td>{listing.name}</td>
-                  <td className="description-cell">
-                    {listing.description?.substring(0, 50)}...
+                  <td>{listing.title}</td>
+                  <td className="SellerListing-description-cell">
+                    {listing.description?.length > 50
+                      ? `${listing.description.substring(0, 50)}...`
+                      : listing.description || "No description"}
                   </td>
-                  <td>${parseFloat(listing.price).toFixed(2)}</td>
-                  <td>{listing.status}</td>
-                  <td className="actions-cell">
+                  <td>${parseFloat(listing.startingBid).toFixed(2)}</td>
+                  <td>
+                    {listing.status
+                      ? listing.status.charAt(0).toUpperCase() +
+                        listing.status.slice(1)
+                      : "Pending"}
+                  </td>
+                  <td className="SellerListing-actions-cell">
                     <button
-                      className="approve-btn"
-                      onClick={() => handleStatusChange(listing._id, 'Approved')}
+                      className="SellerListing-approve-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleStatusChange(listing._id, "Accepted");
+                      }}
+                      disabled={
+                        buttonLoading[listing._id] ||
+                        listing.status === "accepted"
+                      }
+                      aria-label={`Approve listing ${listing.title}`}
                     >
-                      Approve
+                      {buttonLoading[listing._id] === "Accepted"
+                        ? "Approving..."
+                        : "Approve"}
                     </button>
                     <button
-                      className="reject-btn"
-                      onClick={() => handleStatusChange(listing._id, 'Rejected')}
+                      className="SellerListing-reject-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleStatusChange(listing._id, "Rejected");
+                      }}
+                      disabled={
+                        buttonLoading[listing._id] ||
+                        listing.status === "rejected"
+                      }
+                      aria-label={`Reject listing ${listing.title}`}
                     >
-                      Reject
+                      {buttonLoading[listing._id] === "Rejected"
+                        ? "Rejecting..."
+                        : "Reject"}
                     </button>
                   </td>
                 </tr>
@@ -128,6 +186,8 @@ function SellerListing() {
           </tbody>
         </table>
       </div>
+      <br/><br/><br/><br/>
+      <Footer />
     </div>
   );
 }

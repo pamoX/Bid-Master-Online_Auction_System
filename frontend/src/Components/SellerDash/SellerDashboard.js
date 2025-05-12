@@ -6,7 +6,7 @@ import axios from "axios";
 import "./SellerDashboard.css";
 import Footer from "../Footer/Footer";
 
-const ITEMS_URL = "http://localhost:5000/items";
+const ITEMS_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/items";
 
 function SellerDashboard() {
   const [items, setItems] = useState([]);
@@ -17,7 +17,6 @@ function SellerDashboard() {
   // Function to show popup with a message and type (success/error)
   const showPopup = (message, type) => {
     setPopup({ message, type, visible: true });
-    // Auto-hide after 3 seconds
     setTimeout(() => {
       setPopup({ message: "", type: "", visible: false });
     }, 3000);
@@ -27,11 +26,11 @@ function SellerDashboard() {
     try {
       setLoading(true);
       const response = await axios.get(ITEMS_URL);
-      setItems(response.data.items || []);
+      const fetchedItems = response.data.items || [];
+      setItems(fetchedItems);
       setLoading(false);
 
-      // Show success popup if items are loaded
-      if (response.data.items && response.data.items.length > 0) {
+      if (fetchedItems.length > 0) {
         showPopup("Items loaded successfully!", "success");
       } else {
         showPopup("No items available.", "info");
@@ -50,76 +49,72 @@ function SellerDashboard() {
   // Filter items based on selected filter
   const filteredItems = () => {
     if (filter === "all") return items;
-    return items.filter(item => item.status === filter);
+    return items.filter((item) => item.status === filter);
   };
 
   return (
-    <div className="seller-dashboard">
+    <div className="SellerDashboard-page">
       <Nav />
       <br/><br/><br/><br/>
-      <div className="dashboard-container">
-        <header className="dashboard-header">
+      <div className="SellerDashboard-container">
+        <header className="SellerDashboard-header">
           <h2>Seller Dashboard</h2>
-          <Link to="/add-item" className="add-item-btn">+ Add New Item</Link>
+          <Link
+            to="/add-item"
+            className="SellerDashboard-add-item-btn"
+            aria-label="Add new item"
+          >
+            + Add New Item
+          </Link>
         </header>
 
-        <div className="filter-controls">
-          <button 
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`} 
-            onClick={() => setFilter('all')}
-          >
-            All Items
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'pending' ? 'active' : ''}`} 
-            onClick={() => setFilter('pending')}
-          >
-            Pending
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'accepted' ? 'active' : ''}`} 
-            onClick={() => setFilter('accepted')}
-          >
-            Accepted
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'rejected' ? 'active' : ''}`} 
-            onClick={() => setFilter('rejected')}
-          >
-            Rejected
-          </button>
+        <div className="SellerDashboard-filter-controls" role="group" aria-label="Item status filters">
+          {["all", "pending", "accepted", "rejected"].map((status) => (
+            <button
+              key={status}
+              className={`SellerDashboard-filter-btn ${filter === status ? "active" : ""}`}
+              onClick={() => setFilter(status)}
+              aria-pressed={filter === status}
+            >
+              {status.charAt(0).toUpperCase() + status.slice(1)} Items
+            </button>
+          ))}
         </div>
 
         {loading ? (
-          <div className="loading-spinner">Loading items...</div>
+          <div className="SellerDashboard-loading-spinner" aria-live="polite">
+            Loading items...
+          </div>
         ) : (
-          <div className="items-grid">
+          <div className="SellerDashboard-items-grid">
             {filteredItems().length > 0 ? (
               filteredItems().map((item) => (
-                <div key={item._id} className="item-grid-cell">
+                <div key={item._id} className="SellerDashboard-item-grid-cell">
                   <Item item={item} />
                 </div>
               ))
             ) : (
-              <div className="no-items-message">
-                <p>No {filter !== 'all' ? filter : ''} items found.</p>
+              <div className="SellerDashboard-no-items-message" aria-live="polite">
+                <p>No {filter !== "all" ? filter : ""} items found.</p>
               </div>
             )}
           </div>
         )}
+
+        {popup.visible && (
+          <div
+            className={`SellerDashboard-popup-message ${popup.type}`}
+            role="alert"
+            aria-live="assertive"
+          >
+            <span>{popup.message}</span>
+          </div>
+        )}
       </div>
-
-      {/* Popup Message */}
-      {popup.visible && (
-        <div className={`popup-message ${popup.type}`}>
-          <span>{popup.message}</span>
-        </div>
-      )}
-
+      <br/><br/><br/><br/>
+      <Footer />
     </div>
-    
   );
-  
 }
 
 export default SellerDashboard;

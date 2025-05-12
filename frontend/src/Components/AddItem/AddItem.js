@@ -60,7 +60,6 @@ function AddItem() {
   const handleFileUpload = (file) => {
     if (file.type.startsWith('image/')) {
       if (file.size > 10 * 1024 * 1024) {
-        // 10MB limit
         showPopup('Image size exceeds 10MB limit', 'error');
         return;
       }
@@ -138,7 +137,7 @@ function AddItem() {
       showPopup('Item added successfully!', 'success');
       resetForm();
       setTimeout(() => {
-        navigate('/seller-dashboard'); // Navigate to seller dashboard after 3 seconds
+        navigate('/seller-dashboard');
       }, 3000);
     } catch (error) {
       console.error('Error adding item:', error);
@@ -150,68 +149,83 @@ function AddItem() {
   };
 
   return (
-    <div className="AR-add-item-page">
+    <div className="AddItem-page">
       <Nav />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div className="AR-header">
-        <h1>Add Item</h1>
-        <div className="AR-back-link">
+      <br/><br/><br/><br/>
+      <div className="AddItem-header">
+        <h1>Add New Item</h1>
+        <div className="AddItem-back-link">
           <Link to="/seller-profile" className="back-btn">
             <i className="fas fa-arrow-left"></i> Back to Profile
           </Link>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="AR-form-container AR-report-form">
-        <label>Title:</label>
-        <div className="AR-form-group">
+      <form onSubmit={handleSubmit} className="AddItem-form-container">
+        <div className="AddItem-form-group">
+          <label htmlFor="title">Title:</label>
           <input
             type="text"
+            id="title"
             name="title"
             onChange={handleChange}
             value={inputs.title}
             placeholder="Enter item title"
             required
             maxLength="100"
+            aria-describedby="title-error"
           />
         </div>
 
-        <label>Image:</label>
-        <div
-          className={`image-upload-container ${isDragging ? 'active' : ''}`}
-          onClick={handleImageClick}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <input
-            type="file"
-            ref={fileInputRef}
-            className="file-input"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-          {!imagePreview ? (
-            <div>
-              <p>Click to upload or drag and drop</p>
-              <p style={{ fontSize: '12px', color: '#888' }}>JPG, PNG or GIF (max 10MB)</p>
-            </div>
-          ) : (
-            <div className="image-preview">
-              <img src={imagePreview} alt="Item preview" />
-              <div className="remove-image" onClick={removeImage}>
-                ×
+        <div className="AddItem-form-group">
+          <label htmlFor="image">Image:</label>
+          <div
+            className={`image-upload-container ${isDragging ? 'active' : ''}`}
+            onClick={handleImageClick}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => e.key === 'Enter' && handleImageClick()}
+            aria-describedby="image-error"
+          >
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="file-input"
+              accept="image/*"
+              onChange={handleImageChange}
+              id="image"
+              aria-label="Upload item image"
+            />
+            {!imagePreview ? (
+              <div>
+                <p>Click to upload or drag and drop</p>
+                <p style={{ fontSize: '12px', color: '#888' }}>
+                  JPG, PNG or GIF (max 10MB)
+                </p>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="image-preview">
+                <img src={imagePreview} alt="Item preview" />
+                <button
+                  type="button"
+                  className="remove-image"
+                  onClick={removeImage}
+                  aria-label="Remove image"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
-        <label>Description:</label>
-        <div className="AR-form-group">
+        <div className="AddItem-form-group">
+          <label htmlFor="description">Description:</label>
           <textarea
+            id="description"
             name="description"
             onChange={handleChange}
             value={inputs.description}
@@ -219,13 +233,15 @@ function AddItem() {
             required
             rows="4"
             maxLength="1000"
+            aria-describedby="description-error"
           />
         </div>
 
-        <label>Starting Bid ($):</label>
-        <div className="AR-form-group">
+        <div className="AddItem-form-group">
+          <label htmlFor="startingBid">Starting Bid ($):</label>
           <input
             type="number"
+            id="startingBid"
             name="startingBid"
             onChange={handleChange}
             min="0.01"
@@ -233,22 +249,30 @@ function AddItem() {
             value={inputs.startingBid}
             placeholder="Enter starting bid"
             required
+            aria-describedby="startingBid-error"
           />
         </div>
-        <br />
-        <button type="submit" className="submit-button" disabled={isSubmitting}>
+
+        <button
+          type="submit"
+          className="submit-button"
+          disabled={isSubmitting}
+          aria-label={isSubmitting ? 'Submitting item' : 'Add item'}
+        >
           {isSubmitting ? 'Adding Item...' : 'Add Item'}
         </button>
       </form>
 
       {popupMessage && (
-        <div className={`popup-message ${popupType}`}>
+        <div
+          className={`popup-message ${popupType}`}
+          role="alert"
+          aria-live="assertive"
+        >
           <p>{popupMessage}</p>
         </div>
       )}
 
-      <br />
-      <br />
       <Footer />
     </div>
   );
