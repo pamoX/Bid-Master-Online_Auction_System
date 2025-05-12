@@ -1,4 +1,19 @@
-const express = require('express'); 
+const express = require('express');
+const shipmentRouter = express.Router();
+const ShipmentController = require('../Controllers/ShipmentController.js');
+
+shipmentRouter.get('/', ShipmentController.getAllShipments);
+shipmentRouter.get('/user', ShipmentController.getUserShipments);
+shipmentRouter.post('/pending', ShipmentController.submitShippingDetails);
+shipmentRouter.post('/', ShipmentController.addShipments);
+shipmentRouter.post('/assign-courier', ShipmentController.assignCourierToCollection);
+shipmentRouter.get('/:shipid', ShipmentController.getByIdShipments);
+shipmentRouter.put('/:shipid', ShipmentController.updateShipmentStatus);
+shipmentRouter.delete('/:shipid', ShipmentController.deleteShipment);
+
+module.exports = shipmentRouter;
+
+/*const express = require('express'); 
 const shipmentRouter = express.Router();
 
 //insert model
@@ -16,3 +31,4 @@ shipmentRouter.delete("/:shipid", ShipmentController.deleteShipment);
 //shipmentRouter.get("/:selleremail", ShipmentController.getUserShipments);
 //export router
 module.exports = shipmentRouter; 
+*/

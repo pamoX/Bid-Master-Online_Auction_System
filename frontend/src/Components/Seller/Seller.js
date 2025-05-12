@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function Buyer() {
+function Seller() {
   return (
     <div>
       <h1 className='heading'>Seller</h1>
@@ -21,4 +21,4 @@ function Buyer() {
   )
 }
 
-export default Buyer
+export default Seller

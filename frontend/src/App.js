@@ -1,5 +1,5 @@
 import React from 'react';
-//import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 
@@ -13,7 +13,6 @@ import UpdateShipper from './Components/UpdateShipper/UpdateShipper';
 import ShipManageDash from './Components/ShipManageDash/ShipManageDash';
 import ShipNav from './Components/ShipNav/ShipNav';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BuyerShippingForm from './Components/Buyer/BuyerShippingForm/BuyerShippingForm';
@@ -31,16 +30,10 @@ import EditShipProfile from './Components/ShipProfile/EditShipProfile';
 function App() {
   return (
     <div className="App">
-
-
-      
-      <ShipNav></ShipNav>
-
+      <ShipNav />
       <React.Fragment>
         <Routes>
-          
           <Route path="/" element={<Home />} />
-          
           <Route path="/shipmanagedash" element={<ShipManageDash />} />
           <Route path="/shippers" element={<Shippers />} />
           <Route path="/shipments" element={<Shipments />} />
@@ -61,13 +54,10 @@ function App() {
           <Route path="/shprofile" element={<ShipAdminProfile />} />
           <Route path="/shipprofile" element={<ShipProfile />} />
           <Route path="/editshipprofile" element={<EditShipProfile />} />
-
         </Routes>
-        </React.Fragment>
-        
+      </React.Fragment>
     </div>
   );
 }
-
 
 export default App;

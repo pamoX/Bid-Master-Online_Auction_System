@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/*import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { publicRequest } from '../../requestMethods';
@@ -208,10 +208,9 @@ function UpdateShipper() {
     );
 }
 
-export default UpdateShipper;
+export default UpdateShipper;*/
 
-
-/*import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateShipper.css'; // Added CSS import
@@ -370,4 +369,3 @@ function UpdateShipper() {
 }
 
 export default UpdateShipper;
-*/

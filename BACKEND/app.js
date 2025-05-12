@@ -29,7 +29,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/v1/shipments', shipmentRouter);
 app.use('/api/v1/shippers', shipperRouter);
 app.use('/api/v1/shipadmin', shipAdminRouter);
-app.use('/api/v1/shadmin', require('./Routes/ShipProfileRouter.js'));
 
 // Health check
 app.get('/health', (req, res) => {

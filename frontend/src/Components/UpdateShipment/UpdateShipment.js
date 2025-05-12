@@ -1,5 +1,248 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { publicRequest } from '../../requestMethods';
+import './UpdateShipment.css';
+
+function UpdateShipment() {
+  const [shipmentData, setShipmentData] = useState({
+    itemid: '',
+    itemname: '',
+    from: '',
+    collectionCenter: '',
+    to: '',
+    userName: '',
+    selleremail: '',
+    phone: '',
+    buyername: '',
+    buyeremail: '',
+    buyerphone: '',
+    weight: 0,
+    shipmenttype: '',
+    cost: 0,
+    status: ''
+  });
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchHandler = async () => {
+      try {
+        const res = await publicRequest.get(`/shipments/${id}`);
+        setShipmentData(res.data.data);
+      } catch (error) {
+        console.error('Error fetching shipment:', error);
+      }
+    };
+    fetchHandler();
+  }, [id]);
+
+  const handleChange = (e) => {
+    setShipmentData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await publicRequest.put(`/shipments/${id}`, shipmentData);
+      navigate('/shipments');
+    } catch (error) {
+      console.error('Error updating shipment:', error);
+    }
+  };
+
+  return (
+    <div className="sh-update-shipment-container">
+      <form className="sh-shipment-form" onSubmit={handleSubmit}>
+        <h2>Update Shipment</h2>
+        <div className="sh-form-group">
+          <label htmlFor="itemid">Item ID</label>
+          <input
+            type="text"
+            name="itemid"
+            value={shipmentData.itemid}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="itemname">Item Name</label>
+          <input
+            type="text"
+            name="itemname"
+            value={shipmentData.itemname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="from">From</label>
+          <input
+            type="text"
+            name="from"
+            value={shipmentData.from}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="collectionCenter">Collection Center</label>
+          <input
+            type="text"
+            name="collectionCenter"
+            value={shipmentData.collectionCenter}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="to">To</label>
+          <input
+            type="text"
+            name="to"
+            value={shipmentData.to}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="userName">Seller Name</label>
+          <input
+            type="text"
+            name="userName"
+            value={shipmentData.userName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="selleremail">Seller Email</label>
+          <input
+            type="email"
+            name="selleremail"
+            value={shipmentData.selleremail}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="phone">Seller Phone</label>
+          <input
+            type="text"
+            name="phone"
+            value={shipmentData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="buyername">Buyer Name</label>
+          <input
+            type="text"
+            name="buyername"
+            value={shipmentData.buyername}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="buyeremail">Buyer Email</label>
+          <input
+            type="email"
+            name="buyeremail"
+            value={shipmentData.buyeremail}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="buyerphone">Buyer Phone</label>
+          <input
+            type="text"
+            name="buyerphone"
+            value={shipmentData.buyerphone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="weight">Weight (g)</label>
+          <input
+            type="number"
+            name="weight"
+            value={shipmentData.weight}
+            onChange={handleChange}
+            step="0.1"
+            min="0"
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="shipmenttype">Shipment Type</label>
+          <select
+            name="shipmenttype"
+            value={shipmentData.shipmenttype}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Type</option>
+            <option value="Local">Local</option>
+            <option value="International">International</option>
+          </select>
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="cost">Cost ($)</label>
+          <input
+            type="number"
+            name="cost"
+            value={shipmentData.cost}
+            onChange={handleChange}
+            step="0.01"
+            min="0"
+            required
+          />
+        </div>
+        <div className="sh-form-group">
+          <label htmlFor="status">Status</label>
+          <select
+            name="status"
+            value={shipmentData.status}
+            onChange={handleChange}
+            required
+          >
+            <option value="Pending">Pending</option>
+            <option value="Courier Assigned to Collection">Courier Assigned to Collection</option>
+            <option value="Picked Up">Picked Up</option>
+            <option value="At Collection Center">At Collection Center</option>
+            <option value="Courier Assigned to Buyer">Courier Assigned to Buyer</option>
+            <option value="Shipped to Buyer">Shipped to Buyer</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div className="sh-form-actions">
+          <button type="submit" className="sh-btn-submit">
+            Update Shipment
+          </button>
+          <button
+            type="button"
+            className="sh-btn-cancel"
+            onClick={() => navigate('/shipments')}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default UpdateShipment;
+
+/*import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { publicRequest } from '../../requestMethods';
 
@@ -118,10 +361,10 @@ function UpdateShipment() {
 }
 
 export default UpdateShipment;
+*/
 
-
-
-/*import React, { useState, useEffect } from 'react';
+/* worked in mid
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateShipment.css';
@@ -268,5 +511,4 @@ function UpdateShipment() {
 }
 
 export default UpdateShipment;
-
 */
