@@ -1,4 +1,5 @@
 const BidNowModel = require('../Model/BidNowModel');
+const { sendOutbidNotification } = require('../utils/emailNotifications');
 
 // Create a new bid
 const createBid = async (req, res) => {
@@ -9,6 +10,16 @@ const createBid = async (req, res) => {
         const currentHighestBid = await BidNowModel.findOne({ itemId, isHighestBid: true });
         if (currentHighestBid && bidAmount <= currentHighestBid.bidAmount) {
             return res.status(400).json({ message: 'Bid amount must be higher than current highest bid' });
+        }
+        
+        // Notify the previous highest bidder (if not the same user)
+        if (currentHighestBid && currentHighestBid.userId !== userId) {
+            // Find the previous highest bidder's user info
+            const User = require('../Model/UserModel');
+            const outbidUser = await User.findById(currentHighestBid.userId);
+            if (outbidUser && outbidUser.email) {
+                await sendOutbidNotification(outbidUser, 'Auction Item', bidAmount);
+            }
         }
         
         // Update previous highest bid status

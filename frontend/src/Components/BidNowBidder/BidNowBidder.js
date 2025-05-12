@@ -129,6 +129,12 @@ const BidNowBidder = () => {
     }
   }, [outbidNotification]);
 
+  useEffect(() => {
+    if (auctionEnded) {
+      notifyWinnerIfNeeded(itemId);
+    }
+  }, [auctionEnded, itemId]);
+
   const placeBid = async () => {
     if (auctionEnded) {
       alert("This auction has ended!");
@@ -252,6 +258,21 @@ const BidNowBidder = () => {
     parts.push(`${seconds}s`);
     
     return parts.join(" ");
+  };
+
+  const notifyWinnerIfNeeded = async (auctionId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/items/check-end/${auctionId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      console.log('Winner notification response:', data.message);
+    } catch (error) {
+      console.error('Error notifying winner:', error);
+    }
   };
 
   if (loading) return <div className="loading">Loading...</div>;

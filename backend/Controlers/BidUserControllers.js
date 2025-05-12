@@ -1,5 +1,6 @@
 const BidUserModel = require("../Model/BidUserModel");
 
+// Get all bid users
 const getAllBidUsers = async (req, res, next) => {
   let bidUsers;
   try {
@@ -58,7 +59,8 @@ const getBidUserById = async (req, res, next) => {
   const bidUserId = req.params.id;
   let bidUser;
   try {
-    bidUser = await BidUserModel.findById(bidUserId);
+    bidUser = await BidUserModel.findById(bidUserId); // Returns full user object
+    // Optionally, return only email: bidUser = await BidUserModel.findById(bidUserId).select('email');
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Error finding bid user" });
@@ -94,7 +96,7 @@ const updateBidUser = async (req, res, next) => {
       username,
       password,
     };
-    if (picture) updateData.picture = picture; //pic
+    if (picture) updateData.picture = picture; // Include picture if uploaded
     updatedBidUser = await BidUserModel.findByIdAndUpdate(
       bidUserId,
       updateData,

@@ -40,7 +40,12 @@ function Checkout() {
             name: 'Auction Item', 
             price: Math.round(amount * 100),
             quantity: 1 
-          }]
+          }],
+          metadata: {
+            userId: localStorage.getItem('userId'),
+            itemId: itemId,
+            itemName: 'Auction Item'
+          }
         })
       });
 

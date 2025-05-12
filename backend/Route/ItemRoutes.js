@@ -3,6 +3,10 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const itemController = require("../Controlers/ItemControllers");
+const Auction = require('../Model/AuctionModel');
+const BidNowModel = require('../Model/BidNowModel');
+const User = require('../Model/UserModel');
+const { sendAuctionWinNotification } = require('../utils/emailNotifications');
 
 // Configure storage for multer
 const storage = multer.diskStorage({
@@ -63,5 +67,39 @@ router.delete("/:id", itemController.deleteItem);
 
 // Update item status
 router.patch("/:id/status", itemController.updateItemStatus);
+
+router.post('/check-end/:auctionId', async (req, res) => {
+  console.log('check-end route called!', req.params.auctionId);
+  try {
+    const { auctionId } = req.params;
+    const auction = await Auction.findById(auctionId);
+
+    if (!auction) return res.status(404).json({ message: 'Auction not found' });
+
+    if (auction.biddingEndTime <= new Date() && !auction.winnerNotified) {
+      const highestBid = await BidNowModel.findOne({ itemId: auctionId }).sort({ bidAmount: -1 });
+      if (!highestBid) return res.status(200).json({ message: 'No bids placed.' });
+
+      const winner = await User.findById(highestBid.userId);
+      if (winner && winner.email) {
+        await sendAuctionWinNotification(winner, auction.name, highestBid.bidAmount);
+        auction.winnerNotified = true;
+        await auction.save();
+        return res.status(200).json({ message: 'Winner notified.' });
+      } else {
+        return res.status(200).json({ message: 'Winner has no email.' });
+      }
+    } else {
+      return res.status(200).json({ message: 'Auction not ended or already notified.' });
+    }
+  } catch (error) {
+    console.error('Error in check-end:', error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+router.get('/test', (req, res) => {
+  res.send('Test route works!');
+});
 
 module.exports = router;
