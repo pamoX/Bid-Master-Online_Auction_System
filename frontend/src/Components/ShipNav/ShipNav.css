@@ -1,0 +1,69 @@
+/* ShipNav.css */
+.sh-sidenav {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #16130d;
+    opacity: 0.8;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sh-sidenav-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sh-sidenav-nav a {
+    text-decoration: none;
+    color: #ecf0f1;
+    display: block;
+    padding: 15px 20px;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+}
+
+.sh-sidenav-nav a:hover {
+    background-color: #34495e;
+    color: #fff;
+}
+
+.sh-sidenav-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidenav-divider {
+    height: 1px;
+    background: #777;
+    margin: 10px 20px;
+}
+
+.sidenav-icon {
+    font-size: 20px;
+}
+
+.toggle-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    position: fixed;
+    top: 20px;
+    left: 260px;
+}
+
+.toggle-btn:hover {
+    background-color: #2980b9;
+}

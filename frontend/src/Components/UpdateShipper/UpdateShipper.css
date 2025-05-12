@@ -1,0 +1,94 @@
+.upshiper {
+    background-image: url("https://img.freepik.com/free-photo/vehicles-boxes-supply-chain-representation_23-2149853158.jpg?uid=R147827063&ga=GA1.1.1615029688.1715061904&semt=ais_hybrid");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sh-create-shipper-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.sh-shipper-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 24px;
+}
+
+.sh-form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+.sh-form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.sh-btn-submit,
+.sh-btn-cancel {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sh-btn-submit {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.sh-btn-submit:hover {
+    background-color: #3a7bc8;
+}
+
+.sh-btn-cancel {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.sh-btn-cancel:hover {
+    background-color: #e1e1e1;
+}
+
+@media (max-width: 768px) {
+    .sh-create-shipper-container {
+        padding: 20px;
+        margin: 20px;
+    }
+}

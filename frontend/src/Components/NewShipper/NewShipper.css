@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://img.freepik.com/free-vector/hand-drawn-international-trade_23-2149166250.jpg?uid=R147827063&ga=GA1.1.1615029688.1715061904&semt=ais_hybrid");
+}
+
+.sh-create-shipper-container {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    margin: 20px;
+    background-color: #FFFFFF;
+}
+
+.sh-shipper-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sh-shipper-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.sh-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sh-form-group label {
+    font-weight: bold;
+    color: #555;
+    font-size: 14px;
+}
+
+.sh-form-group input,
+.sh-form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.sh-form-group input:focus,
+.sh-form-group select:focus {
+    border-color: #2196F3;
+    outline: none;
+}
+
+.sh-form-group select {
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    background-size: 12px;
+}
+
+.sh-form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.sh-btn-submit {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2196F3;
+    color: white;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.sh-btn-submit:hover {
+    background-color: #1976D2;
+}
+
+@media (max-width: 480px) {
+    .sh-create-shipper-container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .sh-shipper-form h2 {
+        font-size: 20px;
+    }
+
+    .sh-form-group input,
+    .sh-form-group select {
+        font-size: 12px;
+    }
+
+    .sh-btn-submit {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

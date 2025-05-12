@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://img.freepik.com/free-photo/vehicles-boxes-supply-chain-representation_23-2149853158.jpg?uid=R147827063&ga=GA1.1.1615029688.1715061904&semt=ais_hybrid");
+    background-size: cover;
+    background-position: center;
+}
+
+.sh-create-shipment-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    margin: 20px;
+}
+
+.sh-shipment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sh-shipment-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.sh-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sh-form-group label {
+    font-weight: bold;
+    color: #555;
+    font-size: 14px;
+}
+
+.sh-form-group input,
+.sh-form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.sh-form-group input:focus,
+.sh-form-group select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.sh-form-group select {
+    appearance: none;
+    background-size: 12px;
+}
+
+.sh-form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.sh-btn-submit,
+.sh-btn-cancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sh-btn-submit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.sh-btn-submit:hover {
+    background-color: #45a049;
+}
+
+.sh-btn-cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.sh-btn-cancel:hover {
+    background-color: #da190b;
+}
+
+@media (max-width: 480px) {
+    .sh-create-shipment-container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .sh-shipment-form h2 {
+        font-size: 20px;
+    }
+
+    .sh-form-group input,
+    .sh-form-group select {
+        font-size: 12px;
+    }
+
+    .sh-btn-submit,
+    .sh-btn-cancel {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
