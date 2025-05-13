@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './EditBidderProfile.css'; // New CSS file
+import './EditBidderProfile.css'; // import css for styling
 
 const EditBidderProfile = () => {
+  // initialize state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
@@ -18,10 +19,12 @@ const EditBidderProfile = () => {
     password: '',
     picture: null,
   });
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState(null); // id for existing profile (if editing)
+
   const navigate = useNavigate();
   const location = useLocation();
 
+  // populate form if editing
   useEffect(() => {
     if (location.state?.editDetail) {
       const { _id, name, email, age, gender, address, phone, username, picture } = location.state.editDetail;
@@ -41,6 +44,7 @@ const EditBidderProfile = () => {
     }
   }, [location.state]);
 
+  // handle input value change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -49,14 +53,16 @@ const EditBidderProfile = () => {
     });
   };
 
+  // handle file input for profile picture
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFormData({ ...formData, picture: file });
-      setProfilePic(URL.createObjectURL(file));
+      setProfilePic(URL.createObjectURL(file)); // preview image
     }
   };
 
+  // handle form submission for create/update
   const handleSubmit = async (e) => {
     e.preventDefault();
     const confirmUpdate = window.confirm('Are you sure you want to update your profile?');
@@ -71,15 +77,15 @@ const EditBidderProfile = () => {
         });
 
         const url = editingId
-          ? `http://localhost:5000/bid-users/${editingId}`
-          : `http://localhost:5000/bid-users`;
+          ? `http://localhost:5000/bid-users/${editingId}` // update profile
+          : `http://localhost:5000/bid-users`; // create new profile
         const method = editingId ? axios.put : axios.post;
 
         await method(url, submissionData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
 
-        navigate('/bidder-profile'); // Redirect to profile page
+        navigate('/bidder-profile'); // redirect to profile view
       } catch (err) {
         setError(`Failed to ${editingId ? 'update' : 'create'} profile.`);
         console.error('Error:', err);
@@ -89,13 +95,14 @@ const EditBidderProfile = () => {
     }
   };
 
+  // handle profile delete
   const handleDelete = async () => {
     if (!editingId) return;
     const confirmDelete = window.confirm('Are you sure you want to delete your profile?');
     if (confirmDelete) {
       try {
         await axios.delete(`http://localhost:5000/bid-users/${editingId}`);
-        navigate('/bidder-profile'); // Redirect to empty profile
+        navigate('/bidder-profile'); // redirect after deletion
       } catch (err) {
         setError('Failed to delete profile.');
         console.error('Error deleting profile:', err);
@@ -107,10 +114,14 @@ const EditBidderProfile = () => {
     <div className="editbidprofile-edit-bidder-profile-container">
       <h1>{editingId ? 'Edit Profile' : 'Create Profile'}</h1>
 
+      {/* show error message */}
       {error && <div className="editbidprofile-error-message">{error}</div>}
+
+      {/* show loading overlay */}
       {loading && <div className="editbidprofile-loading-overlay">Processing...</div>}
 
       <div className="editbidprofile-form-container">
+        {/* profile picture section */}
         <div className="editbidprofile-profile-pic-section">
           {profilePic ? (
             <img src={profilePic} alt="Preview" className="editbidprofile-profile-pic" />
@@ -130,8 +141,10 @@ const EditBidderProfile = () => {
           </label>
         </div>
 
+        {/* profile form */}
         <form onSubmit={handleSubmit} className="editbidprofile-profile-form">
           <div className="editbidprofile-form-grid">
+            {/* form fields */}
             <div className="editbidprofile-form-group">
               <label htmlFor="name">Name</label>
               <input
@@ -226,6 +239,7 @@ const EditBidderProfile = () => {
             </div>
           </div>
 
+          {/* action buttons */}
           <div className="editbidprofile-button-group">
             <button type="submit" className="editbidprofile-btn-save" disabled={loading}>
               {editingId ? 'Update Profile' : 'Create Profile'}

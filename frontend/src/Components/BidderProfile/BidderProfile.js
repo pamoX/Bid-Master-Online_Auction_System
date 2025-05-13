@@ -10,42 +10,46 @@ const BidderProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // fetch profile data from the api
   const fetchProfile = async () => {
     try {
       setLoading(true);
       const response = await axios.get('http://localhost:5000/bid-users');
-      console.log('API Response:', response.data);
+      console.log('api response:', response.data);
       if (response.data.bidUsers && response.data.bidUsers.length > 0) {
         setProfile(response.data.bidUsers[0]);
-        console.log('Profile set to:', response.data.bidUsers[0]);
+        console.log('profile set to:', response.data.bidUsers[0]);
       } else {
         setProfile(null);
-        console.log('No users found, profile set to null');
+        console.log('no users found, profile set to null');
       }
     } catch (err) {
-      console.error('Error fetching profile:', err);
+      console.error('error fetching profile:', err);
       if (err.response && err.response.status === 404) {
         setProfile(null);
         console.log('404 received, profile set to null');
       } else {
-        setError('Failed to load profile.');
-        console.log('Error details:', err.response ? err.response.data : err.message);
+        setError('failed to load profile.');
+        console.log('error details:', err.response ? err.response.data : err.message);
       }
     } finally {
       setLoading(false);
     }
   };
 
+  // fetch profile when the component mounts or location changes
   useEffect(() => {
     fetchProfile();
   }, [location]);
 
+  // re-fetch profile if recently updated or deleted
   useEffect(() => {
     if (location.state?.justUpdated || location.state?.justDeleted) {
       fetchProfile();
     }
   }, [location.state]);
 
+  // navigate to the edit profile page
   const handleEditProfile = () => {
     if (profile) {
       navigate('/edit-bidder-profile', { state: { editDetail: profile } });
@@ -55,20 +59,21 @@ const BidderProfile = () => {
   };
 
   if (loading) {
-    return <div className="bidprofile-loading">Loading profile...</div>;
+    return <div className="bidprofile-loading">loading profile...</div>;
   }
 
   if (error) {
     return <div className="bidprofile-error-message">{error}</div>;
   }
 
+  // default values for a blank profile
   const blankProfile = {
-    name: 'Not set',
-    address: 'Not set',
-    email: 'Not set',
-    phone: 'Not set',
-    gender: 'Not set',
-    username: 'Not set',
+    name: 'not set',
+    address: 'not set',
+    email: 'not set',
+    phone: 'not set',
+    gender: 'not set',
+    username: 'not set',
     picture: null,
   };
 
@@ -77,16 +82,16 @@ const BidderProfile = () => {
 
   return (
     <div className="bidprofile-bidder-profile-container">
-      <h1 className="bidprofile-h1">My Bidder Profile</h1>
+      <h1 className="bidprofile-h1">my bidder profile</h1>
       <div className={`bidprofile-profile-wrapper ${isBlank ? 'bidprofile-blank-profile' : ''}`}>
         <div className="bidprofile-profile-left">
           <div className="bidprofile-profile-pic-section">
             {displayProfile.picture ? (
               <img
-                src={`http://localhost:5000/${displayProfile.picture}`} // Adjust path if necessary (e.g., http://localhost:5000/uploads/${displayProfile.picture})
-                alt="Profile"
+                src={`http://localhost:5000/${displayProfile.picture}`} // adjust path if necessary
+                alt="profile"
                 className="bidprofile-profile-pic"
-                onError={(e) => console.log('Image load error:', e)} // Log errors if the image fails to load
+                onError={(e) => console.log('image load error:', e)} // log errors if the image fails to load
               />
             ) : (
               <div className="bidprofile-pic-placeholder">
@@ -98,62 +103,62 @@ const BidderProfile = () => {
           <p className="bidprofile-location">{displayProfile.address}</p>
           <div className="bidprofile-action-buttons">
             <button className="bidprofile-btn-follow" disabled={isBlank}>
-              Follow
+              follow
             </button>
             <button className="bidprofile-btn-message" disabled={isBlank}>
-              Message
+              message
             </button>
           </div>
           <div className="bidprofile-social-links">
-            <h3>Connect</h3>
+            <h3>connect</h3>
             <ul>
               <li>
                 <span className="bidprofile-icon website">🌐</span>
                 {isBlank ? (
-                  <span className="bidprofile-not-set">Not set</span>
+                  <span className="bidprofile-not-set">not set</span>
                 ) : (
                   <a href="https://example.com" target="_blank" rel="noopener noreferrer">
-                    Website
+                    website
                   </a>
                 )}
               </li>
               <li>
                 <span className="bidprofile-icon github">🐙</span>
                 {isBlank ? (
-                  <span className="bidprofile-not-set">Not set</span>
+                  <span className="bidprofile-not-set">not set</span>
                 ) : (
                   <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                    GitHub
+                    github
                   </a>
                 )}
               </li>
               <li>
                 <span className="bidprofile-icon twitter">🐦</span>
                 {isBlank ? (
-                  <span className="bidprofile-not-set">Not set</span>
+                  <span className="bidprofile-not-set">not set</span>
                 ) : (
                   <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                    Twitter
+                    twitter
                   </a>
                 )}
               </li>
               <li>
                 <span className="bidprofile-icon instagram">📸</span>
                 {isBlank ? (
-                  <span className="bidprofile-not-set">Not set</span>
+                  <span className="bidprofile-not-set">not set</span>
                 ) : (
                   <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                    Instagram
+                    instagram
                   </a>
                 )}
               </li>
               <li>
                 <span className="bidprofile-icon facebook">📘</span>
                 {isBlank ? (
-                  <span className="bidprofile-not-set">Not set</span>
+                  <span className="bidprofile-not-set">not set</span>
                 ) : (
                   <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                    Facebook
+                    facebook
                   </a>
                 )}
               </li>
@@ -162,79 +167,79 @@ const BidderProfile = () => {
         </div>
         <div className="bidprofile-profile-right">
           <div className="bidprofile-profile-details bidprofile-card">
-            <h3>Personal Information</h3>
+            <h3>personal information</h3>
             <div className="bidprofile-detail-item">
-              <span className="bidprofile-label">Full Name</span>
+              <span className="bidprofile-label">full name</span>
               <span className={`bidprofile-value ${isBlank ? 'bidprofile-not-set' : ''}`}>
                 {displayProfile.name}
               </span>
             </div>
             <div className="bidprofile-detail-item">
-              <span className="bidprofile-label">Email</span>
+              <span className="bidprofile-label">email</span>
               <span className={`bidprofile-value ${isBlank ? 'bidprofile-not-set' : ''}`}>
                 {displayProfile.email}
               </span>
             </div>
             <div className="bidprofile-detail-item">
-              <span className="bidprofile-label">Phone</span>
+              <span className="bidprofile-label">phone</span>
               <span className={`bidprofile-value ${isBlank ? 'bidprofile-not-set' : ''}`}>
                 {displayProfile.phone}
               </span>
             </div>
             <div className="bidprofile-detail-item">
-              <span className="bidprofile-label">Mobile</span>
+              <span className="bidprofile-label">mobile</span>
               <span className={`bidprofile-value ${isBlank ? 'bidprofile-not-set' : ''}`}>
                 {displayProfile.phone}
               </span>
             </div>
             <div className="bidprofile-detail-item">
-              <span className="bidprofile-label">Address</span>
+              <span className="bidprofile-label">address</span>
               <span className={`bidprofile-value ${isBlank ? 'bidprofile-not-set' : ''}`}>
                 {displayProfile.address}
               </span>
             </div>
             <div className="bidprofile-detail-item">
-              <span className="bidprofile-label">Gender</span>
+              <span className="bidprofile-label">gender</span>
               <span className={`bidprofile-value ${isBlank ? 'bidprofile-not-set' : ''}`}>
                 {displayProfile.gender}
               </span>
             </div>
             <div className="bidprofile-detail-item">
-              <span className="bidprofile-label">Username</span>
+              <span className="bidprofile-label">username</span>
               <span className={`bidprofile-value ${isBlank ? 'bidprofile-not-set' : ''}`}>
                 {displayProfile.username}
               </span>
             </div>
             <button className="bidprofile-btn-edit" onClick={handleEditProfile}>
-              {isBlank ? 'Create Profile' : 'Edit Profile'}
+              {isBlank ? 'create profile' : 'edit profile'}
             </button>
           </div>
           <div className="bidprofile-auction-stats bidprofile-card">
-            <h3>Auction Statistics</h3>
+            <h3>auction statistics</h3>
             {isBlank ? (
-              <p className="bidprofile-not-set">No auction activity yet.</p>
+              <p className="bidprofile-not-set">no auction activity yet.</p>
             ) : (
               <>
                 <div className="bidprofile-stat-item">
-                  <span className="bidprofile-stat-label">Bids Placed</span>
+                  <span className="bidprofile-stat-label">bids placed</span>
                   <div className="bidprofile-progress-bar">
                     <div className="bidprofile-progress" style={{ width: '75%' }}></div>
                   </div>
                 </div>
                 <div className="bidprofile-stat-item">
-                  <span className="bidprofile-stat-label">Auctions Won</span>
+                  <span className="bidprofile-stat-label">auctions won</span>
                   <div className="bidprofile-progress-bar">
                     <div className="bidprofile-progress" style={{ width: '50%' }}></div>
                   </div>
                 </div>
                 <div className="bidprofile-stat-item">
-                  <span className="bidprofile-stat-label">Active Bids</span>
+                  <span className="bidprofile-stat-label">active bids</span>
                   <div className="bidprofile-progress-bar">
                     <div className="bidprofile-progress" style={{ width: '30%' }}></div>
                   </div>
                 </div>
                 <div className="bidprofile-stat-item">
-                  <span className="bidprofile-stat-label">Total Spent</span>
+                  <span className="bidprofile-stat-label">total spent</span>
                   <div className="bidprofile-progress-bar">
                     <div className="bidprofile-progress" style={{ width: '60%' }}></div>
                   </div>

@@ -300,7 +300,7 @@ const BidNowBidder = () => {
           
           {/* Bid History Section */}
           <div className="BidNowBidderHistory">
-            <h2>Auction History</h2>
+            <h2>Live Auction</h2>
             <div className="BidNowBidderHistoryList">
               {bidHistory.map((bid, index) => (
                 <div 
@@ -353,6 +353,12 @@ const BidNowBidder = () => {
                   Retrieve My Bid
                 </button>
               )}
+              <div className="terms-text" style={{ marginTop: '10px', fontSize: '0.95em', color: '#555' }}>
+                By placing a bid, you agree to our{' '}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>
+                  Terms and Conditions
+                </a>.
+              </div>
             </div>
           )}
 

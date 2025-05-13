@@ -4,73 +4,79 @@ const { createBid, getBidsByItem, getUserBids, getHighestBid, updateBidStatus, d
 const mongoose = require('mongoose');
 const BidNowModel = require('../Model/BidNowModel');
 
-// Create a new bid
+// create a new bid
 router.post('/', createBid);
 
-// Get all bids for an item
+// get all bids for a specific item
 router.get('/item/:itemId', getBidsByItem);
 
-// Get user's bid history
+// get all bids made by a user
 router.get('/user/:userId', getUserBids);
 
-// Get current highest bid for an item
+// get the highest bid for a specific item
 router.get('/highest/:itemId', getHighestBid);
 
-// Update bid status
+// update the status of a specific bid
 router.put('/:bidId', updateBidStatus);
 
-// Delete a bid (retrieve bid)
+// delete a bid
 router.delete('/:bidId', deleteBid);
 
+// optional: delete bid with additional logic (can be used for restoring bid state)
 const deleteBidHandler = async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
     try {
         const { bidId } = req.params;
+
+        // get user id from body, query, or header
         const userId = req.body.userId || req.query.userId || req.headers['x-user-id'];
         if (!userId) {
             await session.abortTransaction();
             session.endSession();
-            return res.status(400).json({ message: "User ID required" });
+            return res.status(400).json({ message: "user id required" });
         }
 
+        // find the bid
         const bid = await BidNowModel.findById(bidId).session(session);
         if (!bid) {
             await session.abortTransaction();
             session.endSession();
-            return res.status(404).json({ message: "Bid not found" });
+            return res.status(404).json({ message: "bid not found" });
         }
+
+        // check if user is the owner of the bid
         if (bid.userId !== userId) {
             await session.abortTransaction();
             session.endSession();
-            return res.status(403).json({ message: "You can only retrieve your own bids" });
+            return res.status(403).json({ message: "you can only retrieve your own bids" });
         }
 
         const itemId = bid.itemId;
 
-        // Delete the bid
+        // delete the bid
         await BidNowModel.findByIdAndDelete(bidId).session(session);
 
-        // Set all bids for this item to isHighestBid: false
+        // reset all bids for this item to not be highest
         await BidNowModel.updateMany({ itemId }, { isHighestBid: false }).session(session);
 
-        // Find the next highest bid for this item
+        // find the next highest bid and mark it as highest
         const nextHighestBid = await BidNowModel.findOne({ itemId }).sort({ bidAmount: -1 }).session(session);
-
         if (nextHighestBid) {
             nextHighestBid.isHighestBid = true;
             await nextHighestBid.save({ session });
         }
 
+        // commit the transaction
         await session.commitTransaction();
         session.endSession();
 
-        res.status(200).json({ message: "Bid retrieved successfully" });
+        res.status(200).json({ message: "bid retrieved successfully" });
     } catch (error) {
         await session.abortTransaction();
         session.endSession();
-        res.status(500).json({ message: "Failed to retrieve bid" });
+        res.status(500).json({ message: "failed to retrieve bid" });
     }
 };
 
-module.exports = router; 
+module.exports = router;
