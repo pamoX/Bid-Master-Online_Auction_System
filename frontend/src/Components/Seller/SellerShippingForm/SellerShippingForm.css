@@ -1,0 +1,26 @@
+/* SellerShippingForm.css */
+
+.shipping-form-container {
+  @apply max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10;
+}
+
+.shipping-form-title {
+  @apply text-2xl font-bold mb-6;
+}
+
+.shipping-form {
+  @apply space-y-4;
+}
+
+.shipping-form-group label {
+  @apply block text-sm font-medium;
+}
+
+.shipping-form-group input,
+.shipping-form-group select {
+  @apply w-full p-2 border rounded;
+}
+
+.shipping-form-submit {
+  @apply w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600;
+}

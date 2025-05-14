@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { publicRequest } from '../../requestMethods';
+import { toast } from 'react-toastify';
 import './NewShipper.css';
-
-const URL = 'http://localhost:5000/shippers';
 
 function NewShipper() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const [shipper, setShipper] = useState({
         providerid: '',
@@ -27,28 +27,25 @@ function NewShipper() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitting shipper data:', shipper);
+        setLoading(true);
         try {
-            await sendRequest();
+            await publicRequest.post('/shippers', {
+                providerid: String(shipper.providerid),
+                companyname: String(shipper.companyname),
+                companyaddress: String(shipper.companyaddress),
+                companyemail: String(shipper.companyemail),
+                companyphone: String(shipper.companyphone),
+                companytype: String(shipper.companytype),
+                rateperkg: Number(shipper.rateperkg)
+            });
+            toast.success('Courier added successfully!');
             navigate('/shippers');
         } catch (error) {
             console.error('Error creating shipper:', error);
+            toast.error(error.response?.data?.message || 'Failed to add courier');
+        } finally {
+            setLoading(false);
         }
-    };
-
-    const sendRequest = async () => {
-        const response = await axios.post(URL, {
-            providerid: String(shipper.providerid),
-            companyname: String(shipper.companyname),
-            companyaddress: String(shipper.companyaddress),
-            companyemail: String(shipper.companyemail),
-            companyphone: String(shipper.companyphone),
-            companytype: String(shipper.companytype),
-            rateperkg: Number(shipper.rateperkg)
-        });
-        
-        console.log('Server response:', response.data);
-        return response.data;
     };
 
     return (

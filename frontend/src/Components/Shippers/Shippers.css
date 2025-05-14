@@ -1,13 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 .sh-shippers-container {
-  padding: 20px;
-  background-image: url("https://img.freepik.com/free-vector/customer-choosing-order-delivery-type-global-distribution-freight-quote-request-best-shipping-proposal-freight-cost-request-form-concept-pinkish-coral-bluevector-isolated-illustration_335657-1755.jpg?uid=R147827063&ga=GA1.1.1615029688.1715061904&semt=ais_hybrid");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  padding: 2rem;
+  background-color: #f8f9fa;
   min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
 }
 
 .sh-shippers-wrapper {
@@ -17,90 +13,151 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.sh-shippers-title {
-  color: #2c3e50;
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 20px;
+.sh-shippers-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2rem;
+}
+
+.sh-shippers-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.sh-shippers-actions {
+  display: flex;
+  gap: 1rem;
 }
 
 .sh-new-shippers-button {
-  background-color: #3498db;
+  background-color: #4CAF50;
   color: white;
-  padding: 10px 15px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
-  text-decoration: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  transition: background-color 0.2s;
 }
 
-.sh-add-button:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
+.sh-new-shippers-button:hover {
+  background-color: #45a049;
 }
 
-/* DataGrid customization */
+.sh-report-button {
+  background-color: #2196F3;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.sh-report-button:hover {
+  background-color: #1976D2;
+}
+
 .sh-shippers-grid {
-  height: 600px;
-  width: 100%;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
 
+.edit-button {
+  background-color: #2196F3;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.edit-button:hover {
+  background-color: #1976D2;
+}
+
+.delete-icon {
+  color: #dc3545;
+  font-size: 1.25rem;
+  transition: color 0.2s;
+}
+
+.delete-icon:hover {
+  color: #c82333;
+}
+
+.sh-loading-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.25rem;
+  color: #666;
+}
+
+.sh-error-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.25rem;
+  color: #dc3545;
+  background-color: #f8d7da;
+  border-radius: 0.5rem;
+  margin: 2rem;
+}
+
+.sh-no-data-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.25rem;
+  color: #666;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+/* DataGrid specific styles */
 .MuiDataGrid-root {
   border: none !important;
-  background-color: white;
-  border-radius: 8px;
-}
-
-.MuiDataGrid-columnHeaders {
-  background-color: #f8f9fa;
-  color: #000000;
-  font-weight: 600;
 }
 
 .MuiDataGrid-cell {
-  border-bottom: 1px solid #f1f1f1 !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.MuiDataGrid-columnHeaders {
+  background-color: #f5f5f5 !important;
+  border-bottom: 2px solid #e0e0e0 !important;
 }
 
 .MuiDataGrid-row:hover {
-  background-color: #f5f9ff !important;
+  background-color: #f5f5f5 !important;
 }
 
-/* Action buttons */
-.sh-edit-button, .sh-delete-button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.sh-edit-button {
-  background-color: #2ecc71;
-  color: white;
-  text-decoration: none;
-}
-
-.sh-edit-button:hover {
-  background-color: #27ae60;
-}
-
-.sh-delete-button {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.sh-delete-button:hover {
-  background-color: #c0392b;
+/* Print styles */
+@media print {
+  .sh-shippers-header {
+    display: none;
+  }
+  
+  .MuiDataGrid-root {
+    height: auto !important;
+  }
+  
+  .MuiDataGrid-virtualScroller {
+    height: auto !important;
+  }
+  
+  .MuiDataGrid-virtualScrollerContent {
+    height: auto !important;
+  }
+  
+  .MuiDataGrid-virtualScrollerRenderZone {
+    position: relative !important;
+  }
 }
 
 /* Responsive adjustments */

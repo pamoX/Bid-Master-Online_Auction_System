@@ -50,12 +50,13 @@ function App() {
           <Route path="/buyer/shipping/:auctionid" element={<BuyerShippingForm />} />
           <Route path="/seller/shipping/:auctionid" element={<SellerShippingForm />} />
           <Route path="/orders" element={<OrderHistory />} />
+        
           <Route path="/track/:id" element={<ShipmentTracking />} />
           <Route path="/shprofile" element={<ShipAdminProfile />} />
           <Route path="/shipprofile" element={<ShipProfile />} />
           <Route path="/editshipprofile" element={<EditShipProfile />} />
         </Routes>
-      </React.Fragment>
+        </React.Fragment>
     </div>
   );
 }

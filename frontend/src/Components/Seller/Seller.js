@@ -1,7 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function Seller() {
+  const location = useLocation();
+  const auctionid = location.state?.auctionid;
+
   return (
     <div>
       <h1 className='heading'>Seller</h1>
@@ -9,14 +12,10 @@ function Seller() {
         <Link to="/sellershipping" className='link'>
             <h2 className='subheading'>My Shipments</h2>
         </Link> 
-        <Link to="/sellershippingform" className='link'>
+        <Link to={`/seller/shipping/${auctionid}`} className='link'>
             <h2 className='subheading'>New Shipment</h2>
         </Link> 
-
       </div>
-        
-       
-
     </div>
   )
 }

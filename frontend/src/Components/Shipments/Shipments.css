@@ -1,0 +1,167 @@
+.sh-shipments-container {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.sh-shipments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.sh-shipments-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+.sh-shipments-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.sh-new-shipments-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.sh-new-shipments-button:hover {
+    background-color: #45a049;
+}
+
+.sh-report-button {
+    background-color: #2196F3;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.sh-report-button:hover {
+    background-color: #1976D2;
+}
+
+.sh-shipments-grid {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.edit-button {
+    background-color: #2196F3;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.edit-button:hover {
+    background-color: #1976D2;
+}
+
+.delete-icon {
+    color: #dc3545;
+    font-size: 1.25rem;
+    transition: color 0.2s;
+}
+
+.delete-icon:hover {
+    color: #c82333;
+}
+
+.sh-loading-message {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.25rem;
+    color: #666;
+}
+
+.sh-error-message {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.25rem;
+    color: #dc3545;
+    background-color: #f8d7da;
+    border-radius: 0.5rem;
+    margin: 2rem;
+}
+
+.sh-no-data-message {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.25rem;
+    color: #666;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+}
+
+/* DataGrid specific styles */
+.MuiDataGrid-root {
+    border: none !important;
+}
+
+.MuiDataGrid-cell {
+    border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.MuiDataGrid-columnHeaders {
+    background-color: #f5f5f5 !important;
+    border-bottom: 2px solid #e0e0e0 !important;
+}
+
+.MuiDataGrid-row:hover {
+    background-color: #f5f5f5 !important;
+}
+
+/* Select dropdown styles */
+select {
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.25rem;
+    background-color: white;
+    width: 100%;
+    font-size: 0.875rem;
+}
+
+select:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* Print styles */
+@media print {
+    .sh-shipments-header {
+        display: none;
+    }
+    
+    .MuiDataGrid-root {
+        height: auto !important;
+    }
+    
+    .MuiDataGrid-virtualScroller {
+        height: auto !important;
+    }
+    
+    .MuiDataGrid-virtualScrollerContent {
+        height: auto !important;
+    }
+    
+    .MuiDataGrid-virtualScrollerRenderZone {
+        position: relative !important;
+    }
+}
