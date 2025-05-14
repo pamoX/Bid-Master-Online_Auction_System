@@ -7,9 +7,9 @@ shipmentRouter.get('/user', ShipmentController.getUserShipments);
 shipmentRouter.post('/pending', ShipmentController.submitShippingDetails);
 shipmentRouter.post('/', ShipmentController.addShipments);
 shipmentRouter.post('/assign-courier', ShipmentController.assignCourierToCollection);
-shipmentRouter.get('/:shipid', ShipmentController.getByIdShipments);
-shipmentRouter.put('/:shipid', ShipmentController.updateShipmentStatus);
-shipmentRouter.delete('/:shipid', ShipmentController.deleteShipment);
+shipmentRouter.get('/:id', ShipmentController.getByIdShipments);
+shipmentRouter.put('/:id', ShipmentController.updateShipmentStatus);
+shipmentRouter.delete('/:id', ShipmentController.deleteShipment);
 
 module.exports = shipmentRouter;
 

@@ -3,31 +3,37 @@ const Schema = mongoose.Schema;
 
 const shipperSchema = new Schema({
     providerid: {
-        type: String, //data type
-        required: true, //validate
+        type: String,
+        required: true,
+        unique: true
     },
     companyname: {
-        type: String, //data type
-        required: true, //validate
+        type: String,
+        required: true
     },
     companyemail: {
-        type: String, //data type
-        required: true, //validate
-    },  
+        type: String,
+        required: true,
+        match: [/^\S+@\S+\.\S+$/, 'Invalid email']
+    },
     companyphone: {
-        type: String, //data type
-        required: true, //validate
+        type: String,
+        required: true
     },
     companyaddress: {
-        type: String, //data type
-        required: true, //validate
-    },companytype: {
-        type: String, //data type
-        required: true, //validate
-        order: ['Local', 'International']
+        type: String,
+        required: true
     },
-});
+    companytype: {
+        type: String,
+        required: true,
+        enum: ['Local', 'International']
+    },
+    rateperkg: {
+        type: Number,
+        required: true,
+        min: 0
+    }
+}, { timestamps: true });
 
-module.exports = mongoose.model(
-    "ShipperModel.js",
-    shipperSchema); //export model User with UserSchema
+module.exports = mongoose.model('shippers', shipperSchema);

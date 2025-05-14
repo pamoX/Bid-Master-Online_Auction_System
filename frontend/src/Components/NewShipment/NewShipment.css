@@ -15,86 +15,113 @@ body {
 }
 
 .sh-create-shipment-container {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    max-width: 600px;
-    width: 100%;
-    margin: 20px;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sh-shipment-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.5rem;
 }
 
 .sh-shipment-form h2 {
     text-align: center;
     color: #333;
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-bottom: 1.5rem;
+}
+
+.sh-form-section {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.sh-form-section h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
 }
 
 .sh-form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .sh-form-group label {
-    font-weight: bold;
+    font-weight: 500;
     color: #555;
-    font-size: 14px;
 }
 
 .sh-form-group input,
 .sh-form-group select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
 }
 
-.sh-form-group input:focus,
-.sh-form-group select:focus {
-    border-color: #4CAF50;
-    outline: none;
+.sh-form-group input.error,
+.sh-form-group select.error {
+    border-color: #dc3545;
 }
 
-.sh-form-group select {
-    appearance: none;
-    background-size: 12px;
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.readonly {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    border: 1px solid #ddd;
+    color: #666;
+}
+
+.cost-note {
+    color: #6c757d;
+    font-size: 12px;
+    margin-top: 4px;
+    font-style: italic;
 }
 
 .sh-form-actions {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .sh-btn-submit,
 .sh-btn-cancel {
-    padding: 10px 20px;
+    padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 4px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s;
 }
 
 .sh-btn-submit {
     background-color: #4CAF50;
     color: white;
+    width: 100%;
 }
 
 .sh-btn-submit:hover {
     background-color: #45a049;
+}
+
+.sh-btn-submit:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 
 .sh-btn-cancel {
@@ -106,7 +133,26 @@ body {
     background-color: #da190b;
 }
 
-@media (max-width: 480px) {
+/* Scrollbar styling */
+.sh-create-shipment-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sh-create-shipment-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.sh-create-shipment-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.sh-create-shipment-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media (max-width: 768px) {
     .sh-create-shipment-container {
         padding: 20px;
         margin: 10px;
@@ -116,14 +162,35 @@ body {
         font-size: 20px;
     }
 
+    .sh-form-section {
+        padding: 15px;
+    }
+
+    .sh-form-section h3 {
+        font-size: 16px;
+    }
+
     .sh-form-group input,
     .sh-form-group select {
         font-size: 12px;
     }
 
-    .sh-btn-submit,
-    .sh-btn-cancel {
+    .sh-btn-submit {
         font-size: 14px;
-        padding: 8px 16px;
+        padding: 10px 20px;
+        min-width: 150px;
     }
+}
+
+.sh-form-group input.readonly {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    border-color: #dee2e6;
+}
+
+.cost-note {
+    color: #6c757d;
+    font-size: 12px;
+    margin-top: 4px;
+    font-style: italic;
 }

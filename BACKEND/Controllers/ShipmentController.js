@@ -31,6 +31,7 @@ const addShipments = async (req, res) => {
     itemid,
     itemname,
     from,
+    collectionCenter,
     to,
     userName,
     selleremail,
@@ -40,13 +41,43 @@ const addShipments = async (req, res) => {
     buyerphone,
     weight,
     shipmenttype,
-    cost
+    cost,
+    courieridToCollection,
+    courieridToBuyer,
+    status
   } = req.body;
+
   try {
+    // Validate required fields
+    if (!itemid || !itemname || !from || !to || !userName || !selleremail || !phone || 
+        !buyername || !buyeremail || !buyerphone || !weight || !shipmenttype || !cost) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Missing required fields',
+        errors: {
+          itemid: !itemid ? 'Item ID is required' : null,
+          itemname: !itemname ? 'Item name is required' : null,
+          from: !from ? 'Pickup address is required' : null,
+          to: !to ? 'Delivery address is required' : null,
+          userName: !userName ? 'Seller name is required' : null,
+          selleremail: !selleremail ? 'Seller email is required' : null,
+          phone: !phone ? 'Seller phone is required' : null,
+          buyername: !buyername ? 'Buyer name is required' : null,
+          buyeremail: !buyeremail ? 'Buyer email is required' : null,
+          buyerphone: !buyerphone ? 'Buyer phone is required' : null,
+          weight: !weight ? 'Weight is required' : null,
+          shipmenttype: !shipmenttype ? 'Shipment type is required' : null,
+          cost: !cost ? 'Cost is required' : null
+        }
+      });
+    }
+
+    // Create new shipment
     const shipment = new Shipment({
       itemid,
       itemname,
       from,
+      collectionCenter: collectionCenter || 'Main Collection Center',
       to,
       userName,
       selleremail,
@@ -54,17 +85,39 @@ const addShipments = async (req, res) => {
       buyername,
       buyeremail,
       buyerphone,
-      weight,
+      weight: Number(weight),
       shipmenttype,
-      cost
+      cost: Number(cost),
+      courieridToCollection,
+      courieridToBuyer,
+      status: status || 'Pending'
     });
+
     await shipment.save();
-    await sendNotification(selleremail, 'Shipment Created', `Your shipment ${itemid} has been created and is pending courier assignment.`);
-    await sendNotification(buyeremail, 'Shipment Created', `A shipment for item ${itemname} has been created and is pending courier assignment.`);
+
+    // Send notifications
+    await sendNotification(
+      selleremail,
+      'Shipment Created',
+      `Your shipment ${itemid} has been created and is pending courier assignment.`
+    );
+    await sendNotification(
+      buyeremail,
+      'Shipment Created',
+      `A shipment for item ${itemname} has been created and is pending courier assignment.`
+    );
+
+    // Emit socket event
     req.io.emit('shipmentUpdate', { itemid, status: shipment.status });
+
     res.status(201).json({ success: true, data: shipment });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error('Error creating shipment:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: error.message,
+      errors: error.errors
+    });
   }
 };
 
@@ -131,26 +184,44 @@ const submitShippingDetails = async (req, res) => {
 };
 
 const assignCourierToCollection = async (req, res) => {
-  const { shipmentId, courierid } = req.body;
+  const { shipmentId, courierid, field } = req.body;
   try {
     const shipment = await Shipment.findById(shipmentId);
     if (!shipment) return res.status(404).json({ success: false, message: 'Shipment not found' });
+    
     const courier = await Shipper.findOne({ providerid: courierid });
     if (!courier) return res.status(404).json({ success: false, message: 'Courier not found' });
-    shipment.courieridToCollection = courierid;
-    shipment.status = 'Courier Assigned to Collection';
-    shipment.cost = shipment.weight * courier.rateperkg; // Calculate cost for first leg
+
+    // Update the appropriate courier field
+    if (field === 'courieridToCollection') {
+      shipment.courieridToCollection = courierid;
+      shipment.status = 'Courier Assigned to Collection';
+      shipment.cost = shipment.weight * courier.rateperkg; // Calculate cost for first leg
+    } else if (field === 'courieridToBuyer') {
+      shipment.courieridToBuyer = courierid;
+      shipment.status = 'Courier Assigned to Buyer';
+      shipment.cost += shipment.weight * courier.rateperkg; // Add cost for second leg
+    }
+
     await shipment.save();
+
+    // Send notifications
+    const notificationMessage = field === 'courieridToCollection'
+      ? `A courier (${courier.companyname}) has been assigned to pick up your shipment ${shipment.itemid} and deliver it to the collection center.`
+      : `A courier (${courier.companyname}) has been assigned to deliver your shipment ${shipment.itemid} from the collection center to the buyer.`;
+
     await sendNotification(
       shipment.selleremail,
       'Courier Assigned',
-      `A courier (${courier.companyname}) has been assigned to pick up your shipment ${shipment.itemid} and deliver it to the collection center.`
+      notificationMessage
     );
+
     await sendNotification(
       shipment.buyeremail,
       'Shipment Update',
-      `A courier has been assigned for item ${shipment.itemname} to deliver to the collection center.`
+      `A courier has been assigned for item ${shipment.itemname} to deliver ${field === 'courieridToCollection' ? 'to the collection center' : 'to your address'}.`
     );
+
     req.io.emit('shipmentUpdate', { itemid: shipment.itemid, status: shipment.status });
     res.status(200).json({ success: true, data: shipment });
   } catch (error) {

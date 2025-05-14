@@ -45,6 +45,13 @@
   color: #666;
 }
 
+.cost-note {
+  color: #6c757d;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
 .sh-form-actions {
   display: flex;
   gap: 1rem;
@@ -77,4 +84,11 @@
 
 .sh-btn-cancel:hover {
   background-color: #da190b;
+}
+
+.sh-loading-message {
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+  font-size: 1.1rem;
 }

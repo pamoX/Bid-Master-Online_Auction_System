@@ -3,9 +3,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import { publicRequest } from '../../requestMethods';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 import './Shippers.css';
 import ShipNav from '../ShipNav/ShipNav';
 
@@ -13,13 +13,13 @@ const Shippers = () => {
   const [shippers, setShippers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const componentRef = useRef();
+  const pdfRef = useRef();
 
   useEffect(() => {
     const getAllShippers = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('/shippers');
+        const res = await publicRequest.get('/shippers');
         const shipperData = res.data.data || [];
         setShippers(Array.isArray(shipperData) ? shipperData : []);
         setError(null);
@@ -38,7 +38,7 @@ const Shippers = () => {
     if (window.confirm('Are you sure you want to delete this courier?')) {
       try {
         console.log('Attempting to delete shipper with ID:', id);
-        const response = await axios.delete(`/shippers/${id}`);
+        const response = await publicRequest.delete(`/shippers/${id}`);
         console.log('Delete response:', response);
         
         if (response.data && response.data.success) {
@@ -58,73 +58,18 @@ const Shippers = () => {
     }
   };
 
-  const generatePDF = () => {
-    try {
-      const doc = new jsPDF('l', 'mm', 'a4');
-      
-      // Add title
-      doc.setFontSize(16);
-      doc.text('Couriers Report', 14, 15);
-      
-      // Add date
-      doc.setFontSize(10);
-      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 22);
-
-      // Prepare table data
-      const tableData = shippers.map(shipper => [
-        shipper.providerid,
-        shipper.companyname,
-        shipper.companyaddress,
-        shipper.companyemail,
-        shipper.companyphone,
-        shipper.companytype,
-        shipper.rateperkg
-      ]);
-
-      // Add table
-      doc.autoTable({
-        head: [['Courier ID', 'Company Name', 'Company Address', 'Company Email', 
-                'Contact Number', 'Company Type', 'Rate per kg ($)']],
-        body: tableData,
-        startY: 30,
-        theme: 'grid',
-        styles: {
-          fontSize: 8,
-          cellPadding: 2,
-        },
-        headStyles: {
-          fillColor: [61, 75, 100],
-          textColor: 255,
-          fontSize: 8,
-          fontStyle: 'bold',
-        },
-        alternateRowStyles: {
-          fillColor: [245, 245, 245],
-        },
-        margin: { top: 30 },
-      });
-
-      // Save the PDF
-      doc.save('couriers-report.pdf');
-      toast.success('Report downloaded successfully');
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      toast.error('Failed to generate report');
-    }
-  };
-
   const columns = [
     { field: 'providerid', headerName: 'Courier ID', width: 150 },
     { field: 'companyname', headerName: 'Company Name', width: 200 },
-    { field: 'companyaddress', headerName: 'Company Address', width: 200 },
-    { field: 'companyemail', headerName: 'Company Email', width: 150 },
-    { field: 'companyphone', headerName: 'Contact Number', width: 150 },
-    { field: 'companytype', headerName: 'Company Type', width: 150 },
-    { field: 'rateperkg', headerName: "Rate per kg ($)", width: 120 },
+    { field: 'companyaddress', headerName: 'Address', width: 250 },
+    { field: 'companyemail', headerName: 'Email', width: 200 },
+    { field: 'companyphone', headerName: 'Phone', width: 150 },
+    { field: 'companytype', headerName: 'Type', width: 120 },
+    { field: 'rateperkg', headerName: 'Rate per kg ($)', width: 150 },
     {
       field: 'edit',
       headerName: 'Edit',
-      width: 150,
+      width: 100,
       renderCell: (params) => (
         <Link 
           to={`/shippers/${params.row._id}`}
@@ -137,7 +82,7 @@ const Shippers = () => {
     {
       field: 'delete',
       headerName: 'Delete',
-      width: 150,
+      width: 100,
       renderCell: (params) => (
         <div style={{ 
           display: 'flex', 
@@ -155,6 +100,27 @@ const Shippers = () => {
       ),
     },
   ];
+
+  const generatePDF = () => {
+    const input = pdfRef.current;
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('l', 'mm', 'a4', true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.save('couriers-report.pdf');
+      toast.success('Report downloaded successfully');
+    }).catch(error => {
+      console.error('Error generating PDF:', error);
+      toast.error('Failed to generate report');
+    });
+  };
 
   if (loading) {
     return <div className="sh-loading-message">Loading couriers...</div>;
@@ -175,13 +141,17 @@ const Shippers = () => {
               New Courier
             </button>
           </Link>
-          <button className="sh-report-button" onClick={generatePDF}>
+          <button 
+            type="button"
+            className="sh-report-button" 
+            onClick={generatePDF}
+          >
             Download Report
           </button>
         </div>
       </div>
       
-      <div className="sh-shippers-grid">
+      <div className="sh-shippers-grid" ref={pdfRef}>
         <DataGrid
           rows={shippers}
           columns={columns}

@@ -4,10 +4,13 @@ import { DataGrid } from '@mui/x-data-grid';
 import { FaTrash } from 'react-icons/fa';
 import { publicRequest } from '../../requestMethods';
 import { toast } from 'react-toastify';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import './Shipments.css';
+import 'react-toastify/dist/ReactToastify.css';
 import ShipNav from '../ShipNav/ShipNav';
+import axios from 'axios';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
+import './Shipments.css';
 
 function Shipments() {
   const [shipments, setShipments] = useState([]);
@@ -15,6 +18,7 @@ function Shipments() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const componentRef = useRef();
+  const pdfRef = useRef();
 
   useEffect(() => {
     const getAllShipments = async () => {
@@ -45,28 +49,22 @@ function Shipments() {
     getAllShippers();
   }, []);
 
- 
-
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this shipment?')) {
       try {
-        console.log('Attempting to delete shipment with ID:', id);
         const response = await publicRequest.delete(`/shipments/${id}`);
         console.log('Delete response:', response);
         
-        if (response.data && response.data.success) {
+        if (response && response.data && response.data.success) {
+          // Update the local state to remove the deleted shipment
           setShipments(prevShipments => prevShipments.filter(shipment => shipment._id !== id));
           toast.success('Shipment deleted successfully');
         } else {
-          throw new Error(response.data?.message || 'Failed to delete shipment');
+          throw new Error(response?.data?.message || 'Failed to delete shipment');
         }
-    } catch (error) {
-        console.error('Error details:', {
-          message: error.message,
-          response: error.response?.data,
-          status: error.response?.status,
-        });
-        toast.error(error.response?.data?.message || 'Failed to delete shipment. Please try again.');
+      } catch (error) {
+        console.error('Error deleting shipment:', error);
+        toast.error(error.response?.data?.message || 'Failed to delete shipment');
       }
     }
   };
@@ -85,6 +83,7 @@ function Shipments() {
       await publicRequest.post('/shipments/assign-courier', { 
         shipmentId, 
         courierid: courierId,
+        field: field
       });
 
       setShipments(
@@ -92,13 +91,13 @@ function Shipments() {
           shipment._id === shipmentId
             ? { 
                 ...shipment, 
-                [field]: courierId, 
+                [field]: courierId,
                 cost: field === 'courieridToCollection' 
                   ? calculatedCost 
                   : shipment.cost + calculatedCost,
                 status: field === 'courieridToCollection' 
                   ? 'Courier Assigned to Collection' 
-                  : 'Courier Assigned to Buyer' 
+                  : 'Courier Assigned to Buyer'
               }
             : shipment
         )
@@ -111,67 +110,30 @@ function Shipments() {
   };
 
   const generatePDF = () => {
-    try {
-      const doc = new jsPDF('l', 'mm', 'a4');
-      
-      // Add title
-      doc.setFontSize(16);
-      doc.text('Shipments Report', 14, 15);
-      
-      // Add date
-      doc.setFontSize(10);
-      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 22);
-
-      // Prepare table data
-      const tableData = shipments.map(shipment => [
-        shipment.itemid,
-        shipment.itemname,
-        shipment.from,
-        shipment.collectionCenter,
-        shipment.to,
-        shipment.userName,
-        shipment.selleremail,
-        shipment.phone,
-        shipment.buyername,
-        shipment.buyeremail,
-        shipment.buyerphone,
-        shipment.weight,
-        shipment.shipmenttype,
-        shipment.cost,
-        shipment.status
-      ]);
-
-      // Add table
-      doc.autoTable({
-        head: [['Item ID', 'Item Name', 'From', 'Collection Center', 'To', 'Seller Name', 
-                'Seller Email', 'Seller Phone', 'Buyer Name', 'Buyer Email', 'Buyer Phone', 
-                'Weight', 'Type', 'Cost', 'Status']],
-        body: tableData,
-        startY: 30,
-        theme: 'grid',
-        styles: {
-          fontSize: 8,
-          cellPadding: 2,
-        },
-        headStyles: {
-          fillColor: [61, 75, 100],
-          textColor: 255,
-          fontSize: 8,
-          fontStyle: 'bold',
-        },
-        alternateRowStyles: {
-          fillColor: [245, 245, 245],
-        },
-        margin: { top: 30 },
-      });
-
-      // Save the PDF
-      doc.save('shipments-report.pdf');
+    const input = pdfRef.current;
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('l', 'mm', 'a4', true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.save('shipments-report.pdf');
       toast.success('Report downloaded successfully');
-    } catch (error) {
+    }).catch(error => {
       console.error('Error generating PDF:', error);
       toast.error('Failed to generate report');
-    }
+    });
+  };
+
+  const handleDownloadReport = (e) => {
+    e.preventDefault();
+    console.log('Download button clicked');
+    generatePDF();
   };
 
   const columns = [
@@ -277,30 +239,34 @@ function Shipments() {
       <div className="sh-shipments-header">
         <h1 className="sh-shipments-title">Shipments</h1>
         <div className="sh-shipments-actions">
-        <Link to="/newshipment">
+          <Link to="/newshipment">
             <button className="sh-new-shipments-button">
               New Shipment
             </button>
-        </Link>
-          <button className="sh-report-button" onClick={generatePDF}>
+          </Link>
+          <button 
+            type="button"
+            className="sh-report-button" 
+            onClick={generatePDF}
+          >
             Download Report
           </button>
         </div>
       </div>
       
-      <div className="sh-shipments-grid">
+      <div className="sh-shipments-grid" ref={pdfRef}>
         {shipments.length === 0 ? (
           <div className="sh-no-data-message">No shipments found</div>
         ) : (
-        <DataGrid
-          rows={shipments}
-          columns={columns}
-          getRowId={(row) => row._id}
-          initialState={{
+          <DataGrid
+            rows={shipments}
+            columns={columns}
+            getRowId={(row) => row._id}
+            initialState={{
               pagination: { paginationModel: { pageSize: 10, page: 0 } },
-          }}
-          pageSizeOptions={[10, 25, 50]}
-          checkboxSelection
+            }}
+            pageSizeOptions={[10, 25, 50]}
+            checkboxSelection
             disableRowSelectionOnClick
             autoHeight
             sx={{
@@ -314,7 +280,7 @@ function Shipments() {
                 fontWeight: 'bold',
               },
             }}
-        />
+          />
         )}
       </div>
     </div>

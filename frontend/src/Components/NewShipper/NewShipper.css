@@ -18,7 +18,7 @@ body {
     padding: 30px;
     max-width: 500px;
     width: 100%;
-    margin: 20px;
+    margin: 20px auto;
     background-color: #FFFFFF;
 }
 
@@ -64,6 +64,17 @@ body {
     outline: none;
 }
 
+.sh-form-group input.error,
+.sh-form-group select.error {
+    border-color: #dc3545;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
 .sh-form-group select {
     appearance: none;
     background: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
@@ -84,12 +95,18 @@ body {
     cursor: pointer;
     background-color: #2196F3;
     color: white;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     text-decoration: none;
+    min-width: 150px;
 }
 
-.sh-btn-submit:hover {
+.sh-btn-submit:hover:not(:disabled) {
     background-color: #1976D2;
+}
+
+.sh-btn-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 @media (max-width: 480px) {

@@ -68,7 +68,7 @@ function UpdateShipper() {
 
   return (
     <div className="sh-create-shipper-container">
-      <h2>Update Shipping Service Provider</h2>
+      <h2>Update Courier</h2>
       <form className="sh-shipper-form" onSubmit={handleSubmit}>
         <div className="sh-form-group">
           <label htmlFor="providerid">Shipping Provider ID</label>
@@ -148,7 +148,7 @@ function UpdateShipper() {
         </div>
         <div className="sh-form-actions">
           <button type="submit" className="sh-btn-submit">
-            Update Shipping Service Provider
+            Update Courier
           </button>
           <button
             type="button"

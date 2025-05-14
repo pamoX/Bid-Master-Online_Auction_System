@@ -47,8 +47,8 @@ function App() {
           <Route path="/buyershipping" element={<BuyerShipping />} />
           <Route path="/sellershipping" element={<SellerShipping />} />
 
-          <Route path="/buyer/shipping/:auctionid" element={<BuyerShippingForm />} />
-          <Route path="/seller/shipping/:auctionid" element={<SellerShippingForm />} />
+          <Route path="/buyer/shipping/" element={<BuyerShippingForm />} />
+          <Route path="/seller/shipping/" element={<SellerShippingForm />} />
           <Route path="/orders" element={<OrderHistory />} />
         
           <Route path="/track/:id" element={<ShipmentTracking />} />

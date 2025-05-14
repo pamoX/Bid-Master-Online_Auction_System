@@ -9,6 +9,18 @@ const publicRequest = axios.create({
     }
 });
 
+// Add request interceptor
+publicRequest.interceptors.request.use(
+    (config) => {
+        // You can add any request preprocessing here
+        return config;
+    },
+    (error) => {
+        console.error('Request Error:', error);
+        return Promise.reject(error);
+    }
+);
+
 // Add response interceptor
 publicRequest.interceptors.response.use(
     (response) => {
@@ -22,7 +34,11 @@ publicRequest.interceptors.response.use(
         // Handle error response
         const message = error.response?.data?.message || 'An error occurred';
         toast.error(message);
-        console.error('API Error:', error);
+        console.error('API Error:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
+        });
         return Promise.reject(error);
     }
 );
