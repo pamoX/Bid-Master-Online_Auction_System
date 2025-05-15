@@ -33,6 +33,9 @@ function EditItem() {
     additionalImages: []
   });
   
+  // Add validation state
+  const [descriptionError, setDescriptionError] = useState('');
+  
   const [previewUrl, setPreviewUrl] = useState(null);
   const [currentImage, setCurrentImage] = useState('');
   const [additionalPreviews, setAdditionalPreviews] = useState([]);
@@ -64,6 +67,11 @@ function EditItem() {
         image: null,
         additionalImages: []
       });
+      
+      // Check description length and set error if needed
+      if (item.description && item.description.length <= 10) {
+        setDescriptionError('Description must be more than 10 characters');
+      }
       
       if (item.image) {
         setCurrentImage(item.image.startsWith('/uploads') 
@@ -113,6 +121,11 @@ function EditItem() {
             image: null,
             additionalImages: []
           });
+          
+          // Check description length and set error if needed
+          if (item.description && item.description.length <= 10) {
+            setDescriptionError('Description must be more than 10 characters');
+          }
           
           if (item.image) {
             setCurrentImage(item.image.startsWith('/uploads') 
@@ -183,11 +196,26 @@ function EditItem() {
         ...prev,
         [name]: value
       }));
+      
+      // Clear description error when user types and validate
+      if (name === 'description') {
+        if (value.length <= 10) {
+          setDescriptionError('Description must be more than 10 characters');
+        } else {
+          setDescriptionError('');
+        }
+      }
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate description length before submission
+    if (formData.description.length <= 10) {
+      setDescriptionError('Description must be more than 10 characters');
+      return; // Prevent form submission
+    }
     
     // Create FormData object to handle file upload
     const submitData = new FormData();
@@ -268,7 +296,14 @@ function EditItem() {
             </div>
             <div className="item-group">
               <label htmlFor="description">Item Description</label>
-              <textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
+              <textarea 
+                id="description" 
+                name="description" 
+                value={formData.description} 
+                onChange={handleChange} 
+                required 
+              />
+              {descriptionError && <div className="error-message" style={{ color: 'red', fontSize: '0.8rem' }}>{descriptionError}</div>}
             </div>
             <div className="item-group">
               <label htmlFor="price">Item Price ($)</label>
