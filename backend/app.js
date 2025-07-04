@@ -14,7 +14,7 @@ const taskRoutes = require('./Route/TaskRoute');
 const notificationRoutes = require('./Route/TaskNotificationRoute');
 const bidNowRoutes = require("./Route/BidNowRoutes");
 
-//const sellItemRoutes =  require("./Route/SellItemRoute");
+
 
 
 
@@ -27,9 +27,12 @@ require('./utils/auctionWinnerNotifier');
 
 
 const path = require('path');
-const SellerRoute = require("./Route/SellerRoute");
+//const SellerRoute = require("./Route/SellerRoute");
+const sellerProfileRoutes = require("./Route/SellerProfileRoute");
+
 const multer = require("multer");
 const fs = require("fs"); // Add fs for file deletion
+
 
 // Initialize Stripe with your secret key from .env
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
@@ -47,12 +50,14 @@ app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
-app.use("/item", SellerRoute);
+//app.use("/item", SellerRoute);
+app.use('/seller', sellerProfileRoutes);
 
 app.use("/files", express.static(path.join(__dirname, "../frontend/src/Components/ImgUploader/files")));
 
-app.use("/shipments", shipmentRouter);
-app.use("/shippers", shipperRouter);
+
+app.use('/api/shipment', shipmentRouter);
+app.use("/api/courier", shipperRouter);
 
 
 // Define routes
@@ -74,7 +79,7 @@ app.use('/api/users', require('./Route/UserRoute'));
 app.use('/api/bid-users', require('./Route/BidUserRoutes'));
 // Add the Stripe webhook route - must be before express.json() middleware
 app.use('/api/stripe', require('./Route/stripeWebhook'));
-app.use('/api/items', require('./Route/ItemRoutes'));
+
 
 
 

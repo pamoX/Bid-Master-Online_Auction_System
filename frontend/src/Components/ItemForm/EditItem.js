@@ -169,29 +169,36 @@ function EditItem() {
       };
       fileReader.readAsDataURL(file);
     } else if (name === 'additionalImages' && files && files.length > 0) {
-      if (files.length > 4) {
-        alert('You can only upload up to 4 additional images');
-        return;
-      }
-      
-      setFormData(prev => ({
-        ...prev,
-        [name]: Array.from(files)
-      }));
-      
-      // Create preview URLs for additional images
-      const previews = [];
-      for (let i = 0; i < files.length; i++) {
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-          previews.push(fileReader.result);
-          if (previews.length === files.length) {
-            setAdditionalPreviews([...previews]);
-          }
-        };
-        fileReader.readAsDataURL(files[i]);
-      }
-    } else {
+  if (files.length > 4) {
+    alert('You can only upload up to 4 additional images');
+    return;
+  }
+
+  const fileArray = Array.from(files);
+  setFormData((prev) => ({
+    ...prev,
+    additionalImages: fileArray,
+  }));
+
+ setAdditionalPreviews([]);
+
+  Promise.all(
+    fileArray.map(
+      (file) =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        })
+    )
+  )
+    .then((results) => {
+      setAdditionalPreviews(results);
+    })
+    .catch((err) => console.error("Error reading files", err));
+}
+else {
       setFormData(prev => ({
         ...prev,
         [name]: value

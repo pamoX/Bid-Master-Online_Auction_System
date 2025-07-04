@@ -1,17 +1,12 @@
-const express = require('express'); 
-const shipperRouter = express.Router();
+const express = require("express");
+const router = express.Router();
+const ShipperController = require("../Controlers/ShipperController");
 
-//insert model
-const Shipper = require('../Model/ShipperModel.js');
-//insert usercontroller
-const ShipperController = require('../Controlers/ShipperController.js');
-
-shipperRouter.get('/', ShipperController.getAllShippers);
-shipperRouter.post('/', ShipperController.addShipper);
-shipperRouter.get("/:shipperid", ShipperController.getByIdShipper);
-shipperRouter.put("/:shipperid", ShipperController.updateShipper);
-shipperRouter.delete("/:shipperid", ShipperController.deleteShipper);
+router.post("/add", ShipperController.addCourier);
+router.get("/all", ShipperController.getAllCouriers);
+router.put("/update/:id", ShipperController.updateCourier);
+router.delete("/delete/:id", ShipperController.deleteCourier);
+router.get("/dashboard/stats", ShipperController.getDashboardStats);
 
 
-//export router
-module.exports = shipperRouter;
+module.exports = router;

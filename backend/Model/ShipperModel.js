@@ -1,14 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
-const shipperSchema = new Schema({
+const shipperSchema = new mongoose.Schema({
     providerid: { type: String, required: true, unique: true },
     companyname: { type: String, required: true },
-    companyemail: { type: String, required: true, match: [/^\S+@\S+\.\S+$/, 'Invalid email'] },
-    companyphone: { type: String, required: true },
-    companyaddress: { type: String, required: true },
-    companytype: { type: String, required: true, enum: ['Local', 'International'] },
-    rateperkg: { type: Number, required: true, min: 0 }
+    contactnumber: { type: String, required: true },
+    rateperkg: { type: Number, required: true },
+    companytype: { type: String, required: true }, // Local, National, etc.
 }, { timestamps: true });
 
-module.exports = mongoose.model('shippers', shipperSchema);
+module.exports = mongoose.model("Shipper", shipperSchema);
