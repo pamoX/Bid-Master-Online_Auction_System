@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaUser, FaUsers, FaTasks, FaMoneyCheckAlt, FaBoxOpen, 
-  FaGavel, FaShippingFast, FaFileAlt, FaUserShield, FaRegClipboard, FaBars,FaPlusSquare
+  FaGavel, FaShippingFast, FaFileAlt, FaUserShield, FaRegClipboard, FaBars,FaSyncAlt,FaMapMarkerAlt
 } from 'react-icons/fa';
 import './Sidebar.css';
 
@@ -54,20 +54,23 @@ function Sidebar() {
          
           {renderLink("/bidder-profile", FaUser, "Profile")}
           {renderLink("/BidFeedbackPage", FaRegClipboard, "Feedback")}
+           {renderLink("/track", FaMapMarkerAlt, "Track My Shipment")}
         </>
       )}
       {role === "ship" && (
         <>
           {renderLink("/shipmanagedash", FaShippingFast, "Shipping Dashboard")}
           {renderLink("/shipments", FaTasks, "Manage Shipments")}
-          {renderLink("/shippers", FaUsers, "Shipment Providers")}
+          {renderLink("/all-shipments-card", FaTasks, "All Shipments")}
+          {renderLink("/status", FaSyncAlt, "Update Shipment Status")}
+          {renderLink("/couriers", FaMapMarkerAlt, "Courier Dashboard")}
+          
         </>
       )}
       {role === "hr" && (
         <>
           {renderLink("/hrDashboard", FaUserShield, "HR Dashboard")}
           {renderLink("/employeeDashboard", FaUsers, "Employee Management")}
-         
           {renderLink("/tasks", FaTasks, "Task Management")}
           {renderLink("/payroll", FaMoneyCheckAlt, "Payroll")}
         </>

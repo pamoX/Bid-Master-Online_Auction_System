@@ -15,21 +15,22 @@ function Item({ item, onRefresh }) {
   };
 
   const handleDelete = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this item?")) {
-      try {
-        await axios.delete(`http://localhost:5000/items/${item._id}`);
-        if (typeof onRefresh === "function") {
-          onRefresh();
-        }
-        alert("Item deleted successfully!");
-      } catch (error) {
-        console.error("Error deleting item:", error);
-        alert("Failed to delete item. Please try again.");
+  e.preventDefault();
+  e.stopPropagation();
+  if (window.confirm("Are you sure you want to delete this item?")) {
+    try {
+      await axios.patch(`http://localhost:5000/items/seller-delete/${item._id}`);
+      if (typeof onRefresh === "function") {
+        onRefresh();
       }
+      alert("Item deleted from seller dashboard only!");
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      alert("Failed to delete item. Please try again.");
     }
-  };
+  }
+};
+
 
   const handleClick = () => {
     navigate(`/seller-dashboard/${item._id}`);

@@ -20,7 +20,7 @@ function Footer() {
             <li><Link to="/aboutUs">About Us</Link></li>
             <li><Link to="/contactUs">Contact Us</Link></li>
             <li><Link to="/terms">Terms & Conditions</Link></li>
-            <li><Link to="/privacy">Privacy Policy</Link></li>
+           
           </ul>
         </div>
 

@@ -28,12 +28,17 @@ const getItemById = async (req, res) => {
 const getItemsBySeller = async (req, res) => {
   const { username } = req.params;
   try {
-    const items = await Item.find({ username }).sort({ createdAt: -1 });
+    const items = await Item.find({
+      username,
+      isDeletedBySeller: { $ne: true }, // 🔥 Filter out deleted items
+    }).sort({ createdAt: -1 });
+
     res.status(200).json({ item: items });
   } catch (err) {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
 
 // ✅ Add item
 const addItem = async (req, res) => {
@@ -173,6 +178,26 @@ const updateItem = async (req, res) => {
 };
 
 
+
+
+// ✅ Seller-side soft delete
+const deleteItemBySeller = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const item = await Item.findById(id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    item.isDeletedBySeller = true;
+    await item.save();
+
+    res.status(200).json({ message: "Item deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to delete item" });
+  }
+};
+
 // ✅ Delete item
 const deleteItem = async (req, res) => {
   const { id } = req.params;
@@ -197,6 +222,7 @@ const deleteItem = async (req, res) => {
   }
 };
 
+
 // ✅ Update item status (inspection approval/rejection)
 const updateItemStatus = async (req, res) => {
   const { id } = req.params;
@@ -218,6 +244,8 @@ const updateItemStatus = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   getAllItems,
   getItemById,
@@ -225,5 +253,7 @@ module.exports = {
   addItem,
   updateItem,
   deleteItem,
+  deleteItemBySeller,
   updateItemStatus,
+  
 };

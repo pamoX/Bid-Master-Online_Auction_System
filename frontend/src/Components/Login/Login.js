@@ -26,6 +26,9 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("userId", user._id);
         localStorage.setItem("role", rolePrefix);
+        localStorage.setItem("username", user.username);
+        localStorage.setItem("loggedInUserEmail", user.email);
+
 
         toast.success(`Welcome ${user.name}!`, {
           position: "top-right",
@@ -43,7 +46,7 @@ function Login() {
             navigate("/seller-dashboard");
             break;
           case "bid":
-            navigate("/BidDashboard");
+            navigate("/items-gallery");
             break;
           case "ship":
             navigate("/shipmanagedash");

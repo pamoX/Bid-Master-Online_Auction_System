@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import './ItemManager.css';
 
@@ -38,24 +38,9 @@ function ItemManager() {
     navigate(`/edit-item/${item._id}`, { state: { item } });
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
-      fetch(`http://localhost:5000/items/${id}`, {
-        method: 'DELETE',
-      })
-        .then(res => {
-          if (!res.ok) {
-            throw new Error('Failed to delete item');
-          }
-          fetchItems(); // Refresh the items list
-          alert('Item deleted successfully');
-        })
-        .catch(err => {
-          console.error('Error deleting item:', err);
-          alert('Failed to delete item');
-        });
-    }
-  };
+  
+
+  
 
   const handleUpdateStatus = (id, newStatus) => {
     fetch(`http://localhost:5000/items/${id}`, {
@@ -72,7 +57,7 @@ function ItemManager() {
         return res.json();
       })
       .then(() => {
-        fetchItems(); // Refresh the items list
+        fetchItems();
         alert(`Item ${newStatus.toLowerCase()} successfully`);
       })
       .catch(err => {
@@ -120,9 +105,7 @@ function ItemManager() {
             Rejected
           </button>
         </div>
-        
-       
-        
+
         <div className="items-table-container">
           <table className="items-table">
             <thead>
@@ -159,20 +142,20 @@ function ItemManager() {
                       </span>
                     </td>
                     <td className="actions-cell">
-                      <button 
-                        onClick={() => handleEdit(item)} 
-                        className="action-btn edit-btn" 
-                        title="Edit Item"
-                      >
-                        Edit
-                      </button>
-                      <button 
-                        onClick={() => handleDelete(item._id)} 
-                        className="action-btn delete-btn" 
-                        title="Delete Item"
-                      >
-                        Delete
-                      </button>
+                      {/* Hide Edit button if Approved */}
+                      {item.inspectionStatus !== 'Approved' && (
+                        <button 
+                          onClick={() => handleEdit(item)} 
+                          className="action-btn edit-btn" 
+                          title="Edit Item"
+                        >
+                          Edit
+                        </button>
+                      )}
+
+                      
+                     
+                      {/* Show Approve/Reject buttons only if Pending */}
                       {item.inspectionStatus === 'Pending' && (
                         <>
                           <button 

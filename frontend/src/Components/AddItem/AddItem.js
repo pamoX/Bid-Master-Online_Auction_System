@@ -26,49 +26,57 @@ function AddItem() {
   const [additionalPreviews, setAdditionalPreviews] = useState([]);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+  const { name, value, files } = e.target;
 
-    if (name === 'image' && files && files[0]) {
-      const file = files[0];
-      setFormData(prev => ({
-        ...prev,
-        [name]: file
-      }));
+  if (name === 'image' && files && files[0]) {
+    const file = files[0];
+    setFormData(prev => ({
+      ...prev,
+      [name]: file
+    }));
 
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        setPreviewUrl(fileReader.result);
-      };
-      fileReader.readAsDataURL(file);
-    } else if (name === 'additionalImages' && files && files.length > 0) {
-      if (files.length > 4) {
-        alert('You can only upload up to 4 additional images');
-        return;
-      }
-
-      setFormData(prev => ({
-        ...prev,
-        [name]: Array.from(files)
-      }));
-
-      const previews = [];
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          previews.push(reader.result);
-          if (previews.length === files.length) {
-            setAdditionalPreviews([...previews]);
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  } else if (name === 'additionalImages' && files && files.length > 0) {
+    if (files.length > 4) {
+      alert('You can only upload up to 4 additional images');
+      return;
     }
-  };
+
+    const fileArray = Array.from(files);
+    setFormData(prev => ({
+      ...prev,
+      additionalImages: fileArray
+    }));
+
+    // Read all files and generate previews
+    Promise.all(
+      fileArray.map(file => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = () => reject();
+          reader.readAsDataURL(file);
+        });
+      })
+    )
+    .then(results => {
+      setAdditionalPreviews(results);
+    })
+    .catch(err => {
+      console.error("Error reading files", err);
+    });
+  } else {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -11,7 +11,9 @@ import Nav from "./Components/Nav/Nav";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
-import Dashboard from "./Components/Dashboard/Dashboard";
+
+
+//hr
 import AddEmployee from "./Components/AsignRoles/AddEmployee";
 import EmployeeDashboard from "./Components/AsignRoles/EmployeeDashboard";
 import AboutUs from "./Components/AboutUs/AboutUs";
@@ -44,7 +46,6 @@ import AddItem from './Components/AddItem/AddItem';
 import SellUpdateItem from './Components/SellUpdateItem/SellUpdateItem';
 import ImgUploader from './Components/ImgUploader/ImgUploader';
 import SellerProfile from './Components/SellerProfile/SellerProfile';
-import EditProfile from "./Components/EditProfile/EditProfile.js";
 
 
 
@@ -68,21 +69,23 @@ import BidDashboard from './Components/BidDashboard/BidDashboard';
 // BidNowBidder component
 import BidNowBidder from './Components/BidNowBidder/BidNowBidder';
 
-  
-import Shippers from './Components/Shippers/Shippers';
-import Shipments from './Components/Shipments/Shipments';
-import NewShipment from './Components/NewShipment/NewShipment';
-import UpdateShipment from './Components/UpdateShipment/UpdateShipment';
-import NewShipper from './Components/NewShipper/NewShipper';
-import UpdateShipper from './Components/UpdateShipper/UpdateShipper';
+
+//shipping
 import ShipManageDash from './Components/ShipManageDash/ShipManageDash';
+import CourierDashboard from './Components/CourierDashboard/CourierDashboard';
+import ShipmentDashboard from './Components/ShipmentDashboard/ShipmentDashboard';
+import UserShipmentTracker from './Components/UserShipmentTracker/UserShipmentTracker';
+import UpdateShipmentStatus from './Components/UpdateShipmentStatus/UpdateShipmentStatus';
+import AllShipmentCards from './Components/AllShipmentCards/AllShipmentCards';
 
 
 
 
-const Placeholder = ({ pageName }) => <h2>{pageName} Page (Under Construction)</h2>;
+//const Placeholder = ({ pageName }) => <h2>{pageName} Page (Under Construction)</h2>;
 
 function App() {
+
+  const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
   return (
     <div >
    
@@ -95,7 +98,6 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/addEmployee" element={<AddEmployee/>}/>
         <Route path="/employeeDashboard" element={<EmployeeDashboard/>}/>
         <Route path="/aboutUs" element={<AboutUs/>}/>
@@ -112,9 +114,8 @@ function App() {
 
 
 
-       
-        <Route path="/inspectionDashboard" element={<InspectionDashboard/>}/>
-       
+        {/* Inspection route */}
+          <Route path="/inspectionDashboard" element={<InspectionDashboard/>}/>
           <Route path="/item-manager" element={<ItemManager/>} />
           <Route path="/item/:id" element={<ItemView />} />
           <Route path="/edit-item/:id" element={<EditItem />} />
@@ -122,19 +123,18 @@ function App() {
           <Route path="/flagged-items" element={<ReportedItems/>}/>
           <Route path="/flagged-items/:_id" element={<UpdateReport/>}/>
           <Route path="/add-report" element={<AddReport/>}/>
-        <Route path="/item-form" element={<ItemForm />} />
+          <Route path="/item-form" element={<ItemForm />} />
        
          
           
 
-
-        <Route path="/seller-listing" element={<SellerListings/>}/>
+         {/* Seller route */}
+         <Route path="/seller-listing" element={<SellerListings/>}/>
          <Route path="/upload-img" element={<ImgUploader/>}/>
          <Route path="/seller-dashboard" element={<SellerDashboard />} />
          <Route path="/seller-dashboard/:id" element={<SellUpdateItem />} />
          <Route path="/seller-profile" element={<SellerProfile />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-           <Route path="/add-item" element={<AddItem />} />
+         <Route path="/add-item" element={<AddItem />} />
 
 
  
@@ -164,19 +164,15 @@ function App() {
 
           {/* BidNowBidder route */}
           <Route path="/bid-now/:itemId?" element={<BidNowBidder />} />
+         
 
-
-
-
+          {/* shipping route */}
           <Route path="/shipmanagedash" element={<ShipManageDash />} />
-          <Route path="/shippers" element={<Shippers />} />
-          <Route path="/shipments" element={<Shipments />} />
-          <Route path="/newshipment" element={<NewShipment />} />
-          <Route path="/shipments/:id" element={<UpdateShipment />} />
-          <Route path="/newshipper" element={<NewShipper />} />
-          <Route path="/shippers/:id" element={<UpdateShipper/>}/>
-
-
+          <Route path="/couriers" element={<CourierDashboard />} />
+          <Route path="/shipments" element={<ShipmentDashboard />} />
+          <Route path="/status" element={<UpdateShipmentStatus />} />
+          <Route path="/all-shipments-card" element={<AllShipmentCards />} />
+          <Route path="/track" element={<UserShipmentTracker userEmail={loggedInUserEmail} />} />
 
       </Routes>
     </React.Fragment>

@@ -7,7 +7,9 @@ const {
   addItem,
   updateItem,
   deleteItem,
+  deleteItemBySeller,
   updateItemStatus,
+  
 } = require("../Controlers/ItemControllers");
 const upload = require("../upload");
 
@@ -36,5 +38,7 @@ router.put(
 
 router.delete("/:id", deleteItem);
 router.patch("/:id", updateItemStatus);
+router.patch("/seller-delete/:id", deleteItemBySeller); // New route for seller delete
+
 
 module.exports = router;

@@ -14,7 +14,7 @@ const taskRoutes = require('./Route/TaskRoute');
 const notificationRoutes = require('./Route/TaskNotificationRoute');
 const bidNowRoutes = require("./Route/BidNowRoutes");
 
-//const sellItemRoutes =  require("./Route/SellItemRoute");
+
 
 
 
@@ -27,7 +27,7 @@ require('./utils/auctionWinnerNotifier');
 
 
 const path = require('path');
-const SellerRoute = require("./Route/SellerRoute");
+//const SellerRoute = require("./Route/SellerRoute");
 const sellerProfileRoutes = require("./Route/SellerProfileRoute");
 
 const multer = require("multer");
@@ -50,13 +50,14 @@ app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
-app.use("/item", SellerRoute);
+//app.use("/item", SellerRoute);
 app.use('/seller', sellerProfileRoutes);
 
 app.use("/files", express.static(path.join(__dirname, "../frontend/src/Components/ImgUploader/files")));
 
-app.use("/shipments", shipmentRouter);
-app.use("/shippers", shipperRouter);
+
+app.use('/api/shipment', shipmentRouter);
+app.use("/api/courier", shipperRouter);
 
 
 // Define routes

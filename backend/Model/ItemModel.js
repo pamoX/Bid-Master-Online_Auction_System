@@ -28,6 +28,8 @@ const itemSchema = new mongoose.Schema(
     material: { type: String, default: "" },
     maker: { type: String, default: "" },
     year: { type: String, default: "" },
+    isDeletedBySeller: { type: Boolean, default: false },
+
 
     authenticity: { type: String, default: "Verified" },
     inspectionNotes: { type: String, default: "" },
