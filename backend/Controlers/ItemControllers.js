@@ -63,9 +63,14 @@ const addItem = async (req, res) => {
     status,
   } = req.body;
 
+  //const image = req.files?.image?.[0]?.filename
+   // ? `/uploads/${req.files.image[0].filename}`
+   // : "/uploads/placeholder.png";
+
   const image = req.files?.image?.[0]?.filename
-    ? `/uploads/${req.files.image[0].filename}`
-    : "/uploads/placeholder.png";
+  ? `/uploads/${req.files.image[0].filename}`
+  : null;
+
 
   const additionalImages = req.files?.additionalImages
     ? req.files.additionalImages.map((file) => `/uploads/${file.filename}`)
@@ -114,7 +119,7 @@ const updateItem = async (req, res) => {
       return res.status(403).json({
         message: "This item has been approved and cannot be edited anymore.",
       });
-    }
+    } 
 
     const {
       name,
